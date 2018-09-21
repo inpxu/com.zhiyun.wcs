@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.DeviceDefineDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.DeviceDefine">
+        INSERT INTO DEVICE_DEFINE (
+        ID,
+        DIVICE_NO,
+        COMMUNICATION_TYPE,
+        IP,
+        CAT_NO,
+        DEVICE_DESC,
+        MAC_ADDR,
+        BRAND,
+        PLC,
+        YM,
+        SF_VERSION,
+        FACTORY,
+        MAX_X,
+        MAX_Y,
+        MAX_Z,
+        PROTOCOL_ID,
+        STORE_AREA_ID,
+        MODIFY_TIME,
+        CREATE_TIME,
+        DELETED,
+        COMPANY_ID,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{diviceNo,jdbcType=VARCHAR},
+        #{communicationType,jdbcType=VARCHAR},
+        #{ip,jdbcType=VARCHAR},
+        #{catNo,jdbcType=BIGINT},
+        #{deviceDesc,jdbcType=VARCHAR},
+        #{macAddr,jdbcType=VARCHAR},
+        #{brand,jdbcType=VARCHAR},
+        #{plc,jdbcType=VARCHAR},
+        #{ym,jdbcType=TIMESTAMP},
+        #{sfVersion,jdbcType=VARCHAR},
+        #{factory,jdbcType=VARCHAR},
+        #{maxX,jdbcType=INTEGER},
+        #{maxY,jdbcType=INTEGER},
+        #{maxZ,jdbcType=INTEGER},
+        #{protocolId,jdbcType=INTEGER},
+        #{storeAreaId,jdbcType=INTEGER},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{deleted,jdbcType=TINYINT},
+        #{companyId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_DEVICE_DEFINE.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.DeviceDefine">
+        UPDATE DEVICE_DEFINE
+        <set>
+            <if test="diviceNo != null">
+                DIVICE_NO = #{diviceNo,jdbcType=VARCHAR},
+            </if>
+            <if test="communicationType != null">
+                COMMUNICATION_TYPE = #{communicationType,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                IP = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="catNo != null">
+                CAT_NO = #{catNo,jdbcType=BIGINT},
+            </if>
+            <if test="deviceDesc != null">
+                DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="macAddr != null">
+                MAC_ADDR = #{macAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="brand != null">
+                BRAND = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="plc != null">
+                PLC = #{plc,jdbcType=VARCHAR},
+            </if>
+            <if test="ym != null">
+                YM = #{ym,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sfVersion != null">
+                SF_VERSION = #{sfVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="factory != null">
+                FACTORY = #{factory,jdbcType=VARCHAR},
+            </if>
+            <if test="maxX != null">
+                MAX_X = #{maxX,jdbcType=INTEGER},
+            </if>
+            <if test="maxY != null">
+                MAX_Y = #{maxY,jdbcType=INTEGER},
+            </if>
+            <if test="maxZ != null">
+                MAX_Z = #{maxZ,jdbcType=INTEGER},
+            </if>
+            <if test="protocolId != null">
+                PROTOCOL_ID = #{protocolId,jdbcType=INTEGER},
+            </if>
+            <if test="storeAreaId != null">
+                STORE_AREA_ID = #{storeAreaId,jdbcType=INTEGER},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.DeviceDefine">
+        UPDATE DEVICE_DEFINE
+        <set>
+            DIVICE_NO = #{diviceNo,jdbcType=VARCHAR},
+            COMMUNICATION_TYPE = #{communicationType,jdbcType=VARCHAR},
+            IP = #{ip,jdbcType=VARCHAR},
+            CAT_NO = #{catNo,jdbcType=BIGINT},
+            DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR},
+            MAC_ADDR = #{macAddr,jdbcType=VARCHAR},
+            BRAND = #{brand,jdbcType=VARCHAR},
+            PLC = #{plc,jdbcType=VARCHAR},
+            YM = #{ym,jdbcType=TIMESTAMP},
+            SF_VERSION = #{sfVersion,jdbcType=VARCHAR},
+            FACTORY = #{factory,jdbcType=VARCHAR},
+            MAX_X = #{maxX,jdbcType=INTEGER},
+            MAX_Y = #{maxY,jdbcType=INTEGER},
+            MAX_Z = #{maxZ,jdbcType=INTEGER},
+            PROTOCOL_ID = #{protocolId,jdbcType=INTEGER},
+            STORE_AREA_ID = #{storeAreaId,jdbcType=INTEGER},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            DELETED = #{deleted,jdbcType=TINYINT},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.DeviceDefine">
+        UPDATE DEVICE_DEFINE
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID                 id,
+               DIVICE_NO          diviceNo,
+               COMMUNICATION_TYPE communicationType,
+               IP                 ip,
+               CAT_NO             catNo,
+               DEVICE_DESC        deviceDesc,
+               MAC_ADDR           macAddr,
+               BRAND              brand,
+               PLC                plc,
+               YM                 ym,
+               SF_VERSION         sfVersion,
+               FACTORY            factory,
+               MAX_X              maxX,
+               MAX_Y              maxY,
+               MAX_Z              maxZ,
+               PROTOCOL_ID        protocolId,
+               STORE_AREA_ID      storeAreaId,
+               MODIFY_TIME        modifyTime,
+               CREATE_TIME        createTime,
+               DELETED            deleted,
+               COMPANY_ID         companyId,
+               CREATE_BY          createBy,
+               MODIFY_BY          modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.DeviceDefine">
+        <include refid="selectFieldSQL"/>
+        FROM DEVICE_DEFINE
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.DeviceDefine" resultType="com.zhiyun.entity.DeviceDefine">
+        <include refid="selectFieldSQL"/>
+        FROM DEVICE_DEFINE
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="diviceNo != null and diviceNo != ''">
+                AND DIVICE_NO = #{diviceNo,jdbcType=VARCHAR}
+            </if>
+            <if test="communicationType != null and communicationType != ''">
+                AND COMMUNICATION_TYPE = #{communicationType,jdbcType=VARCHAR}
+            </if>
+            <if test="ip != null and ip != ''">
+                AND IP = #{ip,jdbcType=VARCHAR}
+            </if>
+            <if test="catNo != null">
+                AND CAT_NO = #{catNo,jdbcType=BIGINT}
+            </if>
+            <if test="deviceDesc != null and deviceDesc != ''">
+                AND DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="macAddr != null and macAddr != ''">
+                AND MAC_ADDR = #{macAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="brand != null and brand != ''">
+                AND BRAND = #{brand,jdbcType=VARCHAR}
+            </if>
+            <if test="plc != null and plc != ''">
+                AND PLC = #{plc,jdbcType=VARCHAR}
+            </if>
+            <if test="ym != null">
+                AND YM = #{ym,jdbcType=TIMESTAMP}
+            </if>
+            <if test="sfVersion != null and sfVersion != ''">
+                AND SF_VERSION = #{sfVersion,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null and factory != ''">
+                AND FACTORY = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="maxX != null">
+                AND MAX_X = #{maxX,jdbcType=INTEGER}
+            </if>
+            <if test="maxY != null">
+                AND MAX_Y = #{maxY,jdbcType=INTEGER}
+            </if>
+            <if test="maxZ != null">
+                AND MAX_Z = #{maxZ,jdbcType=INTEGER}
+            </if>
+            <if test="protocolId != null">
+                AND PROTOCOL_ID = #{protocolId,jdbcType=INTEGER}
+            </if>
+            <if test="storeAreaId != null">
+                AND STORE_AREA_ID = #{storeAreaId,jdbcType=INTEGER}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.DeviceDefine">
+        <include refid="selectFieldSQL"/>
+        FROM DEVICE_DEFINE
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.diviceNo != null and entity.diviceNo != ''">
+                AND DIVICE_NO = #{entity.diviceNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.communicationType != null and entity.communicationType != ''">
+                AND COMMUNICATION_TYPE = #{entity.communicationType,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.ip != null and entity.ip != ''">
+                AND IP = #{entity.ip,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.catNo != null">
+                AND CAT_NO = #{entity.catNo,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deviceDesc != null and entity.deviceDesc != ''">
+                AND DEVICE_DESC = #{entity.deviceDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.macAddr != null and entity.macAddr != ''">
+                AND MAC_ADDR = #{entity.macAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.brand != null and entity.brand != ''">
+                AND BRAND = #{entity.brand,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.plc != null and entity.plc != ''">
+                AND PLC = #{entity.plc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.ym != null">
+                AND YM = #{entity.ym,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.sfVersion != null and entity.sfVersion != ''">
+                AND SF_VERSION = #{entity.sfVersion,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.factory != null and entity.factory != ''">
+                AND FACTORY = #{entity.factory,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.maxX != null">
+                AND MAX_X = #{entity.maxX,jdbcType=INTEGER}
+            </if>
+            <if test="entity.maxY != null">
+                AND MAX_Y = #{entity.maxY,jdbcType=INTEGER}
+            </if>
+            <if test="entity.maxZ != null">
+                AND MAX_Z = #{entity.maxZ,jdbcType=INTEGER}
+            </if>
+            <if test="entity.protocolId != null">
+                AND PROTOCOL_ID = #{entity.protocolId,jdbcType=INTEGER}
+            </if>
+            <if test="entity.storeAreaId != null">
+                AND STORE_AREA_ID = #{entity.storeAreaId,jdbcType=INTEGER}
+            </if>
+            <if test="entity.deleted != null">
+                AND DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM DEVICE_DEFINE
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.DeviceDefine">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM DEVICE_DEFINE
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM DEVICE_DEFINE
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM DEVICE_DEFINE
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="diviceNo != null and diviceNo != ''">
+                AND DIVICE_NO = #{diviceNo,jdbcType=VARCHAR}
+            </if>
+            <if test="communicationType != null and communicationType != ''">
+                AND COMMUNICATION_TYPE = #{communicationType,jdbcType=VARCHAR}
+            </if>
+            <if test="ip != null and ip != ''">
+                AND IP = #{ip,jdbcType=VARCHAR}
+            </if>
+            <if test="catNo != null">
+                AND CAT_NO = #{catNo,jdbcType=BIGINT}
+            </if>
+            <if test="deviceDesc != null and deviceDesc != ''">
+                AND DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="macAddr != null and macAddr != ''">
+                AND MAC_ADDR = #{macAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="brand != null and brand != ''">
+                AND BRAND = #{brand,jdbcType=VARCHAR}
+            </if>
+            <if test="plc != null and plc != ''">
+                AND PLC = #{plc,jdbcType=VARCHAR}
+            </if>
+            <if test="ym != null">
+                AND YM = #{ym,jdbcType=TIMESTAMP}
+            </if>
+            <if test="sfVersion != null and sfVersion != ''">
+                AND SF_VERSION = #{sfVersion,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null and factory != ''">
+                AND FACTORY = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="maxX != null">
+                AND MAX_X = #{maxX,jdbcType=INTEGER}
+            </if>
+            <if test="maxY != null">
+                AND MAX_Y = #{maxY,jdbcType=INTEGER}
+            </if>
+            <if test="maxZ != null">
+                AND MAX_Z = #{maxZ,jdbcType=INTEGER}
+            </if>
+            <if test="protocolId != null">
+                AND PROTOCOL_ID = #{protocolId,jdbcType=INTEGER}
+            </if>
+            <if test="storeAreaId != null">
+                AND STORE_AREA_ID = #{storeAreaId,jdbcType=INTEGER}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO DEVICE_DEFINE (
+        ID,
+        DIVICE_NO,
+        COMMUNICATION_TYPE,
+        IP,
+        CAT_NO,
+        DEVICE_DESC,
+        MAC_ADDR,
+        BRAND,
+        PLC,
+        YM,
+        SF_VERSION,
+        FACTORY,
+        MAX_X,
+        MAX_Y,
+        MAX_Z,
+        PROTOCOL_ID,
+        STORE_AREA_ID,
+        MODIFY_TIME,
+        CREATE_TIME,
+        DELETED,
+        COMPANY_ID,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ diviceNo,jdbcType=VARCHAR},
+        #{ communicationType,jdbcType=VARCHAR},
+        #{ ip,jdbcType=VARCHAR},
+        #{ catNo,jdbcType=BIGINT},
+        #{ deviceDesc,jdbcType=VARCHAR},
+        #{ macAddr,jdbcType=VARCHAR},
+        #{ brand,jdbcType=VARCHAR},
+        #{ plc,jdbcType=VARCHAR},
+        #{ ym,jdbcType=TIMESTAMP},
+        #{ sfVersion,jdbcType=VARCHAR},
+        #{ factory,jdbcType=VARCHAR},
+        #{ maxX,jdbcType=INTEGER},
+        #{ maxY,jdbcType=INTEGER},
+        #{ maxZ,jdbcType=INTEGER},
+        #{ protocolId,jdbcType=INTEGER},
+        #{ storeAreaId,jdbcType=INTEGER},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ deleted,jdbcType=TINYINT},
+        #{ companyId,jdbcType=BIGINT},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_DEVICE_DEFINE.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE DEVICE_DEFINE
+        <set>
+            <if test="diviceNo != null">
+                DIVICE_NO = #{diviceNo,jdbcType=VARCHAR},
+            </if>
+            <if test="communicationType != null">
+                COMMUNICATION_TYPE = #{communicationType,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                IP = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="catNo != null">
+                CAT_NO = #{catNo,jdbcType=BIGINT},
+            </if>
+            <if test="deviceDesc != null">
+                DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="macAddr != null">
+                MAC_ADDR = #{macAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="brand != null">
+                BRAND = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="plc != null">
+                PLC = #{plc,jdbcType=VARCHAR},
+            </if>
+            <if test="ym != null">
+                YM = #{ym,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sfVersion != null">
+                SF_VERSION = #{sfVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="factory != null">
+                FACTORY = #{factory,jdbcType=VARCHAR},
+            </if>
+            <if test="maxX != null">
+                MAX_X = #{maxX,jdbcType=INTEGER},
+            </if>
+            <if test="maxY != null">
+                MAX_Y = #{maxY,jdbcType=INTEGER},
+            </if>
+            <if test="maxZ != null">
+                MAX_Z = #{maxZ,jdbcType=INTEGER},
+            </if>
+            <if test="protocolId != null">
+                PROTOCOL_ID = #{protocolId,jdbcType=INTEGER},
+            </if>
+            <if test="storeAreaId != null">
+                STORE_AREA_ID = #{storeAreaId,jdbcType=INTEGER},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

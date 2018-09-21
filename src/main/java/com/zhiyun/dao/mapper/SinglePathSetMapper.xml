@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.SinglePathSetDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.SinglePathSet">
+        INSERT INTO SINGLE_PATH_SET (
+        ID,
+        MAC_NO,
+        ACTIVE_NO,
+        ACTIVE_NAME,
+        START_SITE_ID,
+        END_SITE_ID,
+        OFFSET,
+        NEED_TIME,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{macNo,jdbcType=VARCHAR},
+        #{activeNo,jdbcType=INTEGER},
+        #{activeName,jdbcType=VARCHAR},
+        #{startSiteId,jdbcType=DOUBLE},
+        #{endSiteId,jdbcType=DOUBLE},
+        #{offset,jdbcType=DOUBLE},
+        #{needTime,jdbcType=INTEGER},
+        #{companyId,jdbcType=BIGINT},
+        #{deleted,jdbcType=TINYINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_SINGLE_PATH_SET.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.SinglePathSet">
+        UPDATE SINGLE_PATH_SET
+        <set>
+            <if test="macNo != null">
+                MAC_NO = #{macNo,jdbcType=VARCHAR},
+            </if>
+            <if test="activeNo != null">
+                ACTIVE_NO = #{activeNo,jdbcType=INTEGER},
+            </if>
+            <if test="activeName != null">
+                ACTIVE_NAME = #{activeName,jdbcType=VARCHAR},
+            </if>
+            <if test="startSiteId != null">
+                START_SITE_ID = #{startSiteId,jdbcType=DOUBLE},
+            </if>
+            <if test="endSiteId != null">
+                END_SITE_ID = #{endSiteId,jdbcType=DOUBLE},
+            </if>
+            <if test="offset != null">
+                OFFSET = #{offset,jdbcType=DOUBLE},
+            </if>
+            <if test="needTime != null">
+                NEED_TIME = #{needTime,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.SinglePathSet">
+        UPDATE SINGLE_PATH_SET
+        <set>
+            MAC_NO = #{macNo,jdbcType=VARCHAR},
+            ACTIVE_NO = #{activeNo,jdbcType=INTEGER},
+            ACTIVE_NAME = #{activeName,jdbcType=VARCHAR},
+            START_SITE_ID = #{startSiteId,jdbcType=DOUBLE},
+            END_SITE_ID = #{endSiteId,jdbcType=DOUBLE},
+            OFFSET = #{offset,jdbcType=DOUBLE},
+            NEED_TIME = #{needTime,jdbcType=INTEGER},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            DELETED = #{deleted,jdbcType=TINYINT},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.SinglePathSet">
+        UPDATE SINGLE_PATH_SET
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID            id,
+               MAC_NO        macNo,
+               ACTIVE_NO     activeNo,
+               ACTIVE_NAME   activeName,
+               START_SITE_ID startSiteId,
+               END_SITE_ID   endSiteId,
+               OFFSET        offset,
+               NEED_TIME     needTime,
+               COMPANY_ID    companyId,
+               DELETED       deleted,
+               CREATE_TIME   createTime,
+               MODIFY_TIME   modifyTime,
+               CREATE_BY     createBy,
+               MODIFY_BY     modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.SinglePathSet">
+        <include refid="selectFieldSQL"/>
+        FROM SINGLE_PATH_SET
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.SinglePathSet" resultType="com.zhiyun.entity.SinglePathSet">
+        <include refid="selectFieldSQL"/>
+        FROM SINGLE_PATH_SET
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="macNo != null and macNo != ''">
+                AND MAC_NO = #{macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="activeNo != null">
+                AND ACTIVE_NO = #{activeNo,jdbcType=INTEGER}
+            </if>
+            <if test="activeName != null and activeName != ''">
+                AND ACTIVE_NAME = #{activeName,jdbcType=VARCHAR}
+            </if>
+            <if test="startSiteId != null">
+                AND START_SITE_ID = #{startSiteId,jdbcType=DOUBLE}
+            </if>
+            <if test="endSiteId != null">
+                AND END_SITE_ID = #{endSiteId,jdbcType=DOUBLE}
+            </if>
+            <if test="offset != null">
+                AND OFFSET = #{offset,jdbcType=DOUBLE}
+            </if>
+            <if test="needTime != null">
+                AND NEED_TIME = #{needTime,jdbcType=INTEGER}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.SinglePathSet">
+        <include refid="selectFieldSQL"/>
+        FROM SINGLE_PATH_SET
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.macNo != null and entity.macNo != ''">
+                AND MAC_NO = #{entity.macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.activeNo != null">
+                AND ACTIVE_NO = #{entity.activeNo,jdbcType=INTEGER}
+            </if>
+            <if test="entity.activeName != null and entity.activeName != ''">
+                AND ACTIVE_NAME = #{entity.activeName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.startSiteId != null">
+                AND START_SITE_ID = #{entity.startSiteId,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.endSiteId != null">
+                AND END_SITE_ID = #{entity.endSiteId,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.offset != null">
+                AND OFFSET = #{entity.offset,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.needTime != null">
+                AND NEED_TIME = #{entity.needTime,jdbcType=INTEGER}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null">
+                AND DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM SINGLE_PATH_SET
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.SinglePathSet">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM SINGLE_PATH_SET
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM SINGLE_PATH_SET
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM SINGLE_PATH_SET
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="macNo != null and macNo != ''">
+                AND MAC_NO = #{macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="activeNo != null">
+                AND ACTIVE_NO = #{activeNo,jdbcType=INTEGER}
+            </if>
+            <if test="activeName != null and activeName != ''">
+                AND ACTIVE_NAME = #{activeName,jdbcType=VARCHAR}
+            </if>
+            <if test="startSiteId != null">
+                AND START_SITE_ID = #{startSiteId,jdbcType=DOUBLE}
+            </if>
+            <if test="endSiteId != null">
+                AND END_SITE_ID = #{endSiteId,jdbcType=DOUBLE}
+            </if>
+            <if test="offset != null">
+                AND OFFSET = #{offset,jdbcType=DOUBLE}
+            </if>
+            <if test="needTime != null">
+                AND NEED_TIME = #{needTime,jdbcType=INTEGER}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO SINGLE_PATH_SET (
+        ID,
+        MAC_NO,
+        ACTIVE_NO,
+        ACTIVE_NAME,
+        START_SITE_ID,
+        END_SITE_ID,
+        OFFSET,
+        NEED_TIME,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ macNo,jdbcType=VARCHAR},
+        #{ activeNo,jdbcType=INTEGER},
+        #{ activeName,jdbcType=VARCHAR},
+        #{ startSiteId,jdbcType=DOUBLE},
+        #{ endSiteId,jdbcType=DOUBLE},
+        #{ offset,jdbcType=DOUBLE},
+        #{ needTime,jdbcType=INTEGER},
+        #{ companyId,jdbcType=BIGINT},
+        #{ deleted,jdbcType=TINYINT},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_SINGLE_PATH_SET.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE SINGLE_PATH_SET
+        <set>
+            <if test="macNo != null">
+                MAC_NO = #{macNo,jdbcType=VARCHAR},
+            </if>
+            <if test="activeNo != null">
+                ACTIVE_NO = #{activeNo,jdbcType=INTEGER},
+            </if>
+            <if test="activeName != null">
+                ACTIVE_NAME = #{activeName,jdbcType=VARCHAR},
+            </if>
+            <if test="startSiteId != null">
+                START_SITE_ID = #{startSiteId,jdbcType=DOUBLE},
+            </if>
+            <if test="endSiteId != null">
+                END_SITE_ID = #{endSiteId,jdbcType=DOUBLE},
+            </if>
+            <if test="offset != null">
+                OFFSET = #{offset,jdbcType=DOUBLE},
+            </if>
+            <if test="needTime != null">
+                NEED_TIME = #{needTime,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

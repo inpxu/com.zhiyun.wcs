@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+
+            http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+
+    <!--配置connection-factory，指定连接rabbit server参数-->
+    <rabbit:connection-factory id="rabbitConnectionFactory" username="${rabbitmq.username}" password="${rabbitmq.password}"
+                               host="${rabbitmq.host}"
+                               port="${rabbitmq.port}"
+                               virtual-host="${mq.vhost}"/> <!-- virtual-host="/"是默认的虚拟机路径-->
+    <!--配置mqadmin自动创建之后自动创建队列-->
+    <rabbit:admin connection-factory="rabbitConnectionFactory"/>
+    <!--定义队列-->
+    <rabbit:queue name="queue_wcs" durable="true" auto-delete="false" exclusive="false"/>
+    <!-- 定义direct exchange，绑定com.mj.test queue -->
+    <rabbit:direct-exchange name="exchange_wcs" durable="true" auto-delete="false">
+        <rabbit:bindings>
+            <rabbit:binding queue="queue_wcs" key="routing_key_wcs"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+    <!--定义rabbit template用于数据的接收和发送-->
+    <rabbit:template id="amqpTemplate" connection-factory="rabbitConnectionFactory" exchange="wcsExchange"/>
+    <!-- 自定义消息接收者 -->
+    <bean id="messageReceiver" class="com.zhiyun.listener.RabbitListener"/>
+    <!--队列中获取的次数控制在页面上的-->
+    <rabbit:listener-container prefetch="10" connection-factory="rabbitConnectionFactory" acknowledge="manual">
+        <rabbit:listener queues="queue_wcs" ref="messageReceiver"/>
+    </rabbit:listener-container>
+
+</beans>

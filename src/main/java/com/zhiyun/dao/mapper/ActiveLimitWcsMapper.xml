@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.ActiveLimitWcsDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.ActiveLimitWcs">
+        INSERT INTO ACTIVE_LIMIT_WCS (
+        ID,
+        DEVICE_ID,
+        ACTIVE_NO,
+        LIMIT_MAC_NO,
+        LIMIT_MEM,
+        LIMIT_VALUE,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{deviceId,jdbcType=BIGINT},
+        #{activeNo,jdbcType=VARCHAR},
+        #{limitMacNo,jdbcType=VARCHAR},
+        #{limitMem,jdbcType=VARCHAR},
+        #{limitValue,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{deleted,jdbcType=TINYINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_ACTIVE_LIMIT_WCS.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.ActiveLimitWcs">
+        UPDATE ACTIVE_LIMIT_WCS
+        <set>
+            <if test="deviceId != null">
+                DEVICE_ID = #{deviceId,jdbcType=BIGINT},
+            </if>
+            <if test="activeNo != null">
+                ACTIVE_NO = #{activeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="limitMacNo != null">
+                LIMIT_MAC_NO = #{limitMacNo,jdbcType=VARCHAR},
+            </if>
+            <if test="limitMem != null">
+                LIMIT_MEM = #{limitMem,jdbcType=VARCHAR},
+            </if>
+            <if test="limitValue != null">
+                LIMIT_VALUE = #{limitValue,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.ActiveLimitWcs">
+        UPDATE ACTIVE_LIMIT_WCS
+        <set>
+            DEVICE_ID = #{deviceId,jdbcType=BIGINT},
+            ACTIVE_NO = #{activeNo,jdbcType=VARCHAR},
+            LIMIT_MAC_NO = #{limitMacNo,jdbcType=VARCHAR},
+            LIMIT_MEM = #{limitMem,jdbcType=VARCHAR},
+            LIMIT_VALUE = #{limitValue,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            DELETED = #{deleted,jdbcType=TINYINT},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.ActiveLimitWcs">
+        UPDATE ACTIVE_LIMIT_WCS
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID           id,
+               DEVICE_ID    deviceId,
+               ACTIVE_NO    activeNo,
+               LIMIT_MAC_NO limitMacNo,
+               LIMIT_MEM    limitMem,
+               LIMIT_VALUE  limitValue,
+               COMPANY_ID   companyId,
+               DELETED      deleted,
+               CREATE_TIME  createTime,
+               MODIFY_TIME  modifyTime,
+               CREATE_BY    createBy,
+               MODIFY_BY    modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.ActiveLimitWcs">
+        <include refid="selectFieldSQL"/>
+        FROM ACTIVE_LIMIT_WCS
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.ActiveLimitWcs" resultType="com.zhiyun.entity.ActiveLimitWcs">
+        <include refid="selectFieldSQL"/>
+        FROM ACTIVE_LIMIT_WCS
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="deviceId != null">
+                AND DEVICE_ID = #{deviceId,jdbcType=BIGINT}
+            </if>
+            <if test="activeNo != null and activeNo != ''">
+                AND ACTIVE_NO = #{activeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="limitMacNo != null and limitMacNo != ''">
+                AND LIMIT_MAC_NO = #{limitMacNo,jdbcType=VARCHAR}
+            </if>
+            <if test="limitMem != null">
+                AND LIMIT_MEM = #{limitMem,jdbcType=VARCHAR}
+            </if>
+            <if test="limitValue != null">
+                AND LIMIT_VALUE = #{limitValue,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.ActiveLimitWcs">
+        <include refid="selectFieldSQL"/>
+        FROM ACTIVE_LIMIT_WCS
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.deviceNo != null and entity.deviceNo != ''">
+                AND DEVICE_ID = #{entity.deviceId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.activeNo != null and entity.activeNo != ''">
+                AND ACTIVE_NO = #{entity.activeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.limitMacNo != null and entity.limitMacNo != ''">
+                AND LIMIT_MAC_NO = #{entity.limitMacNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.limitMem != null">
+                AND LIMIT_MEM = #{entity.limitMem,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.limitValue != null">
+                AND LIMIT_VALUE = #{entity.limitValue,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null">
+                AND DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM ACTIVE_LIMIT_WCS
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.ActiveLimitWcs">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM ACTIVE_LIMIT_WCS
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM ACTIVE_LIMIT_WCS
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM ACTIVE_LIMIT_WCS
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="deviceId != null">
+                AND DEVICE_ID = #{deviceId,jdbcType=BIGINT}
+            </if>
+            <if test="activeNo != null and activeNo != ''">
+                AND ACTIVE_NO = #{activeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="limitMacNo != null and limitMacNo != ''">
+                AND LIMIT_MAC_NO = #{limitMacNo,jdbcType=VARCHAR}
+            </if>
+            <if test="limitMem != null">
+                AND LIMIT_MEM = #{limitMem,jdbcType=BIGINT}
+            </if>
+            <if test="limitValue != null">
+                AND LIMIT_VALUE = #{limitValue,jdbcType=DOUBLE}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO ACTIVE_LIMIT_WCS (
+        ID,
+        DEVICE_ID,
+        ACTIVE_NO,
+        LIMIT_MAC_NO,
+        LIMIT_MEM,
+        LIMIT_VALUE,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ deviceId,jdbcType=BIGINT},
+        #{ activeNo,jdbcType=VARCHAR},
+        #{ limitMacNo,jdbcType=VARCHAR},
+        #{ limitMem,jdbcType=BIGINT},
+        #{ limitValue,jdbcType=DOUBLE},
+        #{ companyId,jdbcType=BIGINT},
+        #{ deleted,jdbcType=TINYINT},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_ACTIVE_LIMIT_WCS.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE ACTIVE_LIMIT_WCS
+        <set>
+            <if test="deviceId != null">
+                DEVICE_ID = #{deviceId,jdbcType=BIGINT},
+            </if>
+            <if test="activeNo != null">
+                ACTIVE_NO = #{activeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="limitMacNo != null">
+                LIMIT_MAC_NO = #{limitMacNo,jdbcType=VARCHAR},
+            </if>
+            <if test="limitMem != null">
+                LIMIT_MEM = #{limitMem,jdbcType=BIGINT},
+            </if>
+            <if test="limitValue != null">
+                LIMIT_VALUE = #{limitValue,jdbcType=DOUBLE},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

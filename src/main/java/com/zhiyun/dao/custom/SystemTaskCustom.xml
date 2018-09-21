@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.SystemTaskDaoImpl">
+    <!-- 查询字段 -->
+    <sql id="cselectFieldSQL">
+        SELECT system_task.id,
+               system_task.area_id       areaId,
+               system_task.store_id      storeId,
+               system_task.start_site_id startSiteId,
+               system_task.end_site_id   endSiteId,
+               system_task.in_mark       inMark,
+               system_task.amount,
+               system_task.request_time  requestTime,
+               system_task.task_id       taskId,
+               system_task.company_id    companyId,
+               system_task.deleted,
+               system_task.create_time   createTime,
+               system_task.modify_time   modifyTime,
+               system_task.create_by     createBy,
+               system_task.modify_by     modifyBy,
+               site_start.site_name      startPoint,
+               site_end.site_name        endPoint,
+               CASE in_mark
+                   WHEN in_mark = 0 THEN '入库'
+                   WHEN in_mark = 1 THEN '出库'
+                   WHEN in_mark = 1 THEN '搬运'
+                       END AS            inMarkName
+    </sql>
+
+    <!-- 分页查询（条件） -->
+    <sql id="cpage_condition">
+        <where>
+            <if test="entity.areaId != null">
+                AND SYSTEM_TASK.AREA_ID = #{entity.areaId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.storeId != null">
+                AND SYSTEM_TASK.STORE_ID = #{entity.storeId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.startSiteId != null">
+                AND SYSTEM_TASK.START_SITE_ID = #{entity.startSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.endSiteId != null">
+                AND SYSTEM_TASK.END_SITE_ID = #{entity.endSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.inMark != null">
+                AND SYSTEM_TASK.IN_MARK = #{entity.inMark,jdbcType=INTEGER}
+            </if>
+            <if test="entity.amount != null">
+                AND SYSTEM_TASK.AMOUNT = #{entity.amount,jdbcType=INTEGER}
+            </if>
+            <if test="entity.requestTime != null">
+                AND SYSTEM_TASK.REQUEST_TIME = #{entity.requestTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.taskId != null">
+                AND SYSTEM_TASK.TASK_ID = #{entity.taskId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.companyId != null">
+                AND SYSTEM_TASK.COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null">
+                AND SYSTEM_TASK.DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="customPage_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM
+        system_task
+        LEFT JOIN sit_set AS site_start ON site_start.id = system_task.start_site_id
+        AND site_start.deleted = 'F'
+        LEFT JOIN sit_set AS site_end ON site_end.id = system_task.start_site_id
+        AND site_start.deleted = 'F'
+        <include refid="cpage_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="customPage_datas" parameterType="map" resultType="com.zhiyun.dto.SystemTaskDto">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="cselectFieldSQL"/>
+        FROM
+        system_task
+        LEFT JOIN sit_set AS site_start ON site_start.id = system_task.start_site_id
+        AND site_start.deleted = 'F'
+        LEFT JOIN sit_set AS site_end ON site_end.id = system_task.start_site_id
+        AND site_start.deleted = 'F'
+        <include refid="cpage_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+    <select id="queryAllSinglePath" parameterType="com.zhiyun.entity.SystemTask" resultType="com.zhiyun.vo.SinglePathSetVo">
+        SELECT single_path_set.id,
+               single_path_set.mac_no        macNo,
+               single_path_set.active_no     activeNo,
+               single_path_set.active_name   activeName,
+               single_path_set.start_site_id startSiteId,
+               single_path_set.end_site_id   endSiteId,
+               single_path_set.`offset`,
+               single_path_set.company_id companyId,
+	             sit_set.site_name destinationSiteName
+        FROM single_path_set
+               INNER JOIN path_one_to_many ON path_one_to_many.single_path_id = single_path_set.id and path_one_to_many.deleted='F'
+               INNER JOIN path_collections_set ON path_one_to_many.collection_id = path_collections_set.id and  path_collections_set.deleted='F'
+               INNER JOIN sit_set ON sit_set.id = single_path_set.end_site_id
+	             AND sit_set.deleted = 'F'
+        WHERE path_collections_set.deleted = 'F'
+          AND path_collections_set.company_id = #{companyId}
+          AND path_collections_set.start_site_id = #{startSiteId}
+          AND path_collections_set.endt_site_id = #{endSiteId}
+    </select>
+    <select id="queryAllSinglePathInfo" parameterType="com.zhiyun.entity.SystemTask" resultType="com.zhiyun.dto.SinglePathInfoDto">
+        SELECT
+            startSite.site_name startSiteName,
+            endSite.site_name endSiteName
+        FROM
+            single_path_set
+            INNER JOIN path_one_to_many ON path_one_to_many.single_path_id = single_path_set.id
+            INNER JOIN path_collections_set ON path_one_to_many.collection_id = path_collections_set.id
+            INNER JOIN sit_set AS endSite ON endSite.id = single_path_set.end_site_id
+            AND endSite.deleted = 'F'
+            INNER JOIN sit_set AS startSite ON startSite.id = single_path_set.start_site_id
+            AND startSite.deleted = 'F'
+        WHERE
+            path_collections_set.deleted = 'F'
+              AND path_collections_set.company_id = #{companyId}
+              AND path_collections_set.start_site_id = #{startSiteId}
+              AND path_collections_set.endt_site_id = #{endSiteId}
+    </select>
+</mapper>   

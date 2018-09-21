@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.SitSetDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.SitSet">
+        INSERT INTO SIT_SET (
+        ID,
+        MAC_NO,
+        SITE_NAME,
+        Z,
+        Y,
+        X,
+        OFFSET,
+        SITE_TYPE,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{macNo,jdbcType=VARCHAR},
+        #{siteName,jdbcType=VARCHAR},
+        #{z,jdbcType=DOUBLE},
+        #{y,jdbcType=DOUBLE},
+        #{x,jdbcType=DOUBLE},
+        #{offset,jdbcType=DOUBLE},
+        #{siteType,jdbcType=INTEGER},
+        #{companyId,jdbcType=BIGINT},
+        #{deleted,jdbcType=TINYINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_SIT_SET.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.SitSet">
+        UPDATE SIT_SET
+        <set>
+            <if test="id != null">
+                ID = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="macNo != null">
+                MAC_NO = #{macNo,jdbcType=VARCHAR},
+            </if>
+            <if test="siteName != null">
+                SITE_NAME = #{siteName,jdbcType=VARCHAR},
+            </if>
+            <if test="z != null">
+                Z = #{z,jdbcType=DOUBLE},
+            </if>
+            <if test="y != null">
+                Y = #{y,jdbcType=DOUBLE},
+            </if>
+            <if test="x != null">
+                X = #{x,jdbcType=DOUBLE},
+            </if>
+            <if test="offset != null">
+                OFFSET = #{offset,jdbcType=DOUBLE},
+            </if>
+            <if test="siteType != null">
+                SITE_TYPE = #{siteType,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.SitSet">
+        UPDATE SIT_SET
+        <set>
+            ID = #{id,jdbcType=BIGINT},
+            MAC_NO = #{macNo,jdbcType=VARCHAR},
+            SITE_NAME = #{siteName,jdbcType=VARCHAR},
+            Z = #{z,jdbcType=DOUBLE},
+            Y = #{y,jdbcType=DOUBLE},
+            X = #{x,jdbcType=DOUBLE},
+            OFFSET = #{offset,jdbcType=DOUBLE},
+            SITE_TYPE = #{siteType,jdbcType=INTEGER},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            DELETED = #{deleted,jdbcType=TINYINT},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.SitSet">
+        UPDATE SIT_SET
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID          id,
+               MAC_NO      macNo,
+               SITE_NAME   siteName,
+               Z           z,
+               Y           y,
+               X           x,
+               OFFSET      offset,
+               SITE_TYPE   siteType,
+               COMPANY_ID  companyId,
+               DELETED     deleted,
+               CREATE_TIME createTime,
+               MODIFY_TIME modifyTime,
+               CREATE_BY   createBy,
+               MODIFY_BY   modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.SitSet">
+        <include refid="selectFieldSQL"/>
+        FROM SIT_SET
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.SitSet" resultType="com.zhiyun.entity.SitSet">
+        <include refid="selectFieldSQL"/>
+        FROM SIT_SET
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="macNo != null and macNo != ''">
+                AND MAC_NO = #{macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="siteName != null and siteName != ''">
+                AND SITE_NAME = #{siteName,jdbcType=VARCHAR}
+            </if>
+            <if test="z != null">
+                AND Z = #{z,jdbcType=DOUBLE}
+            </if>
+            <if test="y != null">
+                AND Y = #{y,jdbcType=DOUBLE}
+            </if>
+            <if test="x != null">
+                AND X = #{x,jdbcType=DOUBLE}
+            </if>
+            <if test="offset != null">
+                AND OFFSET = #{offset,jdbcType=DOUBLE}
+            </if>
+            <if test="siteType != null and siteType != ''">
+                AND SITE_TYPE = #{siteType,jdbcType=INTEGER}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.SitSet">
+        <include refid="selectFieldSQL"/>
+        FROM SIT_SET
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.id != null">
+                AND ID = #{entity.id,jdbcType=BIGINT}
+            </if>
+            <if test="entity.macNo != null and entity.macNo != ''">
+                AND MAC_NO = #{entity.macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.siteName != null and entity.siteName != ''">
+                AND SITE_NAME = #{entity.siteName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.z != null">
+                AND Z = #{entity.z,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.y != null">
+                AND Y = #{entity.y,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.x != null">
+                AND X = #{entity.x,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.offset != null">
+                AND OFFSET = #{entity.offset,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.siteType != null">
+                AND SITE_TYPE = #{entity.siteType,jdbcType=INTEGER}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null">
+                AND DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM SIT_SET
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.SitSet">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM SIT_SET
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM SIT_SET
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM SIT_SET
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="macNo != null and macNo != ''">
+                AND MAC_NO = #{macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="siteName != null and siteName != ''">
+                AND SITE_NAME = #{siteName,jdbcType=VARCHAR}
+            </if>
+            <if test="z != null">
+                AND Z = #{z,jdbcType=DOUBLE}
+            </if>
+            <if test="y != null">
+                AND Y = #{y,jdbcType=DOUBLE}
+            </if>
+            <if test="x != null">
+                AND X = #{x,jdbcType=DOUBLE}
+            </if>
+            <if test="offset != null">
+                AND OFFSET = #{offset,jdbcType=DOUBLE}
+            </if>
+            <if test="siteType != null and siteType != ''">
+                AND SITE_TYPE = #{siteType,jdbcType=INTEGER}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO SIT_SET (
+        ID,
+        MAC_NO,
+        SITE_NAME,
+        Z,
+        Y,
+        X,
+        OFFSET,
+        SITE_TYPE,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ macNo,jdbcType=VARCHAR},
+        #{ siteName,jdbcType=VARCHAR},
+        #{ z,jdbcType=DOUBLE},
+        #{ y,jdbcType=DOUBLE},
+        #{ x,jdbcType=DOUBLE},
+        #{ offset,jdbcType=DOUBLE},
+        #{ siteType,jdbcType=INTEGER},
+        #{ companyId,jdbcType=BIGINT},
+        #{ deleted,jdbcType=TINYINT},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_SIT_SET.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE SIT_SET
+        <set>
+            <if test="id != null">
+                ID = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="macNo != null">
+                MAC_NO = #{macNo,jdbcType=VARCHAR},
+            </if>
+            <if test="siteName != null">
+                SITE_NAME = #{siteName,jdbcType=VARCHAR},
+            </if>
+            <if test="z != null">
+                Z = #{z,jdbcType=DOUBLE},
+            </if>
+            <if test="y != null">
+                Y = #{y,jdbcType=DOUBLE},
+            </if>
+            <if test="x != null">
+                X = #{x,jdbcType=DOUBLE},
+            </if>
+            <if test="offset != null">
+                OFFSET = #{offset,jdbcType=DOUBLE},
+            </if>
+            <if test="siteType != null">
+                SITE_TYPE = #{siteType,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

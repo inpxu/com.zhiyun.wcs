@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.AutoJobShardingDao">
+
+    <select id="queryAllPath" parameterType="double" resultType="com.zhiyun.entity.SinglePathSet">
+        SELECT single_path_set.id,
+               single_path_set.mac_no,
+               single_path_set.active_no,
+               single_path_set.active_name,
+               single_path_set.start_site_id,
+               single_path_set.end_site_id,
+               single_path_set.`offset`,
+               single_path_set.need_time,
+               single_path_set.company_id
+        FROM single_path_set
+        WHERE deleted = 'F'
+          AND company_id = #{companyId}
+          AND id IN (SELECT single_path_id
+                     FROM path_one_to_many
+                     WHERE deleted = 'F'
+                       AND company_id = #{companyId}
+                       AND start_site_id = #{startSiteId}
+                       AND end_site_id = #{endSiteId})
+    </select>
+</mapper>

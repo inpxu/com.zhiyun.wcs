@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.PathCollectionsSetDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.PathCollectionsSet">
+        INSERT INTO PATH_COLLECTIONS_SET (
+        ID,
+        DEVICE_NO,
+        PATH_NAME,
+        ENDT_SITE_ID,
+        START_SITE_ID,
+        PATH_GROUP,
+        OFFSET,
+        NEED_TIME,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{deviceNo,jdbcType=VARCHAR},
+        #{pathName,jdbcType=VARCHAR},
+        #{endtSiteId,jdbcType=BIGINT},
+        #{startSiteId,jdbcType=BIGINT},
+        #{pathGroup,jdbcType=VARCHAR},
+        #{offset,jdbcType=DOUBLE},
+        #{needTime,jdbcType=INTEGER},
+        #{companyId,jdbcType=BIGINT},
+        #{deleted,jdbcType=TINYINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PATH_COLLECTIONS_SET.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.PathCollectionsSet">
+        UPDATE PATH_COLLECTIONS_SET
+        <set>
+            <if test="deviceNo != null">
+                DEVICE_NO = #{deviceNo,jdbcType=VARCHAR},
+            </if>
+            <if test="pathName != null">
+                PATH_NAME = #{pathName,jdbcType=VARCHAR},
+            </if>
+            <if test="endtSiteId != null">
+                ENDT_SITE_ID = #{endtSiteId,jdbcType=BIGINT},
+            </if>
+            <if test="startSiteId != null">
+                START_SITE_ID = #{startSiteId,jdbcType=BIGINT},
+            </if>
+            <if test="pathGroup != null">
+                PATH_GROUP = #{pathGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="offset != null">
+                OFFSET = #{offset,jdbcType=DOUBLE},
+            </if>
+            <if test="needTime != null">
+                NEED_TIME = #{needTime,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.PathCollectionsSet">
+        UPDATE PATH_COLLECTIONS_SET
+        <set>
+            DEVICE_NO = #{deviceNo,jdbcType=VARCHAR},
+            PATH_NAME = #{pathName,jdbcType=VARCHAR},
+            ENDT_SITE_ID = #{endtSiteId,jdbcType=BIGINT},
+            START_SITE_ID = #{startSiteId,jdbcType=BIGINT},
+            PATH_GROUP = #{pathGroup,jdbcType=VARCHAR},
+            OFFSET = #{offset,jdbcType=DOUBLE},
+            NEED_TIME = #{needTime,jdbcType=INTEGER},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            DELETED = #{deleted,jdbcType=TINYINT},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.PathCollectionsSet">
+        UPDATE PATH_COLLECTIONS_SET
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID            id,
+               DEVICE_NO     deviceNo,
+               PATH_NAME     pathName,
+               ENDT_SITE_ID  endtSiteId,
+               START_SITE_ID startSiteId,
+               PATH_GROUP    pathGroup,
+               OFFSET        offset,
+               NEED_TIME     needTime,
+               COMPANY_ID    companyId,
+               DELETED       deleted,
+               CREATE_TIME   createTime,
+               MODIFY_TIME   modifyTime,
+               CREATE_BY     createBy,
+               MODIFY_BY     modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.PathCollectionsSet">
+        <include refid="selectFieldSQL"/>
+        FROM PATH_COLLECTIONS_SET
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.PathCollectionsSet" resultType="com.zhiyun.entity.PathCollectionsSet">
+        <include refid="selectFieldSQL"/>
+        FROM PATH_COLLECTIONS_SET
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="deviceNo != null and deviceNo != ''">
+                AND DEVICE_NO = #{deviceNo,jdbcType=VARCHAR}
+            </if>
+            <if test="pathName != null and pathName != ''">
+                AND PATH_NAME = #{pathName,jdbcType=VARCHAR}
+            </if>
+            <if test="endtSiteId != null">
+                AND ENDT_SITE_ID = #{endtSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="startSiteId != null">
+                AND START_SITE_ID = #{startSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="pathGroup != null and pathGroup != ''">
+                AND PATH_GROUP = #{pathGroup,jdbcType=VARCHAR}
+            </if>
+            <if test="offset != null">
+                AND OFFSET = #{offset,jdbcType=DOUBLE}
+            </if>
+            <if test="needTime != null">
+                AND NEED_TIME = #{needTime,jdbcType=INTEGER}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.PathCollectionsSet">
+        <include refid="selectFieldSQL"/>
+        FROM PATH_COLLECTIONS_SET
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.deviceNo != null and entity.deviceNo != ''">
+                AND DEVICE_NO = #{entity.deviceNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.pathName != null and entity.pathName != ''">
+                AND PATH_NAME = #{entity.pathName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.endtSiteId != null">
+                AND ENDT_SITE_ID = #{entity.endtSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.startSiteId != null">
+                AND START_SITE_ID = #{entity.startSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.pathGroup != null and entity.pathGroup != ''">
+                AND PATH_GROUP = #{entity.pathGroup,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.offset != null">
+                AND OFFSET = #{entity.offset,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.needTime != null">
+                AND NEED_TIME = #{entity.needTime,jdbcType=INTEGER}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null">
+                AND DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM PATH_COLLECTIONS_SET
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.PathCollectionsSet">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM PATH_COLLECTIONS_SET
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PATH_COLLECTIONS_SET
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PATH_COLLECTIONS_SET
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="deviceNo != null and deviceNo != ''">
+                AND DEVICE_NO = #{deviceNo,jdbcType=VARCHAR}
+            </if>
+            <if test="pathName != null and pathName != ''">
+                AND PATH_NAME = #{pathName,jdbcType=VARCHAR}
+            </if>
+            <if test="endtSiteId != null">
+                AND ENDT_SITE_ID = #{endtSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="startSiteId != null">
+                AND START_SITE_ID = #{startSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="pathGroup != null and pathGroup != ''">
+                AND PATH_GROUP = #{pathGroup,jdbcType=VARCHAR}
+            </if>
+            <if test="offset != null">
+                AND OFFSET = #{offset,jdbcType=DOUBLE}
+            </if>
+            <if test="needTime != null">
+                AND NEED_TIME = #{needTime,jdbcType=INTEGER}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO PATH_COLLECTIONS_SET (
+        ID,
+        DEVICE_NO,
+        PATH_NAME,
+        ENDT_SITE_ID,
+        START_SITE_ID,
+        PATH_GROUP,
+        OFFSET,
+        NEED_TIME,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ deviceNo,jdbcType=VARCHAR},
+        #{ pathName,jdbcType=VARCHAR},
+        #{ endtSiteId,jdbcType=BIGINT},
+        #{ startSiteId,jdbcType=BIGINT},
+        #{ pathGroup,jdbcType=VARCHAR},
+        #{ offset,jdbcType=DOUBLE},
+        #{ needTime,jdbcType=INTEGER},
+        #{ companyId,jdbcType=BIGINT},
+        #{ deleted,jdbcType=TINYINT},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PATH_COLLECTIONS_SET.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE PATH_COLLECTIONS_SET
+        <set>
+            <if test="deviceNo != null">
+                DEVICE_NO = #{deviceNo,jdbcType=VARCHAR},
+            </if>
+            <if test="pathName != null">
+                PATH_NAME = #{pathName,jdbcType=VARCHAR},
+            </if>
+            <if test="endtSiteId != null">
+                ENDT_SITE_ID = #{endtSiteId,jdbcType=BIGINT},
+            </if>
+            <if test="startSiteId != null">
+                START_SITE_ID = #{startSiteId,jdbcType=BIGINT},
+            </if>
+            <if test="pathGroup != null">
+                PATH_GROUP = #{pathGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="offset != null">
+                OFFSET = #{offset,jdbcType=DOUBLE},
+            </if>
+            <if test="needTime != null">
+                NEED_TIME = #{needTime,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

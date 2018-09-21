@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.PathOneToManyDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.PathOneToMany">
+        INSERT INTO PATH_ONE_TO_MANY (
+        ID,
+        COLLECTION_ID,
+        SINGLE_PATH_ID,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{collectionId,jdbcType=BIGINT},
+        #{singlePathId,jdbcType=BIGINT},
+        #{companyId,jdbcType=BIGINT},
+        #{deleted,jdbcType=TINYINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PATH_ONE_TO_MANY.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.PathOneToMany">
+        UPDATE PATH_ONE_TO_MANY
+        <set>
+            <if test="collectionId != null">
+                COLLECTION_ID = #{collectionId,jdbcType=BIGINT},
+            </if>
+            <if test="singlePathId != null">
+                SINGLE_PATH_ID = #{singlePathId,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.PathOneToMany">
+        UPDATE PATH_ONE_TO_MANY
+        <set>
+            COLLECTION_ID = #{collectionId,jdbcType=BIGINT},
+            SINGLE_PATH_ID = #{singlePathId,jdbcType=BIGINT},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            DELETED = #{deleted,jdbcType=TINYINT},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.PathOneToMany">
+        UPDATE PATH_ONE_TO_MANY
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID             id,
+               COLLECTION_ID  collectionId,
+               SINGLE_PATH_ID singlePathId,
+               COMPANY_ID     companyId,
+               DELETED        deleted,
+               CREATE_TIME    createTime,
+               MODIFY_TIME    modifyTime,
+               CREATE_BY      createBy,
+               MODIFY_BY      modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.PathOneToMany">
+        <include refid="selectFieldSQL"/>
+        FROM PATH_ONE_TO_MANY
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.PathOneToMany" resultType="com.zhiyun.entity.PathOneToMany">
+        <include refid="selectFieldSQL"/>
+        FROM PATH_ONE_TO_MANY
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="collectionId != null">
+                AND COLLECTION_ID = #{collectionId,jdbcType=BIGINT}
+            </if>
+            <if test="singlePathId != null">
+                AND SINGLE_PATH_ID = #{singlePathId,jdbcType=BIGINT}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.PathOneToMany">
+        <include refid="selectFieldSQL"/>
+        FROM PATH_ONE_TO_MANY
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.collectionId != null">
+                AND COLLECTION_ID = #{entity.collectionId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.singlePathId != null">
+                AND SINGLE_PATH_ID = #{entity.singlePathId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null">
+                AND DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM PATH_ONE_TO_MANY
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.PathOneToMany">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM PATH_ONE_TO_MANY
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PATH_ONE_TO_MANY
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PATH_ONE_TO_MANY
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="collectionId != null">
+                AND COLLECTION_ID = #{collectionId,jdbcType=BIGINT}
+            </if>
+            <if test="singlePathId != null">
+                AND SINGLE_PATH_ID = #{singlePathId,jdbcType=BIGINT}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO PATH_ONE_TO_MANY (
+        ID,
+        COLLECTION_ID,
+        SINGLE_PATH_ID,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ collectionId,jdbcType=BIGINT},
+        #{ singlePathId,jdbcType=BIGINT},
+        #{ companyId,jdbcType=BIGINT},
+        #{ deleted,jdbcType=TINYINT},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PATH_ONE_TO_MANY.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE PATH_ONE_TO_MANY
+        <set>
+            <if test="collectionId != null">
+                COLLECTION_ID = #{collectionId,jdbcType=BIGINT},
+            </if>
+            <if test="singlePathId != null">
+                SINGLE_PATH_ID = #{singlePathId,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

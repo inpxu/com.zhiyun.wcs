@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.PathCollectionsSetDaoImpl">
+    <!-- 查询字段 -->
+    <sql id="cselectFieldSQL">
+        SELECT path_collections_set.ID                                         id,
+               path_collections_set.DEVICE_NO                                  deviceNo,
+               path_collections_set.PATH_NAME                                  pathName,
+               path_collections_set.ENDT_SITE_ID                               endtSiteId,
+               path_collections_set.START_SITE_ID                              startSiteId,
+               path_collections_set.OFFSET                                     OFFSET,
+               path_collections_set.NEED_TIME                                  needTime,
+               path_collections_set.COMPANY_ID                                 companyId,
+               path_collections_set.DELETED                                    deleted,
+               path_collections_set.CREATE_TIME                                createTime,
+               path_collections_set.MODIFY_TIME                                modifyTime,
+               path_collections_set.CREATE_BY                                  createBy,
+               path_collections_set.MODIFY_BY                                  modifyBy,
+               GROUP_CONCAT(site_start.site_name, '->', site_end.site_name) AS pathGroup,
+               wstart.site_name                                                startPoint,
+               wend.site_name                                                  endPoint
+    </sql>
+    <!-- 分页查询（条件） -->
+    <sql id="cpage_condition">
+        <where>
+            <if test="entity.deviceNo != null and entity.deviceNo != ''">
+                AND path_collections_set.DEVICE_NO = #{entity.deviceNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.pathName != null and entity.pathName != ''">
+                AND path_collections_set.PATH_NAME = #{entity.pathName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.endtSiteId != null">
+                AND path_collections_set.ENDT_SITE_ID = #{entity.endtSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.startSiteId != null">
+                AND path_collections_set.START_SITE_ID = #{entity.startSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.offset != null">
+                AND path_collections_set.OFFSET = #{entity.offset,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.needTime != null">
+                AND path_collections_set.NEED_TIME = #{entity.needTime,jdbcType=INTEGER}
+            </if>
+            <if test="entity.companyId != null">
+                AND path_collections_set.COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null">
+                AND path_collections_set.DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+
+        </where>
+    </sql>
+    <!-- 分页查询（计数） -->
+    <select id="customPage_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM PATH_COLLECTIONS_SET
+        <include refid="cpage_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="customPage_datas" parameterType="map" resultType="com.zhiyun.dto.PathCollectionsSetDto">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="cselectFieldSQL"/>
+        FROM
+        path_collections_set
+        INNER JOIN sit_set AS wstart ON wstart.id = path_collections_set.start_site_id and wstart.deleted='F'
+        INNER JOIN sit_set AS wend ON wend.id = path_collections_set.ENDT_SITE_ID and wend.deleted='F'
+        LEFT JOIN path_one_to_many ON path_one_to_many.collection_id = path_collections_set.id and path_one_to_many.deleted='F'
+        LEFT JOIN single_path_set ON single_path_set.id = path_one_to_many.single_path_id
+        LEFT JOIN sit_set AS site_start ON site_start.id = SINGLE_PATH_SET.start_site_id
+        AND site_start.deleted = 'F'
+        LEFT JOIN sit_set AS site_end ON site_end.id = SINGLE_PATH_SET.end_site_id
+        AND site_end.deleted = 'F'
+        <include refid="cpage_condition"/>
+        GROUP BY path_collections_set.id
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+    <resultMap id="collectionMap" type="com.zhiyun.dto.PathCollectionsSetDto">
+        <id column="id" property="id"/>
+        <result column="pathName" property="pathName"/>
+        <collection property="singlePathSets" ofType="map">
+            <id column="" property="id"/>
+            <result column="pathGroup" property="activeName"/>
+        </collection>
+    </resultMap>
+
+    <select id="beforeAddSinglePath" parameterType="com.zhiyun.entity.PathCollectionsSet" resultMap="collectionMap">
+        SELECT path_collections_set.id id, path_collections_set.path_name pathName, CONCAT(site_start.site_name, '->', site_end.site_name) AS pathGroup
+        FROM path_collections_set
+                 LEFT JOIN path_one_to_many ON path_one_to_many.collection_id = path_collections_set.id and path_one_to_many.deleted = 'F'
+                 LEFT JOIN single_path_set ON single_path_set.id = path_one_to_many.single_path_id and single_path_set.deleted = 'F'
+                 INNER JOIN sit_set AS site_start ON site_start.id = SINGLE_PATH_SET.start_site_id
+                                                         AND site_start.deleted = 'F'
+                 INNER JOIN sit_set AS site_end ON site_end.id = SINGLE_PATH_SET.end_site_id
+                                                       AND site_end.deleted = 'F'
+    </select>
+
+    <select id="findAllSelected" parameterType="com.zhiyun.entity.PathCollectionsSet" resultType="com.zhiyun.entity.SinglePathSet">
+        SELECT SINGLE_PATH_SET.ID id, CONCAT(site_start.site_name, '->', site_end.site_name) AS activeName
+        FROM path_one_to_many
+                 LEFT JOIN SINGLE_PATH_SET ON path_one_to_many.single_path_id = SINGLE_PATH_SET.id and SINGLE_PATH_SET.deleted = 'F'
+                 INNER JOIN sit_set AS site_start ON site_start.id = SINGLE_PATH_SET.start_site_id
+                                                         AND site_start.deleted = 'F'
+                 INNER JOIN sit_set AS site_end ON site_end.id = SINGLE_PATH_SET.end_site_id
+                                                       AND site_end.deleted = 'F'
+        WHERE path_one_to_many.company_id = #{companyId}
+          AND path_one_to_many.deleted = 'F'
+          AND path_one_to_many.collection_id = #{id}
+    </select>
+
+    <select id="isUsed" resultType="boolean" parameterType="map">
+        select count(id)
+        from path_one_to_many
+        where deleted = 'F'
+          and company_id = #{companyId}
+          and single_path_id = #{id}
+    </select>
+
+    <select id="shardingPathInfo" parameterType="com.zhiyun.entity.PathCollectionsSet" resultType="com.zhiyun.dto.PathCollectionsSetDto">
+        select GROUP_CONCAT(site_start.site_name, '->', site_end.site_name) AS pathGroup,
+               CONCAT( wstart.site_name, '->', wend.site_name )  AS singlePathInfo
+        FROM path_collections_set
+                 INNER JOIN sit_set AS wstart ON wstart.id = path_collections_set.start_site_id and wstart.deleted = 'F'
+                 INNER JOIN sit_set AS wend ON wend.id = path_collections_set.ENDT_SITE_ID and wend.deleted = 'F'
+                 LEFT JOIN path_one_to_many ON path_one_to_many.collection_id = path_collections_set.id and path_one_to_many.deleted = 'F'
+                 LEFT JOIN single_path_set ON single_path_set.id = path_one_to_many.single_path_id
+                 LEFT JOIN sit_set AS site_start ON site_start.id = SINGLE_PATH_SET.start_site_id
+                                                        AND site_start.deleted = 'F'
+                 LEFT JOIN sit_set AS site_end ON site_end.id = SINGLE_PATH_SET.end_site_id
+                                                      AND site_end.deleted = 'F'
+                                                      and path_collections_set.id = #{id}
+        GROUP BY path_collections_set.id
+    </select>
+
+    <select id="findRealPath" parameterType="com.zhiyun.entity.SystemTask" resultType="com.zhiyun.entity.PathCollectionsSet">
+        select id
+        from path_collections_set
+        where deleted = 'F'
+          and company_id = #{companyId}
+          and start_site_id = #{startSiteId}
+          and endt_site_id = #{endtSiteId}
+    </select>
+
+</mapper>   

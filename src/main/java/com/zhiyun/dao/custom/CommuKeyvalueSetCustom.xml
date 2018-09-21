@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.CommuKeyvalueSetDaoImpl">
+
+    <update id="deleteAllKeyValue" parameterType="com.zhiyun.entity.CommuKeyvalueSet">
+        update commu_keyvalue_set
+        set deleted = 'T'
+        where company_id = #{companyId}
+          and key_id = #{keyId}
+    </update>
+
+
+    <select id="optionValueByKeyId" parameterType="map" resultType="com.zhiyun.entity.CommuKeyvalueSet">
+       SELECT
+            commu_keyvalue_set.id,
+            commu_keyvalue_set.key_value keyValue,
+            commu_keyvalue_set.key_desc keyDesc,
+            commu_keyvalue_set.remark
+        FROM
+            commu_keyvalue_set
+            INNER JOIN commu_key_set ON commu_keyvalue_set.key_id = commu_key_set.id
+            AND commu_key_set.deleted = 'F'
+	        AND commu_key_set.key_type = #{keyType}
+        WHERE
+            commu_keyvalue_set.deleted = 'F'
+            AND commu_keyvalue_set.company_id =#{companyId}
+    </select>
+</mapper>   

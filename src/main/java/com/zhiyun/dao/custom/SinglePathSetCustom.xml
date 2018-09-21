@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.SinglePathSetDaoImpl">
+    <!-- 查询字段 -->
+    <sql id="cselectFieldSQL">
+        SELECT SINGLE_PATH_SET.ID            id,
+               SINGLE_PATH_SET.MAC_NO        macNo,
+               SINGLE_PATH_SET.ACTIVE_NO     activeNo,
+               SINGLE_PATH_SET.ACTIVE_NAME   activeName,
+               SINGLE_PATH_SET.START_SITE_ID startSiteId,
+               SINGLE_PATH_SET.END_SITE_ID   endSiteId,
+               SINGLE_PATH_SET.OFFSET        OFFSET,
+               SINGLE_PATH_SET.NEED_TIME     needTime,
+               SINGLE_PATH_SET.COMPANY_ID    companyId,
+               SINGLE_PATH_SET.DELETED       deleted,
+               SINGLE_PATH_SET.CREATE_TIME   createTime,
+               SINGLE_PATH_SET.MODIFY_TIME   modifyTime,
+               SINGLE_PATH_SET.CREATE_BY     createBy,
+               SINGLE_PATH_SET.MODIFY_BY     modifyBy,
+               site_start.site_name AS       startPoint,
+               site_end.site_name   AS       endPoint
+    </sql>
+
+    <!-- 分页查询（条件） -->
+    <sql id="cpage_condition">
+        <where>
+            <if test="entity.macNo != null and entity.macNo != ''">
+                AND SINGLE_PATH_SET.MAC_NO = #{entity.macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.activeNo != null">
+                AND SINGLE_PATH_SET.ACTIVE_NO = #{entity.activeNo,jdbcType=INTEGER}
+            </if>
+            <if test="entity.activeName != null and entity.activeName != ''">
+                AND SINGLE_PATH_SET.ACTIVE_NAME = #{entity.activeName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.startSiteId != null">
+                AND SINGLE_PATH_SET.START_SITE_ID = #{entity.startSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.endSiteId != null">
+                AND SINGLE_PATH_SET.END_SITE_ID = #{entity.endSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.offset != null">
+                AND SINGLE_PATH_SET.OFFSET = #{entity.offset,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.needTime != null">
+                AND SINGLE_PATH_SET.NEED_TIME = #{entity.needTime,jdbcType=INTEGER}
+            </if>
+            <if test="entity.companyId != null">
+                AND SINGLE_PATH_SET.COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null">
+                AND SINGLE_PATH_SET.DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="customPage_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM SINGLE_PATH_SET
+        INNER JOIN sit_set AS site_start ON site_start.id = SINGLE_PATH_SET.start_site_id and site_start.deleted='F'
+        INNER JOIN sit_set AS site_end ON site_end.id = SINGLE_PATH_SET.end_site_id and site_end.deleted='F'
+        <include refid="cpage_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="customPage_datas" parameterType="map" resultType="com.zhiyun.dto.SinglePathSetDto">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="cselectFieldSQL"/>
+        FROM SINGLE_PATH_SET
+        INNER JOIN sit_set AS site_start ON site_start.id = SINGLE_PATH_SET.start_site_id and site_start.deleted='F'
+        INNER JOIN sit_set AS site_end ON site_end.id = SINGLE_PATH_SET.end_site_id and site_end.deleted='F'
+        <include refid="cpage_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+    <select id="findAllByCompanyId" parameterType="com.zhiyun.entity.SinglePathSet" resultType="com.zhiyun.entity.SinglePathSet">
+        SELECT SINGLE_PATH_SET.ID id, CONCAT(site_start.site_name, '->', site_end.site_name) AS activeName
+        FROM SINGLE_PATH_SET
+                 INNER JOIN sit_set AS site_start ON site_start.id = SINGLE_PATH_SET.start_site_id
+                                                         AND site_start.deleted = 'F'
+                 INNER JOIN sit_set AS site_end ON site_end.id = SINGLE_PATH_SET.end_site_id
+                                                       AND site_end.deleted = 'F'
+        where SINGLE_PATH_SET.deleted = 'F'
+          and SINGLE_PATH_SET.company_id = #{companyId}
+    </select>
+
+    <select id="isUsed" parameterType="map" resultType="boolean">
+        select count(id)
+        from single_path_set
+        where company_id = #{companyId} and deleted = 'F' and start_site_id = #{id}
+           or end_site_id = #{id}
+    </select>
+</mapper>   

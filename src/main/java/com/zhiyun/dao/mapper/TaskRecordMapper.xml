@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.TaskRecordDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.TaskRecord">
+        INSERT INTO TASK_RECORD (
+        ID,
+        DEVICE_NO,
+        SITE_ID,
+        ARRIVE_TIME,
+        LEAVE_TIME,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{deviceNo,jdbcType=VARCHAR},
+        #{siteId,jdbcType=BIGINT},
+        #{arriveTime,jdbcType=TIMESTAMP},
+        #{leaveTime,jdbcType=TIMESTAMP},
+        #{companyId,jdbcType=BIGINT},
+        #{deleted,jdbcType=TINYINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_TASK_RECORD.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.TaskRecord">
+        UPDATE TASK_RECORD
+        <set>
+            <if test="deviceNo != null">
+                DEVICE_NO = #{deviceNo,jdbcType=VARCHAR},
+            </if>
+            <if test="siteId != null">
+                SITE_ID = #{siteId,jdbcType=BIGINT},
+            </if>
+            <if test="arriveTime != null">
+                ARRIVE_TIME = #{arriveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leaveTime != null">
+                LEAVE_TIME = #{leaveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.TaskRecord">
+        UPDATE TASK_RECORD
+        <set>
+            DEVICE_NO = #{deviceNo,jdbcType=VARCHAR},
+            SITE_ID = #{siteId,jdbcType=BIGINT},
+            ARRIVE_TIME = #{arriveTime,jdbcType=TIMESTAMP},
+            LEAVE_TIME = #{leaveTime,jdbcType=TIMESTAMP},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            DELETED = #{deleted,jdbcType=TINYINT},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.TaskRecord">
+        UPDATE TASK_RECORD
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID          id,
+               DEVICE_NO   deviceNo,
+               SITE_ID     siteId,
+               ARRIVE_TIME arriveTime,
+               LEAVE_TIME  leaveTime,
+               COMPANY_ID  companyId,
+               DELETED     deleted,
+               CREATE_TIME createTime,
+               MODIFY_TIME modifyTime,
+               CREATE_BY   createBy,
+               MODIFY_BY   modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.TaskRecord">
+        <include refid="selectFieldSQL"/>
+        FROM TASK_RECORD
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.TaskRecord" resultType="com.zhiyun.entity.TaskRecord">
+        <include refid="selectFieldSQL"/>
+        FROM TASK_RECORD
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="deviceNo != null and deviceNo != ''">
+                AND DEVICE_NO = #{deviceNo,jdbcType=VARCHAR}
+            </if>
+            <if test="siteId != null">
+                AND SITE_ID = #{siteId,jdbcType=BIGINT}
+            </if>
+            <if test="arriveTime != null">
+                AND ARRIVE_TIME = #{arriveTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="leaveTime != null">
+                AND LEAVE_TIME = #{leaveTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.TaskRecord">
+        <include refid="selectFieldSQL"/>
+        FROM TASK_RECORD
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.deviceNo != null and entity.deviceNo != ''">
+                AND DEVICE_NO = #{entity.deviceNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.siteId != null">
+                AND SITE_ID = #{entity.siteId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.arriveTime != null">
+                AND ARRIVE_TIME = #{entity.arriveTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.leaveTime != null">
+                AND LEAVE_TIME = #{entity.leaveTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null">
+                AND DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM TASK_RECORD
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.TaskRecord">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM TASK_RECORD
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM TASK_RECORD
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM TASK_RECORD
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="deviceNo != null and deviceNo != ''">
+                AND DEVICE_NO = #{deviceNo,jdbcType=VARCHAR}
+            </if>
+            <if test="siteId != null">
+                AND SITE_ID = #{siteId,jdbcType=BIGINT}
+            </if>
+            <if test="arriveTime != null">
+                AND ARRIVE_TIME = #{arriveTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="leaveTime != null">
+                AND LEAVE_TIME = #{leaveTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO TASK_RECORD (
+        ID,
+        DEVICE_NO,
+        SITE_ID,
+        ARRIVE_TIME,
+        LEAVE_TIME,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ deviceNo,jdbcType=VARCHAR},
+        #{ siteId,jdbcType=BIGINT},
+        #{ arriveTime,jdbcType=TIMESTAMP},
+        #{ leaveTime,jdbcType=TIMESTAMP},
+        #{ companyId,jdbcType=BIGINT},
+        #{ deleted,jdbcType=TINYINT},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_TASK_RECORD.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE TASK_RECORD
+        <set>
+            <if test="deviceNo != null">
+                DEVICE_NO = #{deviceNo,jdbcType=VARCHAR},
+            </if>
+            <if test="siteId != null">
+                SITE_ID = #{siteId,jdbcType=BIGINT},
+            </if>
+            <if test="arriveTime != null">
+                ARRIVE_TIME = #{arriveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leaveTime != null">
+                LEAVE_TIME = #{leaveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

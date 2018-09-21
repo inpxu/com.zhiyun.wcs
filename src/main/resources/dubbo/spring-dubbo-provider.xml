@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <description>提供者配置</description>
+
+    <!--生产者全局配置-->
+    <dubbo:provider host="${dubbo.registerHost}" group="${dubbo.group}" version="${dubbo.version}"/>
+    <dubbo:service interface="com.zhiyun.internal.wcs.WcsService" ref="wcsServiceImpl"/>
+
+</beans>

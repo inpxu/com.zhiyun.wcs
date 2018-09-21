@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.CommuKeySetDaoImpl">
+    <resultMap id="queryDetailMap" type="com.zhiyun.dto.CommuKeySetDto">
+        <id property="id" column="id"/>
+        <result column="mac_no" property="macNo"/>
+        <result column="key_type" property="keyType"/>
+        <result column="is_yield" property="isYield"/>
+        <result column="direction" property="direction"/>
+        <collection property="commuKeyvalueSets" javaType="ArrayList" ofType="com.zhiyun.entity.CommuKeyvalueSet">
+            <id property="id" column="value_id"/>
+            <result column="key_value" property="keyValue"/>
+            <result column="key_desc" property="keyDesc"/>
+            <result column="remark" property="remark"/>
+        </collection>
+    </resultMap>
+    <select id="queryDetail" resultMap="queryDetailMap" parameterType="com.zhiyun.entity.CommuKeySet">
+        SELECT commu_key_set.id,
+               commu_key_set.mac_no   macNo,
+               commu_key_set.key_type keyType,
+               commu_key_set.is_yield isYield,
+               commu_key_set.direction,
+               commu_keyvalue_set.id  value_id,
+               commu_keyvalue_set.key_value,
+               commu_keyvalue_set.key_desc,
+               commu_keyvalue_set.remark
+        FROM commu_key_set
+                 LEFT JOIN commu_keyvalue_set ON commu_keyvalue_set.key_id = commu_key_set.id
+                                                     AND commu_keyvalue_set.deleted = 'F'
+        WHERE commu_key_set.deleted = 'F'
+          AND commu_key_set.company_id = #{companyId}
+          AND commu_key_set.id = #{id}
+    </select>
+
+
+    <!-- 查询字段 -->
+    <sql id="cselectFieldSQL">
+            SELECT
+                ID id,
+                MAC_NO macNo,
+                KEY_TYPE keyType,
+                IS_YIELD isYield,
+                DIRECTION direction,
+                MODIFY_TIME modifyTime,
+                CREATE_TIME createTime,
+                DELETED deleted,
+                COMPANY_ID companyId,
+                CREATE_BY createBy,
+                MODIFY_BY modifyBy,
+            CASE
+                    DIRECTION
+                    WHEN 0 THEN
+                    '上行'
+                    WHEN 1 THEN
+                    '下行'
+                END AS directionType,
+            CASE
+                    IS_YIELD
+                    WHEN 0 THEN
+                    '产量' ELSE '其他参数'
+                END AS yieldType
+	</sql>
+
+    <!-- 分页查询（条件） -->
+    <sql id="cpage_condition">
+        <where>
+            <if test="entity.macNo != null and entity.macNo != ''">
+                AND MAC_NO = #{entity.macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.keyType != null and entity.keyType != ''">
+                AND KEY_TYPE = #{entity.keyType,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.isYield != null">
+                AND IS_YIELD = #{entity.isYield,jdbcType=INTEGER}
+            </if>
+            <if test="entity.direction != null">
+                AND DIRECTION = #{entity.direction,jdbcType=INTEGER}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="customPage_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM COMMU_KEY_SET
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="customPage_datas" parameterType="map" resultType="com.zhiyun.dto.CommuKeySetDto">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="cselectFieldSQL"/>
+        FROM COMMU_KEY_SET
+        <include refid="cpage_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <select id="optionKey" parameterType="com.zhiyun.entity.CommuKeySet" resultType="com.zhiyun.entity.CommuKeySet">
+          SELECT
+            commu_key_set.id,
+            commu_key_set.mac_no macNo,
+            commu_key_set.key_type keyType
+          FROM
+            commu_key_set
+            WHERE deleted='F'
+            AND company_id=#{companyId}
+            and  mac_no=#{macNo}
+    </select>
+</mapper>   

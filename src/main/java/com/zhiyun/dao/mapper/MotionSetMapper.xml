@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.MotionSetDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.MotionSet">
+        INSERT INTO MOTION_SET (
+        ID,
+        MAC_NO,
+        ACTIVE_NO,
+        ACTIVE_NAME,
+        SERIAL,
+        X,
+        Y,
+        Z,
+        SKEWING,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{macNo,jdbcType=VARCHAR},
+        #{activeNo,jdbcType=INTEGER},
+        #{activeName,jdbcType=VARCHAR},
+        #{serial,jdbcType=INTEGER},
+        #{x,jdbcType=DOUBLE},
+        #{y,jdbcType=DOUBLE},
+        #{z,jdbcType=DOUBLE},
+        #{skewing,jdbcType=DOUBLE},
+        #{companyId,jdbcType=BIGINT},
+        #{deleted,jdbcType=TINYINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_MOTION_SET.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.MotionSet">
+        UPDATE MOTION_SET
+        <set>
+            <if test="macNo != null">
+                MAC_NO = #{macNo,jdbcType=VARCHAR},
+            </if>
+            <if test="activeNo != null">
+                ACTIVE_NO = #{activeNo,jdbcType=INTEGER},
+            </if>
+            <if test="activeName != null">
+                ACTIVE_NAME = #{activeName,jdbcType=VARCHAR},
+            </if>
+            <if test="serial != null">
+                SERIAL = #{serial,jdbcType=INTEGER},
+            </if>
+            <if test="x != null">
+                X = #{x,jdbcType=DOUBLE},
+            </if>
+            <if test="y != null">
+                Y = #{y,jdbcType=DOUBLE},
+            </if>
+            <if test="z != null">
+                Z = #{z,jdbcType=DOUBLE},
+            </if>
+            <if test="skewing != null">
+                SKEWING = #{skewing,jdbcType=DOUBLE},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.MotionSet">
+        UPDATE MOTION_SET
+        <set>
+            MAC_NO = #{macNo,jdbcType=VARCHAR},
+            ACTIVE_NO = #{activeNo,jdbcType=INTEGER},
+            ACTIVE_NAME = #{activeName,jdbcType=VARCHAR},
+            SERIAL = #{serial,jdbcType=INTEGER},
+            X = #{x,jdbcType=DOUBLE},
+            Y = #{y,jdbcType=DOUBLE},
+            Z = #{z,jdbcType=DOUBLE},
+            SKEWING = #{skewing,jdbcType=DOUBLE},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            DELETED = #{deleted,jdbcType=TINYINT},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.MotionSet">
+        UPDATE MOTION_SET
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID          id,
+               MAC_NO      macNo,
+               ACTIVE_NO   activeNo,
+               ACTIVE_NAME activeName,
+               SERIAL      serial,
+               X           x,
+               Y           y,
+               Z           z,
+               SKEWING     skewing,
+               COMPANY_ID  companyId,
+               DELETED     deleted,
+               CREATE_TIME createTime,
+               MODIFY_TIME modifyTime,
+               CREATE_BY   createBy,
+               MODIFY_BY   modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.MotionSet">
+        <include refid="selectFieldSQL"/>
+        FROM MOTION_SET
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.MotionSet" resultType="com.zhiyun.entity.MotionSet">
+        <include refid="selectFieldSQL"/>
+        FROM MOTION_SET
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="macNo != null and macNo != ''">
+                AND MAC_NO = #{macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="activeNo != null">
+                AND ACTIVE_NO = #{activeNo,jdbcType=INTEGER}
+            </if>
+            <if test="activeName != null and activeName != ''">
+                AND ACTIVE_NAME = #{activeName,jdbcType=VARCHAR}
+            </if>
+            <if test="serial != null">
+                AND SERIAL = #{serial,jdbcType=INTEGER}
+            </if>
+            <if test="x != null">
+                AND X = #{x,jdbcType=DOUBLE}
+            </if>
+            <if test="y != null">
+                AND Y = #{y,jdbcType=DOUBLE}
+            </if>
+            <if test="z != null">
+                AND Z = #{z,jdbcType=DOUBLE}
+            </if>
+            <if test="skewing != null">
+                AND SKEWING = #{skewing,jdbcType=DOUBLE}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.MotionSet">
+        <include refid="selectFieldSQL"/>
+        FROM MOTION_SET
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.macNo != null and entity.macNo != ''">
+                AND MAC_NO = #{entity.macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.activeNo != null">
+                AND ACTIVE_NO = #{entity.activeNo,jdbcType=INTEGER}
+            </if>
+            <if test="entity.activeName != null and entity.activeName != ''">
+                AND ACTIVE_NAME = #{entity.activeName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.serial != null">
+                AND SERIAL = #{entity.serial,jdbcType=INTEGER}
+            </if>
+            <if test="entity.x != null">
+                AND X = #{entity.x,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.y != null">
+                AND Y = #{entity.y,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.z != null">
+                AND Z = #{entity.z,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.skewing != null">
+                AND SKEWING = #{entity.skewing,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null">
+                AND DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM MOTION_SET
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.MotionSet">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM MOTION_SET
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM MOTION_SET
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM MOTION_SET
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="macNo != null and macNo != ''">
+                AND MAC_NO = #{macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="activeNo != null">
+                AND ACTIVE_NO = #{activeNo,jdbcType=INTEGER}
+            </if>
+            <if test="activeName != null and activeName != ''">
+                AND ACTIVE_NAME = #{activeName,jdbcType=VARCHAR}
+            </if>
+            <if test="serial != null">
+                AND SERIAL = #{serial,jdbcType=INTEGER}
+            </if>
+            <if test="x != null">
+                AND X = #{x,jdbcType=DOUBLE}
+            </if>
+            <if test="y != null">
+                AND Y = #{y,jdbcType=DOUBLE}
+            </if>
+            <if test="z != null">
+                AND Z = #{z,jdbcType=DOUBLE}
+            </if>
+            <if test="skewing != null">
+                AND SKEWING = #{skewing,jdbcType=DOUBLE}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null">
+                AND DELETED = #{deleted,jdbcType=TINYINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO MOTION_SET (
+        ID,
+        MAC_NO,
+        ACTIVE_NO,
+        ACTIVE_NAME,
+        SERIAL,
+        X,
+        Y,
+        Z,
+        SKEWING,
+        COMPANY_ID,
+        DELETED,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_BY,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ macNo,jdbcType=VARCHAR},
+        #{ activeNo,jdbcType=INTEGER},
+        #{ activeName,jdbcType=VARCHAR},
+        #{ serial,jdbcType=INTEGER},
+        #{ x,jdbcType=DOUBLE},
+        #{ y,jdbcType=DOUBLE},
+        #{ z,jdbcType=DOUBLE},
+        #{ skewing,jdbcType=DOUBLE},
+        #{ companyId,jdbcType=BIGINT},
+        #{ deleted,jdbcType=TINYINT},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_MOTION_SET.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE MOTION_SET
+        <set>
+            <if test="macNo != null">
+                MAC_NO = #{macNo,jdbcType=VARCHAR},
+            </if>
+            <if test="activeNo != null">
+                ACTIVE_NO = #{activeNo,jdbcType=INTEGER},
+            </if>
+            <if test="activeName != null">
+                ACTIVE_NAME = #{activeName,jdbcType=VARCHAR},
+            </if>
+            <if test="serial != null">
+                SERIAL = #{serial,jdbcType=INTEGER},
+            </if>
+            <if test="x != null">
+                X = #{x,jdbcType=DOUBLE},
+            </if>
+            <if test="y != null">
+                Y = #{y,jdbcType=DOUBLE},
+            </if>
+            <if test="z != null">
+                Z = #{z,jdbcType=DOUBLE},
+            </if>
+            <if test="skewing != null">
+                SKEWING = #{skewing,jdbcType=DOUBLE},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.SitSetDaoImpl">
+    <!-- 查询字段 -->
+    <sql id="cselectFieldSQL">
+        SELECT ID             id,
+               MAC_NO         macNo,
+               SITE_NAME      siteName,
+               Z              z,
+               Y              y,
+               X              x,
+               OFFSET         offset,
+               SITE_TYPE      siteType,
+               COMPANY_ID     companyId,
+               DELETED        deleted,
+               CREATE_TIME    createTime,
+               MODIFY_TIME    modifyTime,
+               CREATE_BY      createBy,
+               MODIFY_BY      modifyBy,
+               CASE SITE_TYPE
+                   WHEN 0 THEN '节点'
+                   WHEN 1 THEN '上料位'
+                   WHEN 2 THEN '下料位'
+                       END AS siteTypeName
+    </sql>
+    <!-- 分页查询（条件） -->
+    <sql id="cpage_condition">
+        <where>
+            <if test="entity.id != null">
+                AND ID = #{entity.id,jdbcType=BIGINT}
+            </if>
+            <if test="entity.macNo != null and entity.macNo != ''">
+                AND MAC_NO = #{entity.macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.siteName != null and entity.siteName != ''">
+                AND SITE_NAME = #{entity.siteName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.z != null">
+                AND Z = #{entity.z,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.y != null">
+                AND Y = #{entity.y,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.x != null">
+                AND X = #{entity.x,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.offset != null">
+                AND OFFSET = #{entity.offset,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.siteType != null">
+                AND SITE_TYPE = #{entity.siteType,jdbcType=INTEGER}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null">
+                AND DELETED = #{entity.deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </sql>
+    <!-- 分页查询（计数） -->
+    <select id="customPage_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM SIT_SET
+        <include refid="cpage_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="customPage_datas" parameterType="map" resultType="com.zhiyun.dto.SitSetDto">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="cselectFieldSQL"/>
+        FROM SIT_SET
+        <include refid="cpage_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+    <select id="optionSite" parameterType="com.zhiyun.entity.SitSet" resultType="com.zhiyun.entity.SitSet">
+        select id as id, site_name as siteName
+        from sit_set
+        where company_id = #{companyId}
+          and deleted = 'F'
+    </select>
+    <select id="customFind" parameterType="com.zhiyun.internal.wcs.SitSet" resultType="com.zhiyun.internal.wcs.SitSet">
+        SELECT ID id,
+        MAC_NO macNo,
+        SITE_NAME siteName,
+        Z z,
+        Y y,
+        X x,
+        OFFSET offset,
+        SITE_TYPE siteType,
+        COMPANY_ID companyId,
+        DELETED deleted,
+        CREATE_TIME createTime,
+        MODIFY_TIME modifyTime,
+        CREATE_BY createBy,
+        MODIFY_BY modifyBy
+        FROM SIT_SET
+        <where>
+            deleted='F'
+            and
+            company_id=#{companyId}
+            <if test="siteType != null and siteType != ''">
+                AND SITE_TYPE = #{siteType,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <select id="getAllSitesNotInIds" parameterType="map" resultType="com.zhiyun.internal.wcs.SitSet">
+        SELECT ID id,
+        MAC_NO macNo,
+        SITE_NAME siteName,
+        Z z,
+        Y y,
+        X x,
+        OFFSET offset,
+        SITE_TYPE siteType,
+        COMPANY_ID companyId,
+        DELETED deleted,
+        CREATE_TIME createTime,
+        MODIFY_TIME modifyTime,
+        CREATE_BY createBy,
+        MODIFY_BY modifyBy
+        FROM SIT_SET
+        where
+        deleted='F'
+        and
+        company_id=#{companyId}
+        AND id NOT IN(${ids})
+
+    </select>
+
+    <select id="queryDetailById" parameterType="map" resultType="com.zhiyun.internal.wcs.SitSet">
+         SELECT ID id,
+        MAC_NO macNo,
+        SITE_NAME siteName,
+        Z z,
+        Y y,
+        X x,
+        OFFSET offset,
+        SITE_TYPE siteType,
+        COMPANY_ID companyId,
+        DELETED deleted,
+        CREATE_TIME createTime,
+        MODIFY_TIME modifyTime,
+        CREATE_BY createBy,
+        MODIFY_BY modifyBy
+        FROM SIT_SET
+        where
+        deleted='F'
+        and
+        company_id=#{companyId}
+        and id=#{id}
+    </select>
+    <select id="queryAllCompany" resultType="com.zhiyun.entity.SitSet" parameterType="map">
+        select company_id companyId from sit_set where deleted='F' group by company_id
+    </select>
+</mapper>   
