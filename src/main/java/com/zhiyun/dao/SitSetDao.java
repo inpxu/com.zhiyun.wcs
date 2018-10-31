@@ -39,6 +39,6 @@ public interface SitSetDao extends BaseDao<SitSet, Long> {
 
     List<ProductionDeviceDto> optionProductionDeviceNo(Map<String, Object> map);
 
-    SitSet getMac(SitSet sitSet);
+    SitSetDto getMac(SitSet sitSet);
 
 }

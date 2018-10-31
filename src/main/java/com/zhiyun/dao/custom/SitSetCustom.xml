@@ -184,7 +184,7 @@
 
     <select id="getMac" parameterType="com.zhiyun.entity.SitSet" resultType="com.zhiyun.dto.SitSetDto">
         SELECT
-               aps.machine_set_mes.mac_name prodMacName,
+               aps.machine_set_mes.mac_name deviceName,
                aps.machine_set_mes.mac_no prodMacNo
         FROM
              aps.machine_set_mes

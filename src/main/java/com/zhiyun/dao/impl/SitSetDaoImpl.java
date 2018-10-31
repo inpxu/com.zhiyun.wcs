@@ -68,7 +68,7 @@ public class SitSetDaoImpl extends BaseDaoImpl<SitSet, Long> implements SitSetDa
     }
 
     @Override
-    public SitSet getMac(SitSet sitSet) {
+    public SitSetDto getMac(SitSet sitSet) {
         return this.selectOne(getMethodName(), sitSet);
     }
 
