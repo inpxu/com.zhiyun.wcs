@@ -2,21 +2,19 @@
 <html>
 <head>
     <meta charset=utf-8>
-    <meta name=viewport content="width=device-width,initial-scale=1">
     <title>WCS</title>
-    <link href="/static/css/app.9e1f51662a3ad2796048f954669e96dc.css" rel="stylesheet">
+    <link href=/static/css/app.18a9573a03f622607a20bb4541951e54.css rel=stylesheet>
 </head>
+<link rel=stylesheet href=/src/assets/font-icon/iconfont.css>
+<script>window.sessionStorage.setItem('ports', 'http://192.168.0.57:8888');
+window.sessionStorage.setItem('socketUrl', 'ws://192.168.0.57:8888/wcs');</script>
 <body>
 <div id=app>
-    <app app-url=http://192.168.0.57:8888 user-name=${userName} user-img=http://61.153.187.242:8049/appSign/user.png company-name="WCS"
-         company-english=${companyName} company-logo=http://61.153.187.80:9000/group1/M00/00/22/wKgBDFtMQCiAZyeWAAAGmFxYh7k901.png
-         menu-list=${menuList!} back-url=${backUrl} upload-url="http://192.168.0.222:8081/fileSystem/uploadFile"></app>
+    <app user-name=沈建飞 user-img=http://124.160.96.135:8070/appSign/head.png company-name=智能仓储控制系统 company-english=飞戎机器人科技有限公司
+         company-logo=http://61.153.187.242:8049/appSign/logo.png></app>
 </div>
-<script type="text/javascript" src="/static/js/manifest.b5f157a95dc1cc995ae7.js"></script>
-<script type="text/javascript" src="/static/js/vendor.470e4b7dbcbb3dd3e157.js"></script>
-<script type="text/javascript" src="/static/js/app.7d3bbf6dc20931e86197.js"></script>
+<script type=text/javascript src=/static/js/manifest.2ae2e69a05c33dfc65f8.js></script>
+<script type=text/javascript src=/static/js/vendor.0bdaf30911cce65b585e.js></script>
+<script type=text/javascript src=/static/js/app.a7b7b0240281e3954dd6.js></script>
 </body>
-<script type="text/javascript" src="/static/jquery.js"></script>
-<script type="text/javascript" src="/static/jquery.media.js"></script>
-
 </html>

@@ -24,6 +24,6 @@
     <!--dubbo配置-->
     <import resource="classpath:/rabbitmq/applicationContext-rabbitmq.xml"/>
     <!--activemq配置-->
-    <import resource="classpath:activemq/applicationContext-activemq.xml"/>
+    <!--<import resource="classpath:activemq/applicationContext-activemq.xml"/>-->
 
 </beans>
