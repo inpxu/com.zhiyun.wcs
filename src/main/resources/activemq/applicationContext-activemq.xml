@@ -22,7 +22,7 @@
     <bean id="tttQueueDestination" class="org.apache.activemq.command.ActiveMQQueue">
         <!--消息队列名称  -->
         <constructor-arg>
-            <value>ttt.queue</value>
+            <value>2data_traffic_croupier</value>
         </constructor-arg>
     </bean>
 

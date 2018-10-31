@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.zhiyun.dto.JobInfoDto;
 import com.zhiyun.dto.SinglePathInfoDto;
 import com.zhiyun.entity.SystemTask;
+import com.zhiyun.entity.SystemTaskSingle;
 import com.zhiyun.service.SystemTaskService;
 import com.zhiyun.vo.SinglePathSetVo;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,6 +34,8 @@ public class JobProcessEngine {
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
     private SystemTaskService systemTaskService;
+    @Autowired
+    private JmsTemplate jmsQueueTemplate;
 
     /**
      * 默认等待队列长度为10
@@ -126,5 +130,21 @@ public class JobProcessEngine {
     public void saveIntoDb(SystemTask systemTask) {
         systemTaskService.saveIntoDb(systemTask);
 
+    }
+
+    /**
+     * 将任务下达给设备
+     *
+     * @param systemTaskSingles
+     * @return void
+     * @author 邓艺
+     * @date 2018/10/31 15:51
+     */
+    public void sendMissionToDevice(List<SystemTaskSingle> systemTaskSingles) {
+        if (CollectionUtils.isNotEmpty(systemTaskSingles)) {
+            for (SystemTaskSingle systemTaskSingle : systemTaskSingles) {
+//                jmsQueueTemplate.convertAndSend();
+            }
+        }
     }
 }
