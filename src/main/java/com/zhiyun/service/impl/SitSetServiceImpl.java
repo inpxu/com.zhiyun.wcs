@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.lang.annotation.ElementType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,7 +92,23 @@ public class SitSetServiceImpl extends BaseServiceImpl<SitSet, Long> implements 
 
     @Override
     public DataGrid<SitSetDto> customPage(Params entity, Pager pager) {
-        return sitSetDao.customPage(entity, pager);
+        DataGrid<SitSetDto> dataGrid = sitSetDao.customPage(entity, pager);
+        for (SitSetDto sitSetDto : dataGrid.getItems()) {
+            String prodMacNo = sitSetDto.getProdMacNo();
+            SitSet sitSet = new SitSet();
+            sitSet.setCompanyId(UserHolder.getCompanyId());
+            sitSet.setProdMacNo(prodMacNo);
+            SitSetDto sit = sitSetDao.getMac(sitSet);
+            if (sit == null) {
+                sitSetDto.setDeviceName("");
+                sitSetDto.setProdMacMsg(prodMacNo);
+            } else {
+                String deviceName = sit.getDeviceName();
+                sitSetDto.setDeviceName(deviceName);
+                sitSetDto.setProdMacMsg(prodMacNo + "/" + deviceName);
+            }
+        }
+        return dataGrid;
     }
 
     @Override
@@ -111,5 +128,11 @@ public class SitSetServiceImpl extends BaseServiceImpl<SitSet, Long> implements 
         Map<String, Object> map = new HashMap<>(2);
         map.put("companyId", UserHolder.getCompanyId());
         return sitSetDao.optionProductionDeviceNo(map);
+    }
+
+    @Override
+    public SitSet getMac(SitSet sitSet) {
+        sitSet.setCompanyId(UserHolder.getCompanyId());
+        return sitSetDao.getMac(sitSet);
     }
 }

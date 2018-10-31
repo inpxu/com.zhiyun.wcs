@@ -181,4 +181,16 @@
         WHERE aps.machine_set_mes.deleted = 'F'
           AND aps.machine_set_mes.company_id = #{companyId}
     </select>
+
+    <select id="getMac" parameterType="com.zhiyun.entity.SitSet" resultType="com.zhiyun.dto.SitSetDto">
+        SELECT
+               aps.machine_set_mes.mac_name deviceName,
+               aps.machine_set_mes.mac_no prodMacNo
+        FROM
+             aps.machine_set_mes
+        WHERE
+              aps.machine_set_mes.deleted = 'F'
+          AND aps.machine_set_mes.company_id = #{companyId}
+          and aps.machine_set_mes.mac_no = #{prodMacNo}
+    </select>
 </mapper>   

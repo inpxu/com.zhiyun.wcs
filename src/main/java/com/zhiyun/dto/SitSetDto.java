@@ -13,6 +13,24 @@ public class SitSetDto extends SitSet implements Serializable {
 
     private static final long serialVersionUID = -6728199897151181819L;
     private String siteTypeName;
+    private String prodMacMsg;
+    private String deviceName;
+
+    public String getProdMacMsg() {
+        return prodMacMsg;
+    }
+
+    public void setProdMacMsg(String prodMacMsg) {
+        this.prodMacMsg = prodMacMsg;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
 
     public String getSiteTypeName() {
         return siteTypeName;
