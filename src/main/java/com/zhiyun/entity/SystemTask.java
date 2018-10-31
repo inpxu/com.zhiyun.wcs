@@ -21,7 +21,7 @@ import javax.validation.constraints.Max;
  */
 public class SystemTask extends BaseEntity<Long> {
 
-	private static final long serialVersionUID = 1729440258125660285L;
+	private static final long serialVersionUID = 5674446314997835957L;
 
 	// ~~~~实体属性
 	// 任务号
@@ -45,6 +45,9 @@ public class SystemTask extends BaseEntity<Long> {
 	// 物料类型
 	@Pattern(regexp="[\\S]{0,30}", message="物料类型字段过长")
 	private String matterType;
+	// 物料编码
+	@Pattern(regexp="[\\S]{0,30}", message="物料编码字段过长")
+	private String matterNo;
 	// 物料名称
 	@Pattern(regexp="[\\S]{0,30}", message="物料名称字段过长")
 	private String matterName;
@@ -171,6 +174,20 @@ public class SystemTask extends BaseEntity<Long> {
 	 */
 	public void setMatterType(String matterType) {
 		this.matterType = matterType;
+	}
+	
+	/**
+	 * 物料编码
+	 */
+	public String getMatterNo() {
+		return this.matterNo;
+	}
+
+	/**
+	 * 物料编码
+	 */
+	public void setMatterNo(String matterNo) {
+		this.matterNo = matterNo;
 	}
 	
 	/**

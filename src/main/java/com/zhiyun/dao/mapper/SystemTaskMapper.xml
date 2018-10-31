@@ -13,6 +13,7 @@
 		   	END_SITE_ID,
 		   	IN_MARK,
 		   	MATTER_TYPE,
+		   	MATTER_NO,
 		   	MATTER_NAME,
 		   	AMOUNT,
 		   	REQUEST_TIME,
@@ -33,6 +34,7 @@
 		   	#{endSiteId,jdbcType=BIGINT},
 		   	#{inMark,jdbcType=INTEGER},
 		   	#{matterType,jdbcType=VARCHAR},
+		   	#{matterNo,jdbcType=VARCHAR},
 		   	#{matterName,jdbcType=VARCHAR},
 		   	#{amount,jdbcType=INTEGER},
 		   	#{requestTime,jdbcType=TIMESTAMP},
@@ -77,6 +79,9 @@
 			</if>
 			<if test="matterType != null">
 				MATTER_TYPE = #{matterType,jdbcType=VARCHAR},
+			</if>
+			<if test="matterNo != null">
+				MATTER_NO = #{matterNo,jdbcType=VARCHAR},
 			</if>
 			<if test="matterName != null">
 				MATTER_NAME = #{matterName,jdbcType=VARCHAR},
@@ -126,6 +131,7 @@
 			END_SITE_ID = #{endSiteId,jdbcType=BIGINT},
 			IN_MARK = #{inMark,jdbcType=INTEGER},
 			MATTER_TYPE = #{matterType,jdbcType=VARCHAR},
+			MATTER_NO = #{matterNo,jdbcType=VARCHAR},
 			MATTER_NAME = #{matterName,jdbcType=VARCHAR},
 			AMOUNT = #{amount,jdbcType=INTEGER},
 			REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP},
@@ -161,6 +167,7 @@
 		       END_SITE_ID endSiteId,
 		       IN_MARK inMark,
 		       MATTER_TYPE matterType,
+		       MATTER_NO matterNo,
 		       MATTER_NAME matterName,
 		       AMOUNT amount,
 		       REQUEST_TIME requestTime,
@@ -210,6 +217,9 @@
 			</if>
 			<if test="matterType != null and matterType != ''">
 				AND MATTER_TYPE = #{matterType,jdbcType=VARCHAR}
+			</if>
+			<if test="matterNo != null and matterNo != ''">
+				AND MATTER_NO = #{matterNo,jdbcType=VARCHAR}
 			</if>
 			<if test="matterName != null and matterName != ''">
 				AND MATTER_NAME = #{matterName,jdbcType=VARCHAR}
@@ -265,6 +275,9 @@
 				</if>
 				<if test="entity.matterType != null and entity.matterType != ''">
 					AND MATTER_TYPE = #{entity.matterType,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.matterNo != null and entity.matterNo != ''">
+					AND MATTER_NO = #{entity.matterNo,jdbcType=VARCHAR}
 				</if>
 				<if test="entity.matterName != null and entity.matterName != ''">
 					AND MATTER_NAME = #{entity.matterName,jdbcType=VARCHAR}
@@ -342,6 +355,9 @@
 			<if test="matterType != null and matterType != ''">
 				AND MATTER_TYPE = #{matterType,jdbcType=VARCHAR}
 			</if>
+			<if test="matterNo != null and matterNo != ''">
+				AND MATTER_NO = #{matterNo,jdbcType=VARCHAR}
+			</if>
 			<if test="matterName != null and matterName != ''">
 				AND MATTER_NAME = #{matterName,jdbcType=VARCHAR}
 			</if>
@@ -378,6 +394,7 @@
 		   	END_SITE_ID,
 		   	IN_MARK,
 		   	MATTER_TYPE,
+		   	MATTER_NO,
 		   	MATTER_NAME,
 		   	AMOUNT,
 		   	REQUEST_TIME,
@@ -398,6 +415,7 @@
 		   	#{ endSiteId,jdbcType=BIGINT},
 		   	#{ inMark,jdbcType=INTEGER},
 		   	#{ matterType,jdbcType=VARCHAR},
+		   	#{ matterNo,jdbcType=VARCHAR},
 		   	#{ matterName,jdbcType=VARCHAR},
 		   	#{ amount,jdbcType=INTEGER},
 		   	#{ requestTime,jdbcType=TIMESTAMP},
@@ -442,6 +460,9 @@
 			</if>
 			<if test="matterType != null">
 				MATTER_TYPE = #{matterType,jdbcType=VARCHAR},
+			</if>
+			<if test="matterNo != null">
+				MATTER_NO = #{matterNo,jdbcType=VARCHAR},
 			</if>
 			<if test="matterName != null">
 				MATTER_NAME = #{matterName,jdbcType=VARCHAR},
