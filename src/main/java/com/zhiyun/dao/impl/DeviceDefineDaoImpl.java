@@ -7,6 +7,7 @@ package com.zhiyun.dao.impl;
 
 import com.zhiyun.base.dao.BaseDaoImpl;
 import com.zhiyun.dao.DeviceDefineDao;
+import com.zhiyun.dto.NetworkNoDto;
 import com.zhiyun.dto.WarehouseAreaDto;
 import com.zhiyun.entity.DeviceDefine;
 import org.springframework.stereotype.Repository;
@@ -26,6 +27,11 @@ public class DeviceDefineDaoImpl extends BaseDaoImpl<DeviceDefine, Long> impleme
 
     @Override
     public List<WarehouseAreaDto> optionWarehouseArea(Map<String, Object> map) {
+        return this.selectList(getMethodName(), map);
+    }
+
+    @Override
+    public List<NetworkNoDto> optionNetworkNo(Map<String, Object> map) {
         return this.selectList(getMethodName(), map);
     }
 }

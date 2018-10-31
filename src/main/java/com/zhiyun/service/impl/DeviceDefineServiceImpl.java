@@ -9,6 +9,7 @@ import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.dao.DeviceDefineDao;
+import com.zhiyun.dto.NetworkNoDto;
 import com.zhiyun.dto.WarehouseAreaDto;
 import com.zhiyun.entity.DeviceDefine;
 import com.zhiyun.service.DeviceDefineService;
@@ -62,5 +63,12 @@ public class DeviceDefineServiceImpl extends BaseServiceImpl<DeviceDefine, Long>
         Map<String, Object> map = new HashMap<>(2);
         map.put("companyId", UserHolder.getCompanyId());
         return deviceDefineDao.optionWarehouseArea(map);
+    }
+
+    @Override
+    public List<NetworkNoDto> optionNetworkNo() {
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("companyId", UserHolder.getCompanyId());
+        return deviceDefineDao.optionNetworkNo(map);
     }
 }

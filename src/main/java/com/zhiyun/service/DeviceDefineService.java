@@ -6,6 +6,7 @@
 package com.zhiyun.service;
 
 import com.zhiyun.base.service.BaseService;
+import com.zhiyun.dto.NetworkNoDto;
 import com.zhiyun.dto.WarehouseAreaDto;
 import com.zhiyun.entity.DeviceDefine;
 
@@ -26,4 +27,5 @@ public interface DeviceDefineService extends BaseService<DeviceDefine, Long> {
 
     List<WarehouseAreaDto> optionWarehouseArea();
 
+    List<NetworkNoDto> optionNetworkNo();
 }
