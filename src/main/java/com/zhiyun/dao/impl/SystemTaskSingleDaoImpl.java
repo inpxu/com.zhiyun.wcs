@@ -5,12 +5,11 @@
 
 package com.zhiyun.dao.impl;
 
-import com.zhiyun.dto.SystemTaskSingleDto;
-import org.springframework.stereotype.Repository;
-
 import com.zhiyun.base.dao.BaseDaoImpl;
 import com.zhiyun.dao.SystemTaskSingleDao;
+import com.zhiyun.dto.SystemTaskSingleDto;
 import com.zhiyun.entity.SystemTaskSingle;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -26,6 +25,6 @@ public class SystemTaskSingleDaoImpl extends BaseDaoImpl<SystemTaskSingle, Long>
 
     @Override
     public List<SystemTaskSingleDto> upDown(SystemTaskSingle systemTaskSingle) {
-        return this.selectList(getMethodName(),systemTaskSingle);
+        return this.selectList(getMethodName(), systemTaskSingle);
     }
 }

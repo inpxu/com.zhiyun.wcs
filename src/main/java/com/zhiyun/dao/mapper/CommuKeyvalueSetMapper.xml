@@ -95,28 +95,27 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.CommuKeyvalueSet">
-		UPDATE COMMU_KEYVALUE_SET
-		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
-		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-		 WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
+        UPDATE COMMU_KEYVALUE_SET
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-		SELECT 
-		       ID id,
-		       KEY_ID keyId,
-		       KEY_VALUE keyValue,
-		       KEY_DESC keyDesc,
-		       REMARK remark,
-		       COMPANY_ID companyId,
-		       DELETED deleted,
-		       CREATE_TIME createTime,
-		       MODIFY_TIME modifyTime,
-		       CREATE_BY createBy,
-		       MODIFY_BY modifyBy
-	</sql>
+        SELECT ID          id,
+               KEY_ID      keyId,
+               KEY_VALUE   keyValue,
+               KEY_DESC    keyDesc,
+               REMARK      remark,
+               COMPANY_ID  companyId,
+               DELETED     deleted,
+               CREATE_TIME createTime,
+               MODIFY_TIME modifyTime,
+               CREATE_BY   createBy,
+               MODIFY_BY   modifyBy
+    </sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.CommuKeyvalueSet">

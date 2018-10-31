@@ -106,52 +106,51 @@
     </select>
 
     <select id="getAllSitesNotInIds" parameterType="map" resultType="com.zhiyun.internal.wcs.SitSet">
-        SELECT ID id,
-        MAC_NO macNo,
-        SITE_NAME siteName,
-        Z z,
-        Y y,
-        X x,
-        OFFSET offset,
-        SITE_TYPE siteType,
-        COMPANY_ID companyId,
-        DELETED deleted,
-        CREATE_TIME createTime,
-        MODIFY_TIME modifyTime,
-        CREATE_BY createBy,
-        MODIFY_BY modifyBy
+        SELECT ID          id,
+               MAC_NO      macNo,
+               SITE_NAME   siteName,
+               Z           z,
+               Y           y,
+               X           x,
+               OFFSET      offset,
+               SITE_TYPE   siteType,
+               COMPANY_ID  companyId,
+               DELETED     deleted,
+               CREATE_TIME createTime,
+               MODIFY_TIME modifyTime,
+               CREATE_BY   createBy,
+               MODIFY_BY   modifyBy
         FROM SIT_SET
-        where
-        deleted='F'
-        and
-        company_id=#{companyId}
-        AND id NOT IN(${ids})
+        where deleted = 'F'
+          and company_id = #{companyId}
+          AND id NOT IN(${ids})
 
     </select>
 
     <select id="queryDetailById" parameterType="map" resultType="com.zhiyun.internal.wcs.SitSet">
-         SELECT ID id,
-        MAC_NO macNo,
-        SITE_NAME siteName,
-        Z z,
-        Y y,
-        X x,
-        OFFSET offset,
-        SITE_TYPE siteType,
-        COMPANY_ID companyId,
-        DELETED deleted,
-        CREATE_TIME createTime,
-        MODIFY_TIME modifyTime,
-        CREATE_BY createBy,
-        MODIFY_BY modifyBy
+        SELECT ID          id,
+               MAC_NO      macNo,
+               SITE_NAME   siteName,
+               Z           z,
+               Y           y,
+               X           x,
+               OFFSET      offset,
+               SITE_TYPE   siteType,
+               COMPANY_ID  companyId,
+               DELETED     deleted,
+               CREATE_TIME createTime,
+               MODIFY_TIME modifyTime,
+               CREATE_BY   createBy,
+               MODIFY_BY   modifyBy
         FROM SIT_SET
-        where
-        deleted='F'
-        and
-        company_id=#{companyId}
-        and id=#{id}
+        where deleted = 'F'
+          and company_id = #{companyId}
+          and id = #{id}
     </select>
     <select id="queryAllCompany" resultType="com.zhiyun.entity.SitSet" parameterType="map">
-        select company_id companyId from sit_set where deleted='F' group by company_id
+        select company_id companyId
+        from sit_set
+        where deleted = 'F'
+        group by company_id
     </select>
 </mapper>   

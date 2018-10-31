@@ -30,7 +30,6 @@ public class WcsServiceImpl implements WcsService {
         SitSet sitSet = new SitSet();
         sitSet.setCompanyId(companyId);
         sitSet.setDeleted("F");
-        List<SitSet> sitSets = sitSetDao.customFind(sitSet);
         return sitSetDao.customFind(sitSet);
     }
 
@@ -53,7 +52,6 @@ public class WcsServiceImpl implements WcsService {
         } else {
             LOGGER.error("查询非给定id节点传入id集合为空");
             return null;
-
         }
     }
 

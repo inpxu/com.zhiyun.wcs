@@ -116,4 +116,8 @@ public class JobProcessEngine {
         return singlePathSets;
     }
 
+    public void saveIntoDb(SystemTask systemTask) {
+        systemTaskService.saveIntoDb(systemTask);
+
+    }
 }

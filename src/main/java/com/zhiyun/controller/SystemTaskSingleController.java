@@ -32,6 +32,7 @@ public class SystemTaskSingleController extends BasicController {
 
     /**
      * 上下料拆分查询
+     *
      * @param systemTaskSingle
      * @param bindingResult
      * @return
@@ -58,6 +59,7 @@ public class SystemTaskSingleController extends BasicController {
 
     /**
      * 移箱拆分查询
+     *
      * @param systemTaskSingle
      * @param bindingResult
      * @return
@@ -84,6 +86,7 @@ public class SystemTaskSingleController extends BasicController {
 
     /**
      * 上下料新增
+     *
      * @param systemTaskSingle
      * @param bindingResult
      * @return
@@ -111,6 +114,7 @@ public class SystemTaskSingleController extends BasicController {
 
     /**
      * 移箱新增
+     *
      * @param systemTaskSingle
      * @param bindingResult
      * @return
@@ -136,9 +140,9 @@ public class SystemTaskSingleController extends BasicController {
         return result;
     }
 
-
     /**
      * 编辑
+     *
      * @param systemTaskSingle
      * @param bindingResult
      * @return

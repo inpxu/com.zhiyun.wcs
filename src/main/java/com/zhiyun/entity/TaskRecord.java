@@ -105,6 +105,7 @@ public class TaskRecord extends BaseEntity<Long> {
     /**
      * 企业id
      */
+    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -112,6 +113,7 @@ public class TaskRecord extends BaseEntity<Long> {
     /**
      * 企业id
      */
+    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }
