@@ -317,6 +317,16 @@
 
     <build>
         <finalName>wcs</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>7</source>
+                    <target>7</target>
+                </configuration>
+            </plugin>
+        </plugins>
         <!--编译资源插件，用于公司项目讲mapper放置在代码中的情况，如果mapper放置在标准的resources文件夹中不必配置-->
         <resources>
             <resource>
