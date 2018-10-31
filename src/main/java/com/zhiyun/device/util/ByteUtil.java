@@ -15,11 +15,13 @@ public class ByteUtil {
 	 */
 	public static String byteArrayToHexString(byte[] src,boolean isAppendSpace){
 		StringBuilder stringBuilder = new StringBuilder();
-		if(src==null||src.length==0)
-			return null;
+		if(src==null||src.length==0) {
+            return null;
+        }
 		for(int i =0;i<src.length;i++){
-			if(isAppendSpace&&i>0)
-				stringBuilder.append(" ");
+			if(isAppendSpace&&i>0) {
+                stringBuilder.append(" ");
+            }
 			stringBuilder.append(byteToHexString(src[i]));
 		}
 		
@@ -35,8 +37,9 @@ public class ByteUtil {
 		StringBuilder stringBuilder = new StringBuilder();
 		int v = src & 0xFF;
 		String hv =Integer.toHexString(v);
-		if(hv.length()==1)
-			stringBuilder.append(0);
+		if(hv.length()==1) {
+            stringBuilder.append(0);
+        }
 		stringBuilder.append(hv);
 		return stringBuilder.toString().toUpperCase();
 	}
@@ -49,8 +52,9 @@ public class ByteUtil {
 	 * @return
 	 */
 	public static byte[] hexStringToByteArray(String hexString){
-		   if (hexString==null || hexString.length()==0)
-		        throw new IllegalArgumentException("this hexString must not be empty");
+		   if (hexString==null || hexString.length()==0) {
+               throw new IllegalArgumentException("this hexString must not be empty");
+           }
 
 		    hexString = hexString.toLowerCase();
 		    final byte[] byteArray = new byte[hexString.length() / 2];
@@ -71,8 +75,9 @@ public class ByteUtil {
 	 */
 	public static String bytesToString(byte[] b){
 		StringBuilder sb = new StringBuilder();
-		for(byte temp: b)
-			sb.append(byteToString(temp));
+		for(byte temp: b) {
+            sb.append(byteToString(temp));
+        }
 		return sb.toString();
 	}
 	
@@ -86,8 +91,9 @@ public class ByteUtil {
 	public static String byteToString(byte b){
 		StringBuilder sb = new StringBuilder();
 		String str =Integer.toBinaryString(b & 0xFF);
-		for(int i=str.length();i<8;i++)
-			sb.append(0);
+		for(int i=str.length();i<8;i++) {
+            sb.append(0);
+        }
 		sb.append(str);
 		return sb.toString();
 	}
@@ -114,11 +120,13 @@ public class ByteUtil {
 	public static byte[] stringToBytes(String s) throws Exception
 	{
 		int byteLength = s.length()/8;
-		if(s.length()%8!=0)
-			throw new Exception(s+"不符合转换要�?...");
+		if(s.length()%8!=0) {
+            throw new Exception(s+"不符合转换要�?...");
+        }
 		byte[] res = new byte[byteLength];
-		for(int i=0;i<byteLength;i++)
-			res[i]=stringToByte(s.substring(i*8, i*8+8));
+		for(int i=0;i<byteLength;i++) {
+            res[i]=stringToByte(s.substring(i*8, i*8+8));
+        }
 		
 		return res;
 	}

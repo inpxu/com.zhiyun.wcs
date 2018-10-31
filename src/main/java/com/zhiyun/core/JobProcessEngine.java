@@ -1,6 +1,7 @@
 package com.zhiyun.core;
 
 import com.alibaba.fastjson.JSON;
+import com.zhiyun.device.dto.ProtocalData;
 import com.zhiyun.dto.JobInfoDto;
 import com.zhiyun.dto.SinglePathInfoDto;
 import com.zhiyun.entity.SystemTask;
@@ -143,7 +144,8 @@ public class JobProcessEngine {
     public void sendMissionToDevice(List<SystemTaskSingle> systemTaskSingles) {
         if (CollectionUtils.isNotEmpty(systemTaskSingles)) {
             for (SystemTaskSingle systemTaskSingle : systemTaskSingles) {
-//                jmsQueueTemplate.convertAndSend();
+                ProtocalData protocalData = new ProtocalData();
+                jmsQueueTemplate.convertAndSend(protocalData);
             }
         }
     }
