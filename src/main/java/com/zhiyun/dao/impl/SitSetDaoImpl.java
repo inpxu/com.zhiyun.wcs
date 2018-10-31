@@ -10,9 +10,9 @@ import com.zhiyun.base.model.DataGrid;
 import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
 import com.zhiyun.dao.SitSetDao;
+import com.zhiyun.dto.ProductionDeviceDto;
 import com.zhiyun.dto.SitSetDto;
 import com.zhiyun.entity.SitSet;
-import com.zhiyun.vo.ProductionDeviceVo;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -63,7 +63,7 @@ public class SitSetDaoImpl extends BaseDaoImpl<SitSet, Long> implements SitSetDa
     }
 
     @Override
-    public List<ProductionDeviceVo> optionProductionDeviceNo(Map<String, Object> map) {
+    public List<ProductionDeviceDto> optionProductionDeviceNo(Map<String, Object> map) {
         return this.selectList(getMethodName(), map);
     }
 

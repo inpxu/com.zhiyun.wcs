@@ -1,6 +1,8 @@
-package com.zhiyun.vo;
+package com.zhiyun.dto;
 
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author 邓艺
@@ -8,7 +10,9 @@ import lombok.Data;
  * @date 2018-10-31 10:18
  */
 @Data
-public class ProductionDeviceVo {
+public class ProductionDeviceDto implements Serializable {
+
+    private static final long serialVersionUID = -1275904802764409152L;
     /**
      * 设备名
      */

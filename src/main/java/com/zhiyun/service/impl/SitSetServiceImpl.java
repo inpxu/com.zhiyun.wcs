@@ -15,11 +15,11 @@ import com.zhiyun.client.UserHolder;
 import com.zhiyun.dao.DeviceDefineDao;
 import com.zhiyun.dao.SinglePathSetDao;
 import com.zhiyun.dao.SitSetDao;
+import com.zhiyun.dto.ProductionDeviceDto;
 import com.zhiyun.dto.SitSetDto;
 import com.zhiyun.entity.DeviceDefine;
 import com.zhiyun.entity.SitSet;
 import com.zhiyun.service.SitSetService;
-import com.zhiyun.vo.ProductionDeviceVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,7 +111,7 @@ public class SitSetServiceImpl extends BaseServiceImpl<SitSet, Long> implements 
     }
 
     @Override
-    public List<ProductionDeviceVo> optionProductionDeviceNo() {
+    public List<ProductionDeviceDto> optionProductionDeviceNo() {
         Map<String, Object> map = new HashMap<>(2);
         map.put("companyId", UserHolder.getCompanyId());
         return sitSetDao.optionProductionDeviceNo(map);

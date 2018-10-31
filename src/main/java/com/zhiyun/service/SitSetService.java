@@ -9,10 +9,10 @@ import com.zhiyun.base.model.DataGrid;
 import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
 import com.zhiyun.base.service.BaseService;
+import com.zhiyun.dto.ProductionDeviceDto;
 import com.zhiyun.dto.SitSetDto;
 import com.zhiyun.entity.DeviceDefine;
 import com.zhiyun.entity.SitSet;
-import com.zhiyun.vo.ProductionDeviceVo;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public interface SitSetService extends BaseService<SitSet, Long> {
 
     List<SitSet> queryAllCompany();
 
-    List<ProductionDeviceVo> optionProductionDeviceNo();
+    List<ProductionDeviceDto> optionProductionDeviceNo();
 
     SitSet getMac(SitSet sitSet);
 
