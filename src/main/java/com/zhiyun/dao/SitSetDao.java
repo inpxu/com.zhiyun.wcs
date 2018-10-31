@@ -11,6 +11,7 @@ import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
 import com.zhiyun.dto.SitSetDto;
 import com.zhiyun.entity.SitSet;
+import com.zhiyun.vo.ProductionDeviceVo;
 
 import java.util.List;
 import java.util.Map;
@@ -36,4 +37,5 @@ public interface SitSetDao extends BaseDao<SitSet, Long> {
 
     List<SitSet> queryAllCompany();
 
+    List<ProductionDeviceVo> optionProductionDeviceNo(Map<String, Object> map);
 }

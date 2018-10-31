@@ -19,6 +19,7 @@ import com.zhiyun.dto.SitSetDto;
 import com.zhiyun.entity.DeviceDefine;
 import com.zhiyun.entity.SitSet;
 import com.zhiyun.service.SitSetService;
+import com.zhiyun.vo.ProductionDeviceVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,5 +104,12 @@ public class SitSetServiceImpl extends BaseServiceImpl<SitSet, Long> implements 
     @Override
     public List<SitSet> queryAllCompany() {
         return sitSetDao.queryAllCompany();
+    }
+
+    @Override
+    public List<ProductionDeviceVo> optionProductionDeviceNo() {
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("companyId", UserHolder.getCompanyId());
+        return sitSetDao.optionProductionDeviceNo(map);
     }
 }

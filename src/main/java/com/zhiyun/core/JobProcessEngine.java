@@ -6,10 +6,9 @@ import com.zhiyun.dto.SinglePathInfoDto;
 import com.zhiyun.entity.SystemTask;
 import com.zhiyun.service.SystemTaskService;
 import com.zhiyun.vo.SinglePathSetVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.BoundListOperations;
@@ -26,9 +25,9 @@ import java.util.List;
  * @version v1.0
  * @date 2018-09-19 14:31
  */
+@Slf4j
 @Component
 public class JobProcessEngine {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JobProcessEngine.class);
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
@@ -95,7 +94,7 @@ public class JobProcessEngine {
             }
         } else {
             //TODO 自动拆分任务失败以后是否提示解决？
-            LOGGER.error("自动拆分任务失败");
+            log.error("自动拆分任务失败");
         }
 
     }
@@ -110,12 +109,20 @@ public class JobProcessEngine {
 
         } else {
             //TODO 自动拆分任务失败以后是否提示解决？
-            LOGGER.error("自动拆分任务失败");
+            log.error("自动拆分任务失败");
         }
 
         return singlePathSets;
     }
 
+    /**
+     * 将由队列中的任务保存至数据库
+     *
+     * @param systemTask 任务对象
+     * @return void
+     * @author 邓艺
+     * @date 2018/10/31 9:49
+     */
     public void saveIntoDb(SystemTask systemTask) {
         systemTaskService.saveIntoDb(systemTask);
 
