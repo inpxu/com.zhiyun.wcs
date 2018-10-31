@@ -6,7 +6,11 @@
 package com.zhiyun.dao;
 
 import com.zhiyun.base.dao.BaseDao;
+import com.zhiyun.dto.WarehouseAreaDto;
 import com.zhiyun.entity.DeviceDefine;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * DeviceDefineDao接口
@@ -17,4 +21,5 @@ import com.zhiyun.entity.DeviceDefine;
  */
 public interface DeviceDefineDao extends BaseDao<DeviceDefine, Long> {
 
+    List<WarehouseAreaDto> optionWarehouseArea(Map<String, Object> map);
 }

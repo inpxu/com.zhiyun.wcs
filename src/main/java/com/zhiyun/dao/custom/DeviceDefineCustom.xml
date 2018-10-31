@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhiyun.dao.impl.DeviceDefineDaoImpl">
 
+    <select id="optionWarehouseArea" parameterType="map" resultType="">
+        SELECT ios.store_area_set_ios.area_no areaNo, ios.store_area_set_ios.area_name areaName
+        FROM ios.store_area_set_ios
+        WHERE ios.store_area_set_ios.deleted = 'F'
+          AND ios.store_area_set_ios.company_id = #{companyId}
+    </select>
 </mapper>   

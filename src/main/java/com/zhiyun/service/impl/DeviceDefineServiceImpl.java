@@ -7,13 +7,18 @@ package com.zhiyun.service.impl;
 
 import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.service.BaseServiceImpl;
+import com.zhiyun.client.UserHolder;
 import com.zhiyun.dao.DeviceDefineDao;
+import com.zhiyun.dto.WarehouseAreaDto;
 import com.zhiyun.entity.DeviceDefine;
 import com.zhiyun.service.DeviceDefineService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 物流设备定义Service接口实现类。
@@ -50,5 +55,12 @@ public class DeviceDefineServiceImpl extends BaseServiceImpl<DeviceDefine, Long>
             //TODO 判断是否被使用
             this.delete(id);
         }
+    }
+
+    @Override
+    public List<WarehouseAreaDto> optionWarehouseArea() {
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("companyId", UserHolder.getCompanyId());
+        return deviceDefineDao.optionWarehouseArea(map);
     }
 }

@@ -6,7 +6,10 @@
 package com.zhiyun.service;
 
 import com.zhiyun.base.service.BaseService;
+import com.zhiyun.dto.WarehouseAreaDto;
 import com.zhiyun.entity.DeviceDefine;
+
+import java.util.List;
 
 /**
  * 物流设备定义Service接口。
@@ -20,4 +23,7 @@ public interface DeviceDefineService extends BaseService<DeviceDefine, Long> {
     void addOrUpdate(DeviceDefine deviceDefine);
 
     void deleteByIds(Long[] ids);
+
+    List<WarehouseAreaDto> optionWarehouseArea();
+
 }

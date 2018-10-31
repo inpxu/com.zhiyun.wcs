@@ -5,6 +5,7 @@ import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.dto.ResultModel;
+import com.zhiyun.dto.WarehouseAreaDto;
 import com.zhiyun.entity.DeviceDefine;
 import com.zhiyun.service.DeviceDefineService;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -116,6 +118,28 @@ public class DeviceDefineController extends BasicController {
             DeviceDefine deviceDefine = deviceDefineService.get(id);
             result.setMessage("删除成功");
             result.setModel(deviceDefine);
+        } catch (Exception e) {
+            result.setResult(false);
+            result.setMessage(e.getMessage());
+            LOGGER.warn(e.getMessage(), e.getCause());
+        }
+        return result;
+    }
+
+    /**
+     * 下拉查询库区
+     *
+     * @param
+     * @return com.zhiyun.dto.ResultModel<java.util.List                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               com.zhiyun.dto.WarehouseAreaDto>>
+     * @author 邓艺
+     * @date 2018/10/31 10:43
+     */
+    @RequestMapping(value = "optionWarehouseArea", method = RequestMethod.GET)
+    public ResultModel<List<WarehouseAreaDto>> optionWarehouseArea() {
+        ResultModel<List<WarehouseAreaDto>> result = new ResultModel<>();
+        try {
+            result.setMessage("删除成功");
+            result.setModel(deviceDefineService.optionWarehouseArea());
         } catch (Exception e) {
             result.setResult(false);
             result.setMessage(e.getMessage());
