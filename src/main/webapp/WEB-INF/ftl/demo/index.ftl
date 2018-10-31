@@ -15,6 +15,6 @@ window.sessionStorage.setItem('socketUrl', 'ws://192.168.0.57:8888/wcs');</scrip
 </div>
 <script type=text/javascript src=/static/js/manifest.2ae2e69a05c33dfc65f8.js></script>
 <script type=text/javascript src=/static/js/vendor.0bdaf30911cce65b585e.js></script>
-<script type=text/javascript src=/static/js/app.a7b7b0240281e3954dd6.js></script>
+<script type=text/javascript src=/static/js/app.8303c153421aebb4acc5.js></script>
 </body>
 </html>
