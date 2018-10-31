@@ -30,4 +30,9 @@ public interface SystemTaskDao extends BaseDao<SystemTask, Long> {
     List<SinglePathSetVo> queryAllSinglePath(SystemTask systemTask);
 
     List<SinglePathInfoDto> queryAllSinglePathInfo(SystemTask systemTask);
+
+    List<SystemTaskDto> upDownGet(SystemTask systemTask);
+
+
+    List<SystemTaskDto> moveBoxGet(SystemTask systemTask);
 }

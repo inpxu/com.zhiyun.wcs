@@ -42,4 +42,14 @@ public class SystemTaskDaoImpl extends BaseDaoImpl<SystemTask, Long> implements 
     public List<SinglePathInfoDto> queryAllSinglePathInfo(SystemTask systemTask) {
         return this.selectList(getMethodName(), systemTask);
     }
+
+    @Override
+    public List<SystemTaskDto> upDownGet(SystemTask systemTask) {
+        return this.selectList(getMethodName(),systemTask);
+    }
+
+    @Override
+    public List<SystemTaskDto> moveBoxGet(SystemTask systemTask) {
+        return this.selectList(getMethodName(),systemTask);
+    }
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -101,6 +102,63 @@ public class SystemTaskController extends BasicController {
         } catch (Exception e) {
             result.setResult(false);
             result.setMessage(e.getMessage());
+            LOGGER.error(e.getMessage(), e.getCause());
+        }
+        return result;
+    }
+
+
+    /**
+     * 上下料请求列表查询
+     *
+     * @param systemTask
+     * @param bindingResult
+     * @return
+     * @author xufei
+     * @date 2018-10-30 19:33:56
+     */
+    @RequestMapping(value = "upDownGet", method = RequestMethod.POST)
+    public ResultModel<List<SystemTaskDto>> upDownGet(@Valid SystemTask systemTask, BindingResult bindingResult) {
+        ResultModel<List<SystemTaskDto>> result = new ResultModel<>();
+        try {
+            validateParam(bindingResult);
+            systemTask.setCompanyId(UserHolder.getCompanyId());
+            systemTask.setRequestTime(new Date());
+            List<SystemTaskDto> list = systemTaskService.upDownGet(systemTask);
+            result.setModel(list);
+            result.setMessage("查询成功");
+        } catch (Exception e) {
+            result.setResult(false);
+            result.setMessage(e.getMessage());
+            //写入日志
+            LOGGER.error(e.getMessage(), e.getCause());
+        }
+        return result;
+    }
+
+    /**
+     * 移箱请求列表查询
+     *
+     * @param systemTask
+     * @param bindingResult
+     * @return
+     * @author xufei
+     * @date 2018-10-30 19:59:45
+     */
+    @RequestMapping(value = "moveBoxGet", method = RequestMethod.POST)
+    public ResultModel<List<SystemTaskDto>> moveBoxGet(@Valid SystemTask systemTask, BindingResult bindingResult) {
+        ResultModel<List<SystemTaskDto>> result = new ResultModel<>();
+        try {
+            validateParam(bindingResult);
+            systemTask.setCompanyId(UserHolder.getCompanyId());
+            systemTask.setRequestTime(new Date());
+            List<SystemTaskDto> list = systemTaskService.moveBoxGet(systemTask);
+            result.setModel(list);
+            result.setMessage("查询成功");
+        } catch (Exception e) {
+            result.setResult(false);
+            result.setMessage(e.getMessage());
+            //写入日志
             LOGGER.error(e.getMessage(), e.getCause());
         }
         return result;

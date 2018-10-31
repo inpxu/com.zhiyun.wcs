@@ -23,7 +23,7 @@
                CASE in_mark
                    WHEN in_mark = 0 THEN '入库'
                    WHEN in_mark = 1 THEN '出库'
-                   WHEN in_mark = 1 THEN '搬运'
+                   WHEN in_mark = 2 THEN '搬运'
                        END AS            inMarkName
     </sql>
 
@@ -125,5 +125,77 @@
               AND path_collections_set.company_id = #{companyId}
               AND path_collections_set.start_site_id = #{startSiteId}
               AND path_collections_set.endt_site_id = #{endSiteId}
+    </select>
+
+    <select id="upDownGet" parameterType="com.zhiyun.entity.SystemTask" resultType="com.zhiyun.dto.SystemTaskDto">
+        SELECT
+        system_task.ID id,
+        system_task.AREA_NAME areaName,
+        system_task.STORE_NAME storeName,
+        system_task.START_SITE_ID startSiteId,
+        system_task.END_SITE_ID endSiteId,
+        system_task.IN_MARK inMark,
+        system_task.MATTER_TYPE matterType,
+        system_task.MATTER_NAME matterName,
+        system_task.AMOUNT amount,
+        system_task.REQUEST_TIME requestTime,
+        system_task.TASK_ID taskId,
+        system_task.COMPANY_ID companyId,
+        system_task.DELETED deleted,
+        system_task.IS_FINISHED isFinished,
+        site_start.site_name      startPoint,
+        site_end.site_name        endPoint,
+        CASE in_mark
+        WHEN in_mark = 0 THEN '入库'
+        WHEN in_mark = 1 THEN '出库'
+        WHEN in_mark = 2 THEN '搬运'
+        END AS            inMarkName
+        FROM SYSTEM_TASK
+        LEFT JOIN sit_set AS site_start ON site_start.id = system_task.start_site_id
+        AND site_start.deleted = 'F'
+        LEFT JOIN sit_set AS site_end ON site_end.id = system_task.start_site_id
+        AND site_start.deleted = 'F'
+        where  system_task.MATTER_TYPE is not null
+                AND system_task.MATTER_NAME is not null
+                AND system_task.COMPANY_ID = #{companyId,jdbcType=BIGINT}
+                AND system_task.DELETED = 'F'
+                <if test="isFinished != null and isFinished != ''">
+                    AND system_task.IS_FINISHED = #{isFinished,jdbcType=VARCHAR}
+                </if>
+    </select>
+
+    <select id="moveBoxGet" parameterType="com.zhiyun.entity.SystemTask" resultType="com.zhiyun.dto.SystemTaskDto">
+        SELECT
+        system_task.ID id,
+        system_task.AREA_NAME areaName,
+        system_task.STORE_NAME storeName,
+        system_task.START_SITE_ID startSiteId,
+        system_task.END_SITE_ID endSiteId,
+        system_task.IN_MARK inMark,
+        system_task.AMOUNT amount,
+        system_task.REQUEST_TIME requestTime,
+        system_task.TASK_ID taskId,
+        system_task.COMPANY_ID companyId,
+        system_task.DELETED deleted,
+        system_task.IS_FINISHED isFinished,
+        site_start.site_name      startPoint,
+        site_end.site_name        endPoint,
+        CASE in_mark
+        WHEN in_mark = 0 THEN '入库'
+        WHEN in_mark = 1 THEN '出库'
+        WHEN in_mark = 2 THEN '搬运'
+        END AS            inMarkName
+        FROM SYSTEM_TASK
+        LEFT JOIN sit_set AS site_start ON site_start.id = system_task.start_site_id
+        AND site_start.deleted = 'F'
+        LEFT JOIN sit_set AS site_end ON site_end.id = system_task.start_site_id
+        AND site_start.deleted = 'F'
+        where  system_task.MATTER_TYPE is null
+        AND system_task.MATTER_NAME is null
+        AND system_task.COMPANY_ID = #{companyId,jdbcType=BIGINT}
+        AND system_task.DELETED = 'F'
+        <if test="isFinished != null and isFinished != ''">
+            AND system_task.IS_FINISHED = #{isFinished,jdbcType=VARCHAR}
+        </if>
     </select>
 </mapper>   

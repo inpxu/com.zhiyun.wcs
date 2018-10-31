@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.SystemTaskSingleDaoImpl">
+
+    <select id="upDown" parameterType="com.zhiyun.entity.SystemTaskSingle" resultType="com.zhiyun.dto.SystemTaskSingleDto">
+        SELECT
+        ID id,
+        START_SITE_ID startSiteId,
+        (select s.site_name from sit_set s where s.id = t.start_site_id and s.company_id = t.company_id and s.deleted = 'F') startSiteName,
+        END_SITE_ID endSiteId,
+        (select s.site_name from sit_set s where s.id = t.end_site_id and s.company_id = t.company_id and s.deleted = 'F') endSiteName,
+        REQUESTED_TIME requestedTime,
+        TASK_ID taskId,
+        COMPANY_ID companyId,
+        DELETED deleted,
+        CREATE_TIME createTime,
+        MODIFY_TIME modifyTime,
+        CREATE_BY createBy,
+        MODIFY_BY modifyBy,
+        SINGLE_TYPE singleType,
+        JOB_STATUS jobStatus
+        FROM SYSTEM_TASK_SINGLE t
+        <where>
+            <if test="startSiteId != null">
+                AND START_SITE_ID = #{startSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="endSiteId != null">
+                AND END_SITE_ID = #{endSiteId,jdbcType=BIGINT}
+            </if>
+            <if test="requestedTime != null">
+                AND REQUESTED_TIME = #{requestedTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="taskId != null">
+                AND TASK_ID = #{taskId,jdbcType=BIGINT}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="singleType != null">
+                AND SINGLE_TYPE = #{singleType,jdbcType=INTEGER}
+            </if>
+            <if test="jobStatus != null and jobStatus != ''">
+                AND JOB_STATUS = #{jobStatus,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+</mapper>   

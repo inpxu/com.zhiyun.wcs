@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>   
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhiyun.dao.impl.SystemTaskDaoImpl">
+<mapper namespace="com.zhiyun.dao.impl.SystemTaskSingleDaoImpl">
 
 	<!-- 插入实体 -->
-	<insert id="insert" parameterType="com.zhiyun.entity.SystemTask">
-		INSERT INTO SYSTEM_TASK (
+	<insert id="insert" parameterType="com.zhiyun.entity.SystemTaskSingle">
+		INSERT INTO SYSTEM_TASK_SINGLE (
 		   	ID,
-		   	AREA_NAME,
-		   	STORE_NAME,
 		   	START_SITE_ID,
 		   	END_SITE_ID,
-		   	IN_MARK,
-		   	MATTER_TYPE,
-		   	MATTER_NAME,
-		   	AMOUNT,
-		   	REQUEST_TIME,
+		   	REQUESTED_TIME,
 		   	TASK_ID,
 		   	COMPANY_ID,
 		   	DELETED,
@@ -22,18 +16,13 @@
 		   	MODIFY_TIME,
 		   	CREATE_BY,
 		   	MODIFY_BY,
-		   	IS_FINISHED
+		   	SINGLE_TYPE,
+		   	JOB_STATUS
 		) VALUES (
 		   	#{id,jdbcType=BIGINT},
-		   	#{areaName,jdbcType=VARCHAR},
-		   	#{storeName,jdbcType=VARCHAR},
 		   	#{startSiteId,jdbcType=BIGINT},
 		   	#{endSiteId,jdbcType=BIGINT},
-		   	#{inMark,jdbcType=INTEGER},
-		   	#{matterType,jdbcType=VARCHAR},
-		   	#{matterName,jdbcType=VARCHAR},
-		   	#{amount,jdbcType=INTEGER},
-		   	#{requestTime,jdbcType=TIMESTAMP},
+		   	#{requestedTime,jdbcType=TIMESTAMP},
 		   	#{taskId,jdbcType=BIGINT},
 		   	#{companyId,jdbcType=BIGINT},
 		   	#{deleted,jdbcType=VARCHAR},
@@ -41,46 +30,29 @@
 		   	#{modifyTime,jdbcType=TIMESTAMP},
 		   	#{createBy,jdbcType=VARCHAR},
 		   	#{modifyBy,jdbcType=VARCHAR},
-		   	#{isFinished,jdbcType=VARCHAR}
+		   	#{singleType,jdbcType=INTEGER},
+		   	#{jobStatus,jdbcType=VARCHAR}
 		)
 		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
 			SELECT LAST_INSERT_ID() AS ID
 		</selectKey>
 		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
-			SELECT SEQ_SYSTEM_TASK.nextval as id FROM dual
+			SELECT SEQ_SYSTEM_TASK_SINGLE.nextval as id FROM dual
 		</selectKey>
 	</insert>
 
 	<!-- 更新实体 -->
-	<update id="update" parameterType="com.zhiyun.entity.SystemTask">
-		UPDATE SYSTEM_TASK
+	<update id="update" parameterType="com.zhiyun.entity.SystemTaskSingle">
+		UPDATE SYSTEM_TASK_SINGLE
 		<set>
-			<if test="areaName != null">
-				AREA_NAME = #{areaName,jdbcType=VARCHAR},
-			</if>
-			<if test="storeName != null">
-				STORE_NAME = #{storeName,jdbcType=VARCHAR},
-			</if>
 			<if test="startSiteId != null">
 				START_SITE_ID = #{startSiteId,jdbcType=BIGINT},
 			</if>
 			<if test="endSiteId != null">
 				END_SITE_ID = #{endSiteId,jdbcType=BIGINT},
 			</if>
-			<if test="inMark != null">
-				IN_MARK = #{inMark,jdbcType=INTEGER},
-			</if>
-			<if test="matterType != null">
-				MATTER_TYPE = #{matterType,jdbcType=VARCHAR},
-			</if>
-			<if test="matterName != null">
-				MATTER_NAME = #{matterName,jdbcType=VARCHAR},
-			</if>
-			<if test="amount != null">
-				AMOUNT = #{amount,jdbcType=INTEGER},
-			</if>
-			<if test="requestTime != null">
-				REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP},
+			<if test="requestedTime != null">
+				REQUESTED_TIME = #{requestedTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="taskId != null">
 				TASK_ID = #{taskId,jdbcType=BIGINT},
@@ -103,26 +75,23 @@
 			<if test="modifyBy != null">
 				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
 			</if>
-			<if test="isFinished != null">
-				IS_FINISHED = #{isFinished,jdbcType=VARCHAR},
+			<if test="singleType != null">
+				SINGLE_TYPE = #{singleType,jdbcType=INTEGER},
+			</if>
+			<if test="jobStatus != null">
+				JOB_STATUS = #{jobStatus,jdbcType=VARCHAR},
 			</if>
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}
 	</update>
 	
 	<!-- 更新实体 -->
-	<update id="updateFields" parameterType="com.zhiyun.entity.SystemTask">
-		UPDATE SYSTEM_TASK
+	<update id="updateFields" parameterType="com.zhiyun.entity.SystemTaskSingle">
+		UPDATE SYSTEM_TASK_SINGLE
 		<set>
-			AREA_NAME = #{areaName,jdbcType=VARCHAR},
-			STORE_NAME = #{storeName,jdbcType=VARCHAR},
 			START_SITE_ID = #{startSiteId,jdbcType=BIGINT},
 			END_SITE_ID = #{endSiteId,jdbcType=BIGINT},
-			IN_MARK = #{inMark,jdbcType=INTEGER},
-			MATTER_TYPE = #{matterType,jdbcType=VARCHAR},
-			MATTER_NAME = #{matterName,jdbcType=VARCHAR},
-			AMOUNT = #{amount,jdbcType=INTEGER},
-			REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP},
+			REQUESTED_TIME = #{requestedTime,jdbcType=TIMESTAMP},
 			TASK_ID = #{taskId,jdbcType=BIGINT},
 			COMPANY_ID = #{companyId,jdbcType=BIGINT},
 			DELETED = #{deleted,jdbcType=VARCHAR},
@@ -130,14 +99,15 @@
 			MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
 			CREATE_BY = #{createBy,jdbcType=VARCHAR},
 			MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
-			IS_FINISHED = #{isFinished,jdbcType=VARCHAR},
+			SINGLE_TYPE = #{singleType,jdbcType=INTEGER},
+			JOB_STATUS = #{jobStatus,jdbcType=VARCHAR},
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}
 	</update>
 
 	<!-- 删除实体 -->
-	<update id="delete" parameterType="com.zhiyun.entity.SystemTask">
-		UPDATE SYSTEM_TASK
+	<update id="delete" parameterType="com.zhiyun.entity.SystemTaskSingle">
+		UPDATE SYSTEM_TASK_SINGLE
 		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
 		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
 		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
@@ -148,15 +118,9 @@
 	<sql id="selectFieldSQL">
 		SELECT 
 		       ID id,
-		       AREA_NAME areaName,
-		       STORE_NAME storeName,
 		       START_SITE_ID startSiteId,
 		       END_SITE_ID endSiteId,
-		       IN_MARK inMark,
-		       MATTER_TYPE matterType,
-		       MATTER_NAME matterName,
-		       AMOUNT amount,
-		       REQUEST_TIME requestTime,
+		       REQUESTED_TIME requestedTime,
 		       TASK_ID taskId,
 		       COMPANY_ID companyId,
 		       DELETED deleted,
@@ -164,30 +128,25 @@
 		       MODIFY_TIME modifyTime,
 		       CREATE_BY createBy,
 		       MODIFY_BY modifyBy,
-		       IS_FINISHED isFinished
+		       SINGLE_TYPE singleType,
+		       JOB_STATUS jobStatus
 	</sql>
 
 	<!-- 查询 -->
-	<select id="get" parameterType="map" resultType="com.zhiyun.entity.SystemTask">
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.SystemTaskSingle">
 		<include refid="selectFieldSQL" />
-		  FROM SYSTEM_TASK
+		  FROM SYSTEM_TASK_SINGLE
 		 WHERE ID = #{id,jdbcType=INTEGER}
 		   AND DELETED = #{deleted,jdbcType=VARCHAR}
 	</select>
 
 	<!-- 查询 -->
-	<select id="find" parameterType="com.zhiyun.entity.SystemTask" resultType="com.zhiyun.entity.SystemTask">
+	<select id="find" parameterType="com.zhiyun.entity.SystemTaskSingle" resultType="com.zhiyun.entity.SystemTaskSingle">
 		<include refid="selectFieldSQL" />
-		  FROM SYSTEM_TASK
+		  FROM SYSTEM_TASK_SINGLE
 		<where>
 			<if test="id != null">
 				AND ID = #{id,jdbcType=INTEGER}
-			</if>
-			<if test="areaName != null and areaName != ''">
-				AND AREA_NAME = #{areaName,jdbcType=VARCHAR}
-			</if>
-			<if test="storeName != null and storeName != ''">
-				AND STORE_NAME = #{storeName,jdbcType=VARCHAR}
 			</if>
 			<if test="startSiteId != null">
 				AND START_SITE_ID = #{startSiteId,jdbcType=BIGINT}
@@ -195,20 +154,8 @@
 			<if test="endSiteId != null">
 				AND END_SITE_ID = #{endSiteId,jdbcType=BIGINT}
 			</if>
-			<if test="inMark != null">
-				AND IN_MARK = #{inMark,jdbcType=INTEGER}
-			</if>
-			<if test="matterType != null and matterType != ''">
-				AND MATTER_TYPE = #{matterType,jdbcType=VARCHAR}
-			</if>
-			<if test="matterName != null and matterName != ''">
-				AND MATTER_NAME = #{matterName,jdbcType=VARCHAR}
-			</if>
-			<if test="amount != null">
-				AND AMOUNT = #{amount,jdbcType=INTEGER}
-			</if>
-			<if test="requestTime != null">
-				AND REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP}
+			<if test="requestedTime != null">
+				AND REQUESTED_TIME = #{requestedTime,jdbcType=TIMESTAMP}
 			</if>
 			<if test="taskId != null">
 				AND TASK_ID = #{taskId,jdbcType=BIGINT}
@@ -219,48 +166,33 @@
 			<if test="deleted != null and deleted != ''">
 				AND DELETED = #{deleted,jdbcType=VARCHAR}
 			</if>
-			<if test="isFinished != null and isFinished != ''">
-				AND IS_FINISHED = #{isFinished,jdbcType=VARCHAR}
+			<if test="singleType != null">
+				AND SINGLE_TYPE = #{singleType,jdbcType=INTEGER}
+			</if>
+			<if test="jobStatus != null and jobStatus != ''">
+				AND JOB_STATUS = #{jobStatus,jdbcType=VARCHAR}
 			</if>
 		</where>
 	</select>
 
 	<!-- 查询所有 -->
-	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.SystemTask">
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.SystemTaskSingle">
 		<include refid="selectFieldSQL" />
-		  FROM SYSTEM_TASK
+		  FROM SYSTEM_TASK_SINGLE
 		 WHERE DELETED = #{deleted,jdbcType=VARCHAR}
 	</select>
 
 	<!-- 分页查询（条件） -->
 	<sql id="page_condition">
 		<where>
-				<if test="entity.areaName != null and entity.areaName != ''">
-					AND AREA_NAME = #{entity.areaName,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.storeName != null and entity.storeName != ''">
-					AND STORE_NAME = #{entity.storeName,jdbcType=VARCHAR}
-				</if>
 				<if test="entity.startSiteId != null">
 					AND START_SITE_ID = #{entity.startSiteId,jdbcType=BIGINT}
 				</if>
 				<if test="entity.endSiteId != null">
 					AND END_SITE_ID = #{entity.endSiteId,jdbcType=BIGINT}
 				</if>
-				<if test="entity.inMark != null">
-					AND IN_MARK = #{entity.inMark,jdbcType=INTEGER}
-				</if>
-				<if test="entity.matterType != null and entity.matterType != ''">
-					AND MATTER_TYPE = #{entity.matterType,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.matterName != null and entity.matterName != ''">
-					AND MATTER_NAME = #{entity.matterName,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.amount != null">
-					AND AMOUNT = #{entity.amount,jdbcType=INTEGER}
-				</if>
-				<if test="entity.requestTime != null">
-					AND REQUEST_TIME = #{entity.requestTime,jdbcType=TIMESTAMP}
+				<if test="entity.requestedTime != null">
+					AND REQUESTED_TIME = #{entity.requestedTime,jdbcType=TIMESTAMP}
 				</if>
 				<if test="entity.taskId != null">
 					AND TASK_ID = #{entity.taskId,jdbcType=BIGINT}
@@ -271,8 +203,11 @@
 				<if test="entity.deleted != null and entity.deleted != ''">
 					AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
 				</if>
-				<if test="entity.isFinished != null and entity.isFinished != ''">
-					AND IS_FINISHED = #{entity.isFinished,jdbcType=VARCHAR}
+				<if test="entity.singleType != null">
+					AND SINGLE_TYPE = #{entity.singleType,jdbcType=INTEGER}
+				</if>
+				<if test="entity.jobStatus != null and entity.jobStatus != ''">
+					AND JOB_STATUS = #{entity.jobStatus,jdbcType=VARCHAR}
 				</if>
 		</where>
 	</sql>
@@ -280,15 +215,15 @@
 	<!-- 分页查询（计数） -->
 	<select id="page_count" parameterType="map" resultType="int">
 		SELECT count(*)
-		  FROM SYSTEM_TASK
+		  FROM SYSTEM_TASK_SINGLE
 		<include refid="page_condition" />
 	</select>
 
 	<!-- 分页查询（数据） -->
-	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.SystemTask">
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.SystemTaskSingle">
 		<include refid="mybatis.pageStartSQL" />
 		<include refid="selectFieldSQL" />
-		  FROM SYSTEM_TASK
+		  FROM SYSTEM_TASK_SINGLE
 		<include refid="page_condition" />
 		<include refid="mybatis.pageEndSQL" />
 	</select>
@@ -296,23 +231,17 @@
 	<!-- Map查询所有 -->
 	<select id="findMapListAll" parameterType="map" resultType="map">
 		<include refid="selectFieldSQL" />
-		  FROM SYSTEM_TASK
+		  FROM SYSTEM_TASK_SINGLE
 		 WHERE DELETED = "F"
 	</select>
 	
 	<!-- Map条件查询 -->
 	<select id="findMapList" parameterType="map" resultType="map">
 		<include refid="selectFieldSQL" />
-		  FROM SYSTEM_TASK
+		  FROM SYSTEM_TASK_SINGLE
 		 <where>
 			<if test="id != null">
 				AND ID = #{id,jdbcType=INTEGER}
-			</if>
-			<if test="areaName != null and areaName != ''">
-				AND AREA_NAME = #{areaName,jdbcType=VARCHAR}
-			</if>
-			<if test="storeName != null and storeName != ''">
-				AND STORE_NAME = #{storeName,jdbcType=VARCHAR}
 			</if>
 			<if test="startSiteId != null">
 				AND START_SITE_ID = #{startSiteId,jdbcType=BIGINT}
@@ -320,20 +249,8 @@
 			<if test="endSiteId != null">
 				AND END_SITE_ID = #{endSiteId,jdbcType=BIGINT}
 			</if>
-			<if test="inMark != null">
-				AND IN_MARK = #{inMark,jdbcType=INTEGER}
-			</if>
-			<if test="matterType != null and matterType != ''">
-				AND MATTER_TYPE = #{matterType,jdbcType=VARCHAR}
-			</if>
-			<if test="matterName != null and matterName != ''">
-				AND MATTER_NAME = #{matterName,jdbcType=VARCHAR}
-			</if>
-			<if test="amount != null">
-				AND AMOUNT = #{amount,jdbcType=INTEGER}
-			</if>
-			<if test="requestTime != null">
-				AND REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP}
+			<if test="requestedTime != null">
+				AND REQUESTED_TIME = #{requestedTime,jdbcType=TIMESTAMP}
 			</if>
 			<if test="taskId != null">
 				AND TASK_ID = #{taskId,jdbcType=BIGINT}
@@ -344,8 +261,11 @@
 			<if test="deleted != null and deleted != ''">
 				AND DELETED = #{deleted,jdbcType=VARCHAR}
 			</if>
-			<if test="isFinished != null and isFinished != ''">
-				AND IS_FINISHED = #{isFinished,jdbcType=VARCHAR}
+			<if test="singleType != null">
+				AND SINGLE_TYPE = #{singleType,jdbcType=INTEGER}
+			</if>
+			<if test="jobStatus != null and jobStatus != ''">
+				AND JOB_STATUS = #{jobStatus,jdbcType=VARCHAR}
 			</if>
 		 WHERE DELETED = "F"
 		</where>
@@ -353,17 +273,11 @@
 	
 	<!-- 插入实体map -->
 	<insert id="mapInsert" parameterType="map">
-		INSERT INTO SYSTEM_TASK (
+		INSERT INTO SYSTEM_TASK_SINGLE (
 		   	ID,
-		   	AREA_NAME,
-		   	STORE_NAME,
 		   	START_SITE_ID,
 		   	END_SITE_ID,
-		   	IN_MARK,
-		   	MATTER_TYPE,
-		   	MATTER_NAME,
-		   	AMOUNT,
-		   	REQUEST_TIME,
+		   	REQUESTED_TIME,
 		   	TASK_ID,
 		   	COMPANY_ID,
 		   	DELETED,
@@ -371,18 +285,13 @@
 		   	MODIFY_TIME,
 		   	CREATE_BY,
 		   	MODIFY_BY,
-		   	IS_FINISHED
+		   	SINGLE_TYPE,
+		   	JOB_STATUS
 		) VALUES (
 		   	#{ id,jdbcType=BIGINT},
-		   	#{ areaName,jdbcType=VARCHAR},
-		   	#{ storeName,jdbcType=VARCHAR},
 		   	#{ startSiteId,jdbcType=BIGINT},
 		   	#{ endSiteId,jdbcType=BIGINT},
-		   	#{ inMark,jdbcType=INTEGER},
-		   	#{ matterType,jdbcType=VARCHAR},
-		   	#{ matterName,jdbcType=VARCHAR},
-		   	#{ amount,jdbcType=INTEGER},
-		   	#{ requestTime,jdbcType=TIMESTAMP},
+		   	#{ requestedTime,jdbcType=TIMESTAMP},
 		   	#{ taskId,jdbcType=BIGINT},
 		   	#{ companyId,jdbcType=BIGINT},
 		   	#{ deleted,jdbcType=VARCHAR},
@@ -390,46 +299,29 @@
 		   	#{ modifyTime,jdbcType=TIMESTAMP},
 		   	#{ createBy,jdbcType=VARCHAR},
 		   	#{ modifyBy,jdbcType=VARCHAR},
-		   	#{ isFinished,jdbcType=VARCHAR}
+		   	#{ singleType,jdbcType=INTEGER},
+		   	#{ jobStatus,jdbcType=VARCHAR}
 		)
 		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
 			SELECT LAST_INSERT_ID() AS ID
 		</selectKey>
 		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
-			SELECT SEQ_SYSTEM_TASK.nextval as id FROM dual
+			SELECT SEQ_SYSTEM_TASK_SINGLE.nextval as id FROM dual
 		</selectKey>
 	</insert>
 	
 	<!-- 更新实体Map -->
 	<update id="mapUpdate" parameterType="map">
-		UPDATE SYSTEM_TASK
+		UPDATE SYSTEM_TASK_SINGLE
 		<set>
-			<if test="areaName != null">
-				AREA_NAME = #{areaName,jdbcType=VARCHAR},
-			</if>
-			<if test="storeName != null">
-				STORE_NAME = #{storeName,jdbcType=VARCHAR},
-			</if>
 			<if test="startSiteId != null">
 				START_SITE_ID = #{startSiteId,jdbcType=BIGINT},
 			</if>
 			<if test="endSiteId != null">
 				END_SITE_ID = #{endSiteId,jdbcType=BIGINT},
 			</if>
-			<if test="inMark != null">
-				IN_MARK = #{inMark,jdbcType=INTEGER},
-			</if>
-			<if test="matterType != null">
-				MATTER_TYPE = #{matterType,jdbcType=VARCHAR},
-			</if>
-			<if test="matterName != null">
-				MATTER_NAME = #{matterName,jdbcType=VARCHAR},
-			</if>
-			<if test="amount != null">
-				AMOUNT = #{amount,jdbcType=INTEGER},
-			</if>
-			<if test="requestTime != null">
-				REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP},
+			<if test="requestedTime != null">
+				REQUESTED_TIME = #{requestedTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="taskId != null">
 				TASK_ID = #{taskId,jdbcType=BIGINT},
@@ -452,8 +344,11 @@
 			<if test="modifyBy != null">
 				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
 			</if>
-			<if test="isFinished != null">
-				IS_FINISHED = #{isFinished,jdbcType=VARCHAR},
+			<if test="singleType != null">
+				SINGLE_TYPE = #{singleType,jdbcType=INTEGER},
+			</if>
+			<if test="jobStatus != null">
+				JOB_STATUS = #{jobStatus,jdbcType=VARCHAR},
 			</if>
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}

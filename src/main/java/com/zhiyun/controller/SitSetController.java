@@ -134,7 +134,8 @@ public class SitSetController extends BasicController {
     public ResultModel<List<SitSet>> optionSite() {
         ResultModel<List<SitSet>> result = new ResultModel<>();
         result.setMessage("查询成功");
-        result.setModel(sitSetService.optionSite());
+        List<SitSet> list = sitSetService.optionSite();
+        result.setModel(list);
         return result;
     }
 

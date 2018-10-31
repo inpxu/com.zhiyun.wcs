@@ -10,6 +10,7 @@ import com.zhiyun.base.model.DataGrid;
 import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
 import com.zhiyun.base.service.BaseServiceImpl;
+import com.zhiyun.client.UserHolder;
 import com.zhiyun.dto.SinglePathInfoDto;
 import com.zhiyun.dto.SystemTaskDto;
 import com.zhiyun.dao.SystemTaskDao;
@@ -17,6 +18,7 @@ import com.zhiyun.entity.SystemTask;
 import com.zhiyun.service.SystemTaskService;
 import com.zhiyun.internal.uniqueid.UniqueIdService;
 import com.zhiyun.vo.SinglePathSetVo;
+import org.apache.activemq.util.Suspendable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,5 +89,16 @@ public class SystemTaskServiceImpl extends BaseServiceImpl<SystemTask, Long> imp
     @Override
     public List<SinglePathInfoDto> queryAllSinglePathInfo(SystemTask systemTask) {
         return systemTaskDao.queryAllSinglePathInfo(systemTask);
+    }
+
+    @Override
+    public List<SystemTaskDto> upDownGet(SystemTask systemTask) {
+        systemTask.setCompanyId(UserHolder.getCompanyId());
+        return systemTaskDao.upDownGet(systemTask);
+    }
+    @Override
+    public List<SystemTaskDto> moveBoxGet(SystemTask systemTask) {
+        systemTask.setCompanyId(UserHolder.getCompanyId());
+        return systemTaskDao.upDownGet(systemTask);
     }
 }
