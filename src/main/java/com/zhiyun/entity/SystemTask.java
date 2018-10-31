@@ -21,7 +21,7 @@ import javax.validation.constraints.Max;
  */
 public class SystemTask extends BaseEntity<Long> {
 
-	private static final long serialVersionUID = 5674446314997835957L;
+	private static final long serialVersionUID = 5391733100219096784L;
 
 	// ~~~~实体属性
 	// 任务号
@@ -30,6 +30,9 @@ public class SystemTask extends BaseEntity<Long> {
 	// 库区
 	@Pattern(regexp="[\\S]{0,20}", message="库区字段过长")
 	private String areaName;
+	// 仓库id
+	@Max(value=9223372036854775807L,message="仓库id字段过长")
+	private Long storeId;
 	// 仓库
 	@Pattern(regexp="[\\S]{0,20}", message="仓库字段过长")
 	private String storeName;
@@ -104,6 +107,20 @@ public class SystemTask extends BaseEntity<Long> {
 	 */
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
+	}
+	
+	/**
+	 * 仓库id
+	 */
+	public Long getStoreId() {
+		return this.storeId;
+	}
+
+	/**
+	 * 仓库id
+	 */
+	public void setStoreId(Long storeId) {
+		this.storeId = storeId;
 	}
 	
 	/**

@@ -8,6 +8,7 @@
 		   	ID,
 		   	TASK_ID,
 		   	AREA_NAME,
+		   	STORE_ID,
 		   	STORE_NAME,
 		   	START_SITE_ID,
 		   	END_SITE_ID,
@@ -29,6 +30,7 @@
 		   	#{id,jdbcType=BIGINT},
 		   	#{taskId,jdbcType=BIGINT},
 		   	#{areaName,jdbcType=VARCHAR},
+		   	#{storeId,jdbcType=BIGINT},
 		   	#{storeName,jdbcType=VARCHAR},
 		   	#{startSiteId,jdbcType=BIGINT},
 		   	#{endSiteId,jdbcType=BIGINT},
@@ -64,6 +66,9 @@
 			</if>
 			<if test="areaName != null">
 				AREA_NAME = #{areaName,jdbcType=VARCHAR},
+			</if>
+			<if test="storeId != null">
+				STORE_ID = #{storeId,jdbcType=BIGINT},
 			</if>
 			<if test="storeName != null">
 				STORE_NAME = #{storeName,jdbcType=VARCHAR},
@@ -126,6 +131,7 @@
 		<set>
 			TASK_ID = #{taskId,jdbcType=BIGINT},
 			AREA_NAME = #{areaName,jdbcType=VARCHAR},
+			STORE_ID = #{storeId,jdbcType=BIGINT},
 			STORE_NAME = #{storeName,jdbcType=VARCHAR},
 			START_SITE_ID = #{startSiteId,jdbcType=BIGINT},
 			END_SITE_ID = #{endSiteId,jdbcType=BIGINT},
@@ -162,6 +168,7 @@
 		       ID id,
 		       TASK_ID taskId,
 		       AREA_NAME areaName,
+		       STORE_ID storeId,
 		       STORE_NAME storeName,
 		       START_SITE_ID startSiteId,
 		       END_SITE_ID endSiteId,
@@ -202,6 +209,9 @@
 			</if>
 			<if test="areaName != null and areaName != ''">
 				AND AREA_NAME = #{areaName,jdbcType=VARCHAR}
+			</if>
+			<if test="storeId != null">
+				AND STORE_ID = #{storeId,jdbcType=BIGINT}
 			</if>
 			<if test="storeName != null and storeName != ''">
 				AND STORE_NAME = #{storeName,jdbcType=VARCHAR}
@@ -260,6 +270,9 @@
 				</if>
 				<if test="entity.areaName != null and entity.areaName != ''">
 					AND AREA_NAME = #{entity.areaName,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.storeId != null">
+					AND STORE_ID = #{entity.storeId,jdbcType=BIGINT}
 				</if>
 				<if test="entity.storeName != null and entity.storeName != ''">
 					AND STORE_NAME = #{entity.storeName,jdbcType=VARCHAR}
@@ -340,6 +353,9 @@
 			<if test="areaName != null and areaName != ''">
 				AND AREA_NAME = #{areaName,jdbcType=VARCHAR}
 			</if>
+			<if test="storeId != null">
+				AND STORE_ID = #{storeId,jdbcType=BIGINT}
+			</if>
 			<if test="storeName != null and storeName != ''">
 				AND STORE_NAME = #{storeName,jdbcType=VARCHAR}
 			</if>
@@ -389,6 +405,7 @@
 		   	ID,
 		   	TASK_ID,
 		   	AREA_NAME,
+		   	STORE_ID,
 		   	STORE_NAME,
 		   	START_SITE_ID,
 		   	END_SITE_ID,
@@ -410,6 +427,7 @@
 		   	#{ id,jdbcType=BIGINT},
 		   	#{ taskId,jdbcType=BIGINT},
 		   	#{ areaName,jdbcType=VARCHAR},
+		   	#{ storeId,jdbcType=BIGINT},
 		   	#{ storeName,jdbcType=VARCHAR},
 		   	#{ startSiteId,jdbcType=BIGINT},
 		   	#{ endSiteId,jdbcType=BIGINT},
@@ -445,6 +463,9 @@
 			</if>
 			<if test="areaName != null">
 				AREA_NAME = #{areaName,jdbcType=VARCHAR},
+			</if>
+			<if test="storeId != null">
+				STORE_ID = #{storeId,jdbcType=BIGINT},
 			</if>
 			<if test="storeName != null">
 				STORE_NAME = #{storeName,jdbcType=VARCHAR},
