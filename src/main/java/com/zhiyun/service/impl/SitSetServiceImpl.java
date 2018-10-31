@@ -91,7 +91,11 @@ public class SitSetServiceImpl extends BaseServiceImpl<SitSet, Long> implements 
 
     @Override
     public DataGrid<SitSetDto> customPage(Params entity, Pager pager) {
-        return sitSetDao.customPage(entity, pager);
+        DataGrid<SitSetDto> dataGrid = sitSetDao.customPage(entity, pager);
+        for (SitSetDto sitSetDto : dataGrid.getItems()) {
+            sitSetDto.setProdMacMsg(sitSetDto.getProdMacNo() +"/" + sitSetDto.getProdMacName());
+        }
+        return dataGrid;
     }
 
     @Override
@@ -111,5 +115,11 @@ public class SitSetServiceImpl extends BaseServiceImpl<SitSet, Long> implements 
         Map<String, Object> map = new HashMap<>(2);
         map.put("companyId", UserHolder.getCompanyId());
         return sitSetDao.optionProductionDeviceNo(map);
+    }
+
+    @Override
+    public SitSet getMac(SitSet sitSet) {
+        sitSet.setCompanyId(UserHolder.getCompanyId());
+        return sitSetDao.getMac(sitSet);
     }
 }

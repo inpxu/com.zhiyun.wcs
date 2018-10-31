@@ -38,4 +38,7 @@ public interface SitSetDao extends BaseDao<SitSet, Long> {
     List<SitSet> queryAllCompany();
 
     List<ProductionDeviceVo> optionProductionDeviceNo(Map<String, Object> map);
+
+    SitSet getMac(SitSet sitSet);
+
 }

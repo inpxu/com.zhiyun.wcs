@@ -46,4 +46,7 @@ public interface SitSetService extends BaseService<SitSet, Long> {
     List<SitSet> queryAllCompany();
 
     List<ProductionDeviceVo> optionProductionDeviceNo();
+
+    SitSet getMac(SitSet sitSet);
+
 }
