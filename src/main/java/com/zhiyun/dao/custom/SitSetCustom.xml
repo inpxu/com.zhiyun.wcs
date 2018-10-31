@@ -3,20 +3,26 @@
 <mapper namespace="com.zhiyun.dao.impl.SitSetDaoImpl">
     <!-- 查询字段 -->
     <sql id="cselectFieldSQL">
-        SELECT ID             id,
-               MAC_NO         macNo,
-               SITE_NAME      siteName,
-               Z              z,
-               Y              y,
-               X              x,
-               OFFSET         offset,
-               SITE_TYPE      siteType,
-               COMPANY_ID     companyId,
-               DELETED        deleted,
-               CREATE_TIME    createTime,
-               MODIFY_TIME    modifyTime,
-               CREATE_BY      createBy,
-               MODIFY_BY      modifyBy,
+       SELECT
+		       ID id,
+		       MAC_NO macNo,
+		       PROD_MAC_NO prodMacNo,
+		       SITE_NAME siteName,
+		       Z z,
+		       Y y,
+		       X x,
+		       OFFSET offset,
+		       SITE_TYPE siteType,
+		       LAYER layer,
+		       MAC_IN_SITE_NO macInSiteNo,
+		       MATTER_NAME matterName,
+		       AFTER_TIME afterTime,
+		       COMPANY_ID companyId,
+		       DELETED deleted,
+		       CREATE_TIME createTime,
+		       MODIFY_TIME modifyTime,
+		       CREATE_BY createBy,
+		       MODIFY_BY modifyBy,
                CASE SITE_TYPE
                    WHEN 0 THEN '节点'
                    WHEN 1 THEN '上料位'
@@ -80,14 +86,20 @@
           and deleted = 'F'
     </select>
     <select id="customFind" parameterType="com.zhiyun.internal.wcs.SitSet" resultType="com.zhiyun.internal.wcs.SitSet">
-        SELECT ID id,
+        SELECT
+        ID id,
         MAC_NO macNo,
+        PROD_MAC_NO prodMacNo,
         SITE_NAME siteName,
         Z z,
         Y y,
         X x,
         OFFSET offset,
         SITE_TYPE siteType,
+        LAYER layer,
+        MAC_IN_SITE_NO macInSiteNo,
+        MATTER_NAME matterName,
+        AFTER_TIME afterTime,
         COMPANY_ID companyId,
         DELETED deleted,
         CREATE_TIME createTime,
@@ -106,52 +118,65 @@
     </select>
 
     <select id="getAllSitesNotInIds" parameterType="map" resultType="com.zhiyun.internal.wcs.SitSet">
-        SELECT ID          id,
-               MAC_NO      macNo,
-               SITE_NAME   siteName,
-               Z           z,
-               Y           y,
-               X           x,
-               OFFSET      offset,
-               SITE_TYPE   siteType,
-               COMPANY_ID  companyId,
-               DELETED     deleted,
-               CREATE_TIME createTime,
-               MODIFY_TIME modifyTime,
-               CREATE_BY   createBy,
-               MODIFY_BY   modifyBy
+        SELECT
+		       ID id,
+		       MAC_NO macNo,
+		       PROD_MAC_NO prodMacNo,
+		       SITE_NAME siteName,
+		       Z z,
+		       Y y,
+		       X x,
+		       OFFSET offset,
+		       SITE_TYPE siteType,
+		       LAYER layer,
+		       MAC_IN_SITE_NO macInSiteNo,
+		       MATTER_NAME matterName,
+		       AFTER_TIME afterTime,
+		       COMPANY_ID companyId,
+		       DELETED deleted,
+		       CREATE_TIME createTime,
+		       MODIFY_TIME modifyTime,
+		       CREATE_BY createBy,
+		       MODIFY_BY modifyBy
         FROM SIT_SET
-        where deleted = 'F'
-          and company_id = #{companyId}
-          AND id NOT IN(${ids})
+        where
+        deleted='F'
+        and
+        company_id=#{companyId}
+        AND id NOT IN(${ids})
 
     </select>
 
     <select id="queryDetailById" parameterType="map" resultType="com.zhiyun.internal.wcs.SitSet">
-        SELECT ID          id,
-               MAC_NO      macNo,
-               SITE_NAME   siteName,
-               Z           z,
-               Y           y,
-               X           x,
-               OFFSET      offset,
-               SITE_TYPE   siteType,
-               COMPANY_ID  companyId,
-               DELETED     deleted,
-               CREATE_TIME createTime,
-               MODIFY_TIME modifyTime,
-               CREATE_BY   createBy,
-               MODIFY_BY   modifyBy
+         SELECT
+		       ID id,
+		       MAC_NO macNo,
+		       PROD_MAC_NO prodMacNo,
+		       SITE_NAME siteName,
+		       Z z,
+		       Y y,
+		       X x,
+		       OFFSET offset,
+		       SITE_TYPE siteType,
+		       LAYER layer,
+		       MAC_IN_SITE_NO macInSiteNo,
+		       MATTER_NAME matterName,
+		       AFTER_TIME afterTime,
+		       COMPANY_ID companyId,
+		       DELETED deleted,
+		       CREATE_TIME createTime,
+		       MODIFY_TIME modifyTime,
+		       CREATE_BY createBy,
+		       MODIFY_BY modifyBy
         FROM SIT_SET
-        where deleted = 'F'
-          and company_id = #{companyId}
-          and id = #{id}
+        where
+        deleted='F'
+        and
+        company_id=#{companyId}
+        and id=#{id}
     </select>
     <select id="queryAllCompany" resultType="com.zhiyun.entity.SitSet" parameterType="map">
-        select company_id companyId
-        from sit_set
-        where deleted = 'F'
-        group by company_id
+        select company_id companyId from sit_set where deleted='F' group by company_id
     </select>
 
     <select id="optionProductionDeviceNo" parameterType="map" resultType="com.zhiyun.vo.ProductionDeviceVo">
