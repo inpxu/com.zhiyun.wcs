@@ -12,6 +12,7 @@ import com.zhiyun.base.service.BaseService;
 import com.zhiyun.dto.SitSetDto;
 import com.zhiyun.entity.DeviceDefine;
 import com.zhiyun.entity.SitSet;
+import com.zhiyun.vo.ProductionDeviceVo;
 
 import java.util.List;
 
@@ -43,4 +44,6 @@ public interface SitSetService extends BaseService<SitSet, Long> {
     List<SitSet> optionSite();
 
     List<SitSet> queryAllCompany();
+
+    List<ProductionDeviceVo> optionProductionDeviceNo();
 }

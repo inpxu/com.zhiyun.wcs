@@ -178,4 +178,15 @@
     <select id="queryAllCompany" resultType="com.zhiyun.entity.SitSet" parameterType="map">
         select company_id companyId from sit_set where deleted='F' group by company_id
     </select>
+
+    <select id="optionProductionDeviceNo" parameterType="map" resultType="com.zhiyun.vo.ProductionDeviceVo">
+        SELECT
+               aps.machine_set_mes.mac_name deviceName,
+               aps.machine_set_mes.mac_no deviceNo
+        FROM
+             aps.machine_set_mes
+        WHERE
+                aps.machine_set_mes.deleted = 'F'
+          AND aps.machine_set_mes.company_id = #{companyId}
+    </select>
 </mapper>   
