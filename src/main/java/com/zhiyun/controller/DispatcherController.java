@@ -1,11 +1,14 @@
 package com.zhiyun.controller;
 
 import com.zhiyun.dto.ResultModel;
+import com.zhiyun.entity.SystemTask;
 import com.zhiyun.service.DispatcherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -45,6 +48,12 @@ public class DispatcherController extends BasicController {
     public ResultModel<String> systemCtl() {
         ResultModel<String> resultModel = new ResultModel<>();
         return resultModel;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/startMission", method = RequestMethod.POST)
+    public String startMission(SystemTask systemTask) {
+        return "";
     }
 
 }
