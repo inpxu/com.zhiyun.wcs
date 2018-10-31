@@ -1,5 +1,7 @@
 package com.zhiyun.dto;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -7,25 +9,14 @@ import java.io.Serializable;
  * @version v1.0
  * @date 2018-09-19 15:43
  */
+@Data
 public class JobPoolDto implements Serializable {
 
     private static final long serialVersionUID = 8802653370866617265L;
-    private String JobName;
-    private Long JobId;
+    /**
+     * 任务名
+     */
+    private String jobName;
+    private Long obId;
 
-    public String getJobName() {
-        return JobName;
-    }
-
-    public void setJobName(String jobName) {
-        JobName = jobName;
-    }
-
-    public Long getJobId() {
-        return JobId;
-    }
-
-    public void setJobId(Long jobId) {
-        JobId = jobId;
-    }
 }

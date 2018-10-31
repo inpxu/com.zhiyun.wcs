@@ -33,6 +33,5 @@ public interface SystemTaskDao extends BaseDao<SystemTask, Long> {
 
     List<SystemTaskDto> upDownGet(SystemTask systemTask);
 
-
     List<SystemTaskDto> moveBoxGet(SystemTask systemTask);
 }

@@ -35,31 +35,26 @@
 
     <!-- 查询字段 -->
     <sql id="cselectFieldSQL">
-            SELECT
-                ID id,
-                MAC_NO macNo,
-                KEY_TYPE keyType,
-                IS_YIELD isYield,
-                DIRECTION direction,
-                MODIFY_TIME modifyTime,
-                CREATE_TIME createTime,
-                DELETED deleted,
-                COMPANY_ID companyId,
-                CREATE_BY createBy,
-                MODIFY_BY modifyBy,
-            CASE
-                    DIRECTION
-                    WHEN 0 THEN
-                    '上行'
-                    WHEN 1 THEN
-                    '下行'
-                END AS directionType,
-            CASE
-                    IS_YIELD
-                    WHEN 0 THEN
-                    '产量' ELSE '其他参数'
-                END AS yieldType
-	</sql>
+        SELECT ID             id,
+               MAC_NO         macNo,
+               KEY_TYPE       keyType,
+               IS_YIELD       isYield,
+               DIRECTION      direction,
+               MODIFY_TIME    modifyTime,
+               CREATE_TIME    createTime,
+               DELETED        deleted,
+               COMPANY_ID     companyId,
+               CREATE_BY      createBy,
+               MODIFY_BY      modifyBy,
+               CASE DIRECTION
+                   WHEN 0 THEN '上行'
+                   WHEN 1 THEN '下行'
+                       END AS directionType,
+               CASE IS_YIELD
+                   WHEN 0 THEN '产量'
+                   ELSE '其他参数'
+                       END AS yieldType
+    </sql>
 
     <!-- 分页查询（条件） -->
     <sql id="cpage_condition">
@@ -102,14 +97,10 @@
     </select>
 
     <select id="optionKey" parameterType="com.zhiyun.entity.CommuKeySet" resultType="com.zhiyun.entity.CommuKeySet">
-          SELECT
-            commu_key_set.id,
-            commu_key_set.mac_no macNo,
-            commu_key_set.key_type keyType
-          FROM
-            commu_key_set
-            WHERE deleted='F'
-            AND company_id=#{companyId}
-            and  mac_no=#{macNo}
+        SELECT commu_key_set.id, commu_key_set.mac_no macNo, commu_key_set.key_type keyType
+        FROM commu_key_set
+        WHERE deleted = 'F'
+          AND company_id = #{companyId}
+          and mac_no = #{macNo}
     </select>
 </mapper>   

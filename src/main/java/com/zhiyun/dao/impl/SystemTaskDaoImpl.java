@@ -9,9 +9,9 @@ import com.zhiyun.base.dao.BaseDaoImpl;
 import com.zhiyun.base.model.DataGrid;
 import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
+import com.zhiyun.dao.SystemTaskDao;
 import com.zhiyun.dto.SinglePathInfoDto;
 import com.zhiyun.dto.SystemTaskDto;
-import com.zhiyun.dao.SystemTaskDao;
 import com.zhiyun.entity.SystemTask;
 import com.zhiyun.vo.SinglePathSetVo;
 import org.springframework.stereotype.Repository;
@@ -45,11 +45,11 @@ public class SystemTaskDaoImpl extends BaseDaoImpl<SystemTask, Long> implements 
 
     @Override
     public List<SystemTaskDto> upDownGet(SystemTask systemTask) {
-        return this.selectList(getMethodName(),systemTask);
+        return this.selectList(getMethodName(), systemTask);
     }
 
     @Override
     public List<SystemTaskDto> moveBoxGet(SystemTask systemTask) {
-        return this.selectList(getMethodName(),systemTask);
+        return this.selectList(getMethodName(), systemTask);
     }
 }

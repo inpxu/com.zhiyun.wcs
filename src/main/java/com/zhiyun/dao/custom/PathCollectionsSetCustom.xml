@@ -117,8 +117,7 @@
     </select>
 
     <select id="shardingPathInfo" parameterType="com.zhiyun.entity.PathCollectionsSet" resultType="com.zhiyun.dto.PathCollectionsSetDto">
-        select GROUP_CONCAT(site_start.site_name, '->', site_end.site_name) AS pathGroup,
-               CONCAT( wstart.site_name, '->', wend.site_name )  AS singlePathInfo
+        select GROUP_CONCAT(site_start.site_name, '->', site_end.site_name) AS pathGroup, CONCAT(wstart.site_name, '->', wend.site_name) AS singlePathInfo
         FROM path_collections_set
                  INNER JOIN sit_set AS wstart ON wstart.id = path_collections_set.start_site_id and wstart.deleted = 'F'
                  INNER JOIN sit_set AS wend ON wend.id = path_collections_set.ENDT_SITE_ID and wend.deleted = 'F'

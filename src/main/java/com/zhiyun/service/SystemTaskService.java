@@ -46,4 +46,6 @@ public interface SystemTaskService extends BaseService<SystemTask, Long> {
     List<SystemTaskDto> upDownGet(SystemTask systemTask);
 
     List<SystemTaskDto> moveBoxGet(SystemTask systemTask);
+
+    void saveIntoDb(SystemTask systemTask);
 }

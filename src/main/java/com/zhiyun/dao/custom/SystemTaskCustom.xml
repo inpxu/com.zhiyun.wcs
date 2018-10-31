@@ -96,35 +96,31 @@
                single_path_set.start_site_id startSiteId,
                single_path_set.end_site_id   endSiteId,
                single_path_set.`offset`,
-               single_path_set.company_id companyId,
-	             sit_set.site_name destinationSiteName
+               single_path_set.company_id    companyId,
+               sit_set.site_name             destinationSiteName
         FROM single_path_set
-               INNER JOIN path_one_to_many ON path_one_to_many.single_path_id = single_path_set.id and path_one_to_many.deleted='F'
-               INNER JOIN path_collections_set ON path_one_to_many.collection_id = path_collections_set.id and  path_collections_set.deleted='F'
-               INNER JOIN sit_set ON sit_set.id = single_path_set.end_site_id
-	             AND sit_set.deleted = 'F'
+                 INNER JOIN path_one_to_many ON path_one_to_many.single_path_id = single_path_set.id and path_one_to_many.deleted = 'F'
+                 INNER JOIN path_collections_set ON path_one_to_many.collection_id = path_collections_set.id and path_collections_set.deleted = 'F'
+                 INNER JOIN sit_set ON sit_set.id = single_path_set.end_site_id
+                                           AND sit_set.deleted = 'F'
         WHERE path_collections_set.deleted = 'F'
           AND path_collections_set.company_id = #{companyId}
           AND path_collections_set.start_site_id = #{startSiteId}
           AND path_collections_set.endt_site_id = #{endSiteId}
     </select>
     <select id="queryAllSinglePathInfo" parameterType="com.zhiyun.entity.SystemTask" resultType="com.zhiyun.dto.SinglePathInfoDto">
-        SELECT
-            startSite.site_name startSiteName,
-            endSite.site_name endSiteName
-        FROM
-            single_path_set
-            INNER JOIN path_one_to_many ON path_one_to_many.single_path_id = single_path_set.id
-            INNER JOIN path_collections_set ON path_one_to_many.collection_id = path_collections_set.id
-            INNER JOIN sit_set AS endSite ON endSite.id = single_path_set.end_site_id
-            AND endSite.deleted = 'F'
-            INNER JOIN sit_set AS startSite ON startSite.id = single_path_set.start_site_id
-            AND startSite.deleted = 'F'
-        WHERE
-            path_collections_set.deleted = 'F'
-              AND path_collections_set.company_id = #{companyId}
-              AND path_collections_set.start_site_id = #{startSiteId}
-              AND path_collections_set.endt_site_id = #{endSiteId}
+        SELECT startSite.site_name startSiteName, endSite.site_name endSiteName
+        FROM single_path_set
+                 INNER JOIN path_one_to_many ON path_one_to_many.single_path_id = single_path_set.id
+                 INNER JOIN path_collections_set ON path_one_to_many.collection_id = path_collections_set.id
+                 INNER JOIN sit_set AS endSite ON endSite.id = single_path_set.end_site_id
+                                                      AND endSite.deleted = 'F'
+                 INNER JOIN sit_set AS startSite ON startSite.id = single_path_set.start_site_id
+                                                        AND startSite.deleted = 'F'
+        WHERE path_collections_set.deleted = 'F'
+          AND path_collections_set.company_id = #{companyId}
+          AND path_collections_set.start_site_id = #{startSiteId}
+          AND path_collections_set.endt_site_id = #{endSiteId}
     </select>
 
     <select id="upDownGet" parameterType="com.zhiyun.entity.SystemTask" resultType="com.zhiyun.dto.SystemTaskDto">
@@ -143,25 +139,25 @@
         system_task.COMPANY_ID companyId,
         system_task.DELETED deleted,
         system_task.IS_FINISHED isFinished,
-        site_start.site_name      startPoint,
-        site_end.site_name        endPoint,
+        site_start.site_name startPoint,
+        site_end.site_name endPoint,
         CASE in_mark
         WHEN in_mark = 0 THEN '入库'
         WHEN in_mark = 1 THEN '出库'
         WHEN in_mark = 2 THEN '搬运'
-        END AS            inMarkName
+        END AS inMarkName
         FROM SYSTEM_TASK
         LEFT JOIN sit_set AS site_start ON site_start.id = system_task.start_site_id
         AND site_start.deleted = 'F'
         LEFT JOIN sit_set AS site_end ON site_end.id = system_task.start_site_id
         AND site_start.deleted = 'F'
-        where  system_task.MATTER_TYPE is not null
-                AND system_task.MATTER_NAME is not null
-                AND system_task.COMPANY_ID = #{companyId,jdbcType=BIGINT}
-                AND system_task.DELETED = 'F'
-                <if test="isFinished != null and isFinished != ''">
-                    AND system_task.IS_FINISHED = #{isFinished,jdbcType=VARCHAR}
-                </if>
+        where system_task.MATTER_TYPE is not null
+        AND system_task.MATTER_NAME is not null
+        AND system_task.COMPANY_ID = #{companyId,jdbcType=BIGINT}
+        AND system_task.DELETED = 'F'
+        <if test="isFinished != null and isFinished != ''">
+            AND system_task.IS_FINISHED = #{isFinished,jdbcType=VARCHAR}
+        </if>
     </select>
 
     <select id="moveBoxGet" parameterType="com.zhiyun.entity.SystemTask" resultType="com.zhiyun.dto.SystemTaskDto">
@@ -178,19 +174,19 @@
         system_task.COMPANY_ID companyId,
         system_task.DELETED deleted,
         system_task.IS_FINISHED isFinished,
-        site_start.site_name      startPoint,
-        site_end.site_name        endPoint,
+        site_start.site_name startPoint,
+        site_end.site_name endPoint,
         CASE in_mark
         WHEN in_mark = 0 THEN '入库'
         WHEN in_mark = 1 THEN '出库'
         WHEN in_mark = 2 THEN '搬运'
-        END AS            inMarkName
+        END AS inMarkName
         FROM SYSTEM_TASK
         LEFT JOIN sit_set AS site_start ON site_start.id = system_task.start_site_id
         AND site_start.deleted = 'F'
         LEFT JOIN sit_set AS site_end ON site_end.id = system_task.start_site_id
         AND site_start.deleted = 'F'
-        where  system_task.MATTER_TYPE is null
+        where system_task.MATTER_TYPE is null
         AND system_task.MATTER_NAME is null
         AND system_task.COMPANY_ID = #{companyId,jdbcType=BIGINT}
         AND system_task.DELETED = 'F'

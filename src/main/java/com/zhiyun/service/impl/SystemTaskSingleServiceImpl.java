@@ -5,21 +5,15 @@
 
 package com.zhiyun.service.impl;
 
-import javax.annotation.Resource;
-
-import com.zhiyun.dao.SystemTaskDao;
-import com.zhiyun.dto.SystemTaskSingleDto;
-import com.zhiyun.entity.SystemTask;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
-
 import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.dao.SystemTaskSingleDao;
+import com.zhiyun.dto.SystemTaskSingleDto;
 import com.zhiyun.entity.SystemTaskSingle;
 import com.zhiyun.service.SystemTaskSingleService;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -32,23 +26,23 @@ import java.util.List;
 @Service("systemTaskSingleService")
 public class SystemTaskSingleServiceImpl extends BaseServiceImpl<SystemTaskSingle, Long> implements SystemTaskSingleService {
 
-	@Resource
-	private SystemTaskSingleDao systemTaskSingleDao;
+    @Resource
+    private SystemTaskSingleDao systemTaskSingleDao;
 
-	@Override
-	protected BaseDao<SystemTaskSingle, Long> getBaseDao() {
-		return this.systemTaskSingleDao;
-	}
+    @Override
+    protected BaseDao<SystemTaskSingle, Long> getBaseDao() {
+        return this.systemTaskSingleDao;
+    }
 
-	@Override
-	public List<SystemTaskSingleDto> upDown(SystemTaskSingle systemTaskSingle) {
-		return systemTaskSingleDao.upDown(systemTaskSingle);
-	}
+    @Override
+    public List<SystemTaskSingleDto> upDown(SystemTaskSingle systemTaskSingle) {
+        return systemTaskSingleDao.upDown(systemTaskSingle);
+    }
 
-	@Override
-	public void del(Long[] ids) {
-		for (Long id : ids) {
-			systemTaskSingleDao.delete(id);
-		}
-	}
+    @Override
+    public void del(Long[] ids) {
+        for (Long id : ids) {
+            systemTaskSingleDao.delete(id);
+        }
+    }
 }

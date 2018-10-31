@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
@@ -36,7 +35,7 @@ public class InitialSystem {
      * @author 邓艺
      * @date 2018/9/19 18:15
      */
-    @PostConstruct
+    //    @PostConstruct
     public void initial() {
         List<SitSet> list = sitSetService.queryAllCompany();
         if (CollectionUtils.isNotEmpty(list)) {
@@ -44,12 +43,12 @@ public class InitialSystem {
                 List<String> range = redisTemplate.boundListOps("jobQueue-" + sitSet.getCompanyId()).range(0, 1);
                 if (CollectionUtils.isNotEmpty(range)) {
                     //TODO 将任务下达设备
-//                    new Thread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//
-//                        }
-//                    }).start();
+                    //                    new Thread(new Runnable() {
+                    //                        @Override
+                    //                        public void run() {
+                    //
+                    //                        }
+                    //                    }).start();
                 } else {
                     LOGGER.warn("任务redis队列中还未存在任务");
                 }
