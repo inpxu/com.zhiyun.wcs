@@ -87,4 +87,8 @@ public class WcsTest {
         List<SitSet> allSitesNotInIds = wcsService.getAllSitesNotInIds(1L, list);
         System.out.println(allSitesNotInIds);
     }
+
+
+
+
 }

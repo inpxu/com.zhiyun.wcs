@@ -9,6 +9,7 @@ import com.zhiyun.entity.SystemTaskSingle;
 import com.zhiyun.service.DispatcherService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class DispatcherServiceImpl implements DispatcherService {
     private SystemTaskSingleDao systemTaskSingleDao;
     @Autowired
     private JobProcessEngine jobProcessEngine;
+    @Value("${taskId}")
+    private Long needRunTaskId;
 
 
     @Override
@@ -35,6 +38,9 @@ public class DispatcherServiceImpl implements DispatcherService {
         param.setTaskId(systemTask.getTaskId());
         List<SystemTaskSingle> systemTaskSingles = systemTaskSingleDao.find(param);
         if (CollectionUtils.isNotEmpty(systemTaskSingles)) {
+            if (systemTask.getTaskId()==1) {
+
+            }
             jobProcessEngine.sendMissionToDevice(systemTaskSingles);
         }else{
             throw new BusinessException("任务未分解");
