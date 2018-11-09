@@ -19,10 +19,10 @@
         <property name="sessionCacheSize" value="100"/>
     </bean>
     <!--定义消息队列  -->
-    <bean id="tttQueueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+    <bean id="jmsTemplateProducter" class="org.apache.activemq.command.ActiveMQQueue">
         <!--消息队列名称  -->
         <constructor-arg>
-            <value>2data_traffic_croupier</value>
+            <value>111data_traffic_croupier</value>
         </constructor-arg>
     </bean>
 
@@ -36,7 +36,7 @@
     <!--队列类型JmsTemplate  -->
     <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="activemqconnectionFactory"/>
-        <property name="defaultDestination" ref="tttQueueDestination"/>
+        <property name="defaultDestination" ref="jmsTemplateProducter"/>
         <property name="receiveTimeout" value="10000"/>
         <!--非pub/sub（发布/订阅）模式，即队列模式 -->
         <property name="pubSubDomain" value="false"/>

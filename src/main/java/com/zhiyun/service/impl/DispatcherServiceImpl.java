@@ -20,8 +20,9 @@ public class DispatcherServiceImpl implements DispatcherService {
     private SystemTaskSingleDao systemTaskSingleDao;
     @Autowired
     private JobProcessEngine jobProcessEngine;
-    @Value("${taskId}")
+    @Value("${needRunTaskId}")
     private Long needRunTaskId;
+
 
 
     @Override
@@ -38,10 +39,10 @@ public class DispatcherServiceImpl implements DispatcherService {
         param.setTaskId(systemTask.getTaskId());
         List<SystemTaskSingle> systemTaskSingles = systemTaskSingleDao.find(param);
         if (CollectionUtils.isNotEmpty(systemTaskSingles)) {
-            if (systemTask.getTaskId()==1) {
-
+            //是否是指定需要运行的任务
+            if (systemTask.getTaskId().equals(needRunTaskId)) {
+                jobProcessEngine.sendMissionToDevice(systemTaskSingles);
             }
-            jobProcessEngine.sendMissionToDevice(systemTaskSingles);
         }else{
             throw new BusinessException("任务未分解");
         }

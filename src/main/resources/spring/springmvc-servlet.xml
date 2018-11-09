@@ -13,6 +13,7 @@
 
     <!-- 扫描com.flame包下的所有class文件，配置注解的类全都装入容器中进行管理 -->
     <context:component-scan base-package="com.zhiyun"/>
+    <context:component-scan base-package="com.flame"/>
     <!-- 返回乱码处理 -->
     <!-- 添加注解驱动 -->
     <mvc:annotation-driven>

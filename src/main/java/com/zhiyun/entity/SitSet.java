@@ -31,6 +31,17 @@ public class SitSet extends BaseEntity<Long> {
     // 节点名
     @Pattern(regexp = "[\\S]{0,24}", message = "节点名字段过长")
     private String siteName;
+    //0 A 1B
+    private Integer line;
+
+    public Integer getLine() {
+        return line;
+    }
+
+    public void setLine(Integer line) {
+        this.line = line;
+    }
+
     // z
     private Double z;
     // y

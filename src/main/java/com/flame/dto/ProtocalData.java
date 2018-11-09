@@ -1,15 +1,14 @@
-package com.zhiyun.device.dto;
+package com.flame.dto;
 
-import com.zhiyun.device.dto.config.Ack;
-import com.zhiyun.device.util.ByteUtil;
+import com.flame.dto.config.Ack;
+import com.flame.util.ByteUtil;
 
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class ProtocalData implements Serializable{
 
-
-	private byte[] devType ={0x00,0x10};// 设备类别
+    private byte[] devType ={0x00,0x10};// 设备类别
 	
 	private byte afn=0x0c;// 设备类别
 	

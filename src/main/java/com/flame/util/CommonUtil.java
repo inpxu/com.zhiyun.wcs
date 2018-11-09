@@ -1,4 +1,4 @@
-package com.zhiyun.device.util;
+package com.flame.util;
 
 import java.util.concurrent.ConcurrentHashMap;
 

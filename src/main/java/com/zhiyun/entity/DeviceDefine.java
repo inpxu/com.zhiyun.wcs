@@ -33,8 +33,7 @@ public class DeviceDefine extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,20}", message = "IP地址字段过长")
     private String ip;
     // 机器猫编码
-    @Max(value = 9223372036854775807L, message = "机器猫编码字段过长")
-    private Long catNo;
+    private String catNo;
     // 描述
     @Pattern(regexp = "[\\s\\S]{0,60}", message = "描述字段过长")
     private String deviceDesc;
@@ -130,14 +129,14 @@ public class DeviceDefine extends BaseEntity<Long> {
     /**
      * 机器猫编码
      */
-    public Long getCatNo() {
+    public String getCatNo() {
         return this.catNo;
     }
 
     /**
      * 机器猫编码
      */
-    public void setCatNo(Long catNo) {
+    public void setCatNo(String catNo) {
         this.catNo = catNo;
     }
 

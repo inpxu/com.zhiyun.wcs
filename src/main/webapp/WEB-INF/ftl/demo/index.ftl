@@ -3,10 +3,10 @@
 <head>
     <meta charset=utf-8>
     <title>WCS</title>
-    <link href=/static/css/app.18a9573a03f622607a20bb4541951e54.css rel=stylesheet>
+    <link href=/static/css/app.4ad989ed6d9abc35b129ac19f4aa9c66.css rel=stylesheet>
 </head>
 <link rel=stylesheet href=/src/assets/font-icon/iconfont.css>
-<script>window.sessionStorage.setItem('ports', 'http://192.168.0.57:8888');
+<script>window.sessionStorage.setItem('ports', 'http://192.168.2.219:8283');
 window.sessionStorage.setItem('socketUrl', 'ws://192.168.0.57:8888/wcs');</script>
 <body>
 <div id=app>
@@ -15,6 +15,6 @@ window.sessionStorage.setItem('socketUrl', 'ws://192.168.0.57:8888/wcs');</scrip
 </div>
 <script type=text/javascript src=/static/js/manifest.2ae2e69a05c33dfc65f8.js></script>
 <script type=text/javascript src=/static/js/vendor.0bdaf30911cce65b585e.js></script>
-<script type=text/javascript src=/static/js/app.8303c153421aebb4acc5.js></script>
+<script type=text/javascript src=/static/js/app.a99da4b03a599634416c.js></script>
 </body>
 </html>

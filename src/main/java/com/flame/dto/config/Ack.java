@@ -1,4 +1,4 @@
-package com.zhiyun.device.dto.config;
+package com.flame.dto.config;
 /**
  * 是否需要应答(帧确认)
  * @author Think
