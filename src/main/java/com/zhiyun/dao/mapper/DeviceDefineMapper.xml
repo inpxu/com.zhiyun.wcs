@@ -33,7 +33,7 @@
         #{diviceNo,jdbcType=VARCHAR},
         #{communicationType,jdbcType=VARCHAR},
         #{ip,jdbcType=VARCHAR},
-        #{catNo,jdbcType=BIGINT},
+        #{catNo,jdbcType=VARCHAR},
         #{deviceDesc,jdbcType=VARCHAR},
         #{macAddr,jdbcType=VARCHAR},
         #{brand,jdbcType=VARCHAR},
@@ -75,7 +75,7 @@
                 IP = #{ip,jdbcType=VARCHAR},
             </if>
             <if test="catNo != null">
-                CAT_NO = #{catNo,jdbcType=BIGINT},
+                CAT_NO = #{catNo,jdbcType=VARCHAR},
             </if>
             <if test="deviceDesc != null">
                 DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR},
@@ -142,7 +142,7 @@
             DIVICE_NO = #{diviceNo,jdbcType=VARCHAR},
             COMMUNICATION_TYPE = #{communicationType,jdbcType=VARCHAR},
             IP = #{ip,jdbcType=VARCHAR},
-            CAT_NO = #{catNo,jdbcType=BIGINT},
+            CAT_NO = #{catNo,jdbcType=VARCHAR},
             DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR},
             MAC_ADDR = #{macAddr,jdbcType=VARCHAR},
             BRAND = #{brand,jdbcType=VARCHAR},
@@ -227,7 +227,7 @@
                 AND IP = #{ip,jdbcType=VARCHAR}
             </if>
             <if test="catNo != null">
-                AND CAT_NO = #{catNo,jdbcType=BIGINT}
+                AND CAT_NO = #{catNo,jdbcType=VARCHAR}
             </if>
             <if test="deviceDesc != null and deviceDesc != ''">
                 AND DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR}
@@ -294,7 +294,7 @@
                 AND IP = #{entity.ip,jdbcType=VARCHAR}
             </if>
             <if test="entity.catNo != null">
-                AND CAT_NO = #{entity.catNo,jdbcType=BIGINT}
+                AND CAT_NO = #{entity.catNo,jdbcType=VARCHAR}
             </if>
             <if test="entity.deviceDesc != null and entity.deviceDesc != ''">
                 AND DEVICE_DESC = #{entity.deviceDesc,jdbcType=VARCHAR}
@@ -382,7 +382,7 @@
                 AND IP = #{ip,jdbcType=VARCHAR}
             </if>
             <if test="catNo != null">
-                AND CAT_NO = #{catNo,jdbcType=BIGINT}
+                AND CAT_NO = #{catNo,jdbcType=VARCHAR}
             </if>
             <if test="deviceDesc != null and deviceDesc != ''">
                 AND DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR}
@@ -461,7 +461,7 @@
         #{ diviceNo,jdbcType=VARCHAR},
         #{ communicationType,jdbcType=VARCHAR},
         #{ ip,jdbcType=VARCHAR},
-        #{ catNo,jdbcType=BIGINT},
+        #{ catNo,jdbcType=VARCHAR},
         #{ deviceDesc,jdbcType=VARCHAR},
         #{ macAddr,jdbcType=VARCHAR},
         #{ brand,jdbcType=VARCHAR},
@@ -503,7 +503,7 @@
                 IP = #{ip,jdbcType=VARCHAR},
             </if>
             <if test="catNo != null">
-                CAT_NO = #{catNo,jdbcType=BIGINT},
+                CAT_NO = #{catNo,jdbcType=VARCHAR},
             </if>
             <if test="deviceDesc != null">
                 DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR},

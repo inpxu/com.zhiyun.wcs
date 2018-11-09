@@ -6,8 +6,8 @@
     <link href=/static/css/app.18a9573a03f622607a20bb4541951e54.css rel=stylesheet>
 </head>
 <link rel=stylesheet href=/src/assets/font-icon/iconfont.css>
-<script>window.sessionStorage.setItem('ports', 'http://192.168.0.57:8888');
-window.sessionStorage.setItem('socketUrl', 'ws://192.168.0.57:8888/wcs');</script>
+<script>window.sessionStorage.setItem('ports', 'http://192.168.2.219:8283');
+window.sessionStorage.setItem('socketUrl', 'ws://192.168.2.219:8283/wcs');</script>
 <body>
 <div id=app>
     <app user-name=沈建飞 user-img=http://124.160.96.135:8070/appSign/head.png company-name=智能仓储控制系统 company-english=飞戎机器人科技有限公司
