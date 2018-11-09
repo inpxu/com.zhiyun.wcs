@@ -1,5 +1,7 @@
 package com.zhiyun.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.dto.ResultModel;
 import com.zhiyun.entity.SystemTask;
 import com.zhiyun.service.DispatcherService;
@@ -53,7 +55,20 @@ public class DispatcherController extends BasicController {
     @ResponseBody
     @RequestMapping(value = "/startMission", method = RequestMethod.POST)
     public String startMission(SystemTask systemTask) {
-        return "";
+        BaseResult<String> baseResult = new BaseResult<>();
+        try {
+            baseResult.setResult(true);
+            baseResult.setMessage("任务开始执行");
+            dispatcherService.startMission(systemTask);
+        } catch (Exception e) {
+            baseResult.setResult(false);
+            baseResult.setMessage("任务执行失败");
+            e.printStackTrace();
+        }
+        /**
+         * 出发任务执行
+         */
+        return JSON.toJSONString(baseResult);
     }
 
 }
