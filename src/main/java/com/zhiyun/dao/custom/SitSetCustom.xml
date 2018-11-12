@@ -197,4 +197,26 @@
           AND aps.machine_set_mes.company_id = #{companyId}
           and aps.machine_set_mes.mac_no = #{prodMacNo}
     </select>
+
+    <select id="findSit" resultType="com.zhiyun.dto.SitSetDto" parameterType="com.zhiyun.entity.SitSet">
+        select
+          id  id,
+          id sitId,
+          MAC_IN_SITE_NO macInSiteNo,
+          LAYER          layer,
+          site_name siteName,
+          SITE_TYPE siteType,
+        CASE SITE_TYPE
+        WHEN 0 THEN '节点'
+        WHEN 1 THEN '上料位'
+        WHEN 2 THEN '下料位'
+        END AS siteTypeName
+        from sit_set
+        where deleted = 'F'
+          AND company_id = #{companyId}
+        <if test="siteName != null and siteName != ''">
+            AND site_name like concat ('%',#{siteName},'%')
+        </if>
+
+    </select>
 </mapper>   

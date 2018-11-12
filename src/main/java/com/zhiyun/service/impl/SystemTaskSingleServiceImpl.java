@@ -12,6 +12,7 @@ import com.zhiyun.dto.SystemTaskSingleDto;
 import com.zhiyun.entity.SystemTaskSingle;
 import com.zhiyun.service.SystemTaskSingleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -40,6 +41,7 @@ public class SystemTaskSingleServiceImpl extends BaseServiceImpl<SystemTaskSingl
     }
 
     @Override
+    @Transactional
     public void del(Long[] ids) {
         for (Long id : ids) {
             systemTaskSingleDao.delete(id);

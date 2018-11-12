@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.DeviceSitSetDaoImpl">
+
+    <!-- 分页查询（计数） -->
+    <select id="customPage_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM DEVICE_SIT_SET
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="customPage_datas" parameterType="map" resultType="com.zhiyun.dto.DeviceSitSetDto">
+        <include refid="mybatis.pageStartSQL"/>
+        SELECT
+        ID id,
+        DIVICE_NO diviceNo,
+        SIT_ID sitId,
+        (select site_name from sit_set where sit_set.id = DEVICE_SIT_SET.sit_id
+                            and sit_set.COMPANY_ID = DEVICE_SIT_SET.COMPANY_ID
+                            and sit_set.deleted = 'F') sitName,
+        SITE_TYPE siteType,
+        LIST_NAME listName,
+        PROD_MAC_NO prodMacNo,
+        LAYER layer,
+        MAC_IN_SITE_NO macInSiteNo,
+        COMPANY_ID companyId,
+        DELETED deleted,
+        CASE SITE_TYPE
+          WHEN 0 THEN '节点'
+          WHEN 1 THEN '上料位'
+          WHEN 2 THEN '下料位'
+          END AS siteTypeName
+        FROM DEVICE_SIT_SET
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+</mapper>   

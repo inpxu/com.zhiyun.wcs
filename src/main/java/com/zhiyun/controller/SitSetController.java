@@ -156,5 +156,22 @@ public class SitSetController extends BasicController {
         return result;
     }
 
+    /**
+     * 下拉模糊查询节点
+     *
+     * @param sitSet
+     * @return
+     * @author 徐飞
+     * @date 2018-11-12 15:38:42
+     */
+    @RequestMapping(value = "findSit", method = RequestMethod.POST)
+    public ResultModel<List<SitSetDto>> findSit(SitSet sitSet) {
+        ResultModel<List<SitSetDto>> result = new ResultModel<>();
+        result.setMessage("查询成功");
+        List<SitSetDto> list = sitSetService.findSit(sitSet);
+        result.setModel(list);
+        return result;
+    }
+
 }
 

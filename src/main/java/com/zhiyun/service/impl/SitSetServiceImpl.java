@@ -135,4 +135,10 @@ public class SitSetServiceImpl extends BaseServiceImpl<SitSet, Long> implements 
         sitSet.setCompanyId(UserHolder.getCompanyId());
         return sitSetDao.getMac(sitSet);
     }
+
+    @Override
+    public List<SitSetDto> findSit(SitSet sitSet) {
+        sitSet.setCompanyId(UserHolder.getCompanyId());
+        return sitSetDao.findSit(sitSet);
+    }
 }

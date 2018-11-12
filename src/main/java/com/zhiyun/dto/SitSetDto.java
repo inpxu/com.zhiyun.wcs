@@ -15,6 +15,15 @@ public class SitSetDto extends SitSet implements Serializable {
     private String siteTypeName;
     private String prodMacMsg;
     private String deviceName;
+    private Long sitId;
+
+    public Long getSitId() {
+        return sitId;
+    }
+
+    public void setSitId(Long sitId) {
+        this.sitId = sitId;
+    }
 
     public String getProdMacMsg() {
         return prodMacMsg;

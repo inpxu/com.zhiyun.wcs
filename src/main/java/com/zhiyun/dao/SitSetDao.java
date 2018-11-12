@@ -41,4 +41,7 @@ public interface SitSetDao extends BaseDao<SitSet, Long> {
 
     SitSetDto getMac(SitSet sitSet);
 
+
+    List<SitSetDto> findSit(SitSet sitSet);
+
 }

@@ -35,7 +35,6 @@ public class SitSet extends BaseEntity<Long> {
     private String siteName;
     //0 A 1B
     private Integer line;
-
     // z
     private Double z;
     // y

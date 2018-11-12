@@ -171,5 +171,29 @@ public class DeviceDefineController extends BasicController {
         return result;
     }
 
+    /**
+     * 下拉设备编码
+     *
+     * @param
+     * @return com.zhiyun.dto.ResultModel<java.util.List<com.zhiyun.entity.DeviceDefine>>
+     * @author 邓艺
+     * @date 2018/10/31 11:01
+     */
+    @RequestMapping(value = "deviceGet", method = RequestMethod.GET)
+    public ResultModel<List<DeviceDefine>> deviceGet() {
+        ResultModel<List<DeviceDefine>> result = new ResultModel<>();
+        try {
+            result.setMessage("获取成功");
+            DeviceDefine deviceDefine = new DeviceDefine();
+            deviceDefine.setCompanyId(UserHolder.getCompanyId());
+            result.setModel(deviceDefineService.find(deviceDefine));
+        } catch (Exception e) {
+            result.setResult(false);
+            result.setMessage(e.getMessage());
+            LOGGER.warn(e.getMessage(), e.getCause());
+        }
+        return result;
+    }
+
 }
 

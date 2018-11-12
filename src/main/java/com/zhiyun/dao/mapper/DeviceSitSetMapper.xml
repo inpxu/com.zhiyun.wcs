@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.DeviceSitSetDaoImpl">
+
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.DeviceSitSet">
+		INSERT INTO DEVICE_SIT_SET (
+		   	ID,
+		   	DIVICE_NO,
+		   	SIT_ID,
+		   	SITE_TYPE,
+		   	LIST_NAME,
+		   	PROD_MAC_NO,
+		   	LAYER,
+		   	MAC_IN_SITE_NO,
+		   	COMPANY_ID,
+		   	DELETED,
+		   	CREATE_TIME,
+		   	MODIFY_TIME,
+		   	CREATE_BY,
+		   	MODIFY_BY
+		) VALUES (
+		   	#{id,jdbcType=BIGINT},
+		   	#{diviceNo,jdbcType=VARCHAR},
+		   	#{sitId,jdbcType=BIGINT},
+		   	#{siteType,jdbcType=INTEGER},
+		   	#{listName,jdbcType=VARCHAR},
+		   	#{prodMacNo,jdbcType=VARCHAR},
+		   	#{layer,jdbcType=INTEGER},
+		   	#{macInSiteNo,jdbcType=VARCHAR},
+		   	#{companyId,jdbcType=BIGINT},
+		   	#{deleted,jdbcType=VARCHAR},
+		   	#{createTime,jdbcType=TIMESTAMP},
+		   	#{modifyTime,jdbcType=TIMESTAMP},
+		   	#{createBy,jdbcType=VARCHAR},
+		   	#{modifyBy,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_DEVICE_SIT_SET.nextval as id FROM dual
+		</selectKey>
+	</insert>
+
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.DeviceSitSet">
+		UPDATE DEVICE_SIT_SET
+		<set>
+			<if test="diviceNo != null">
+				DIVICE_NO = #{diviceNo,jdbcType=VARCHAR},
+			</if>
+			<if test="sitId != null">
+				SIT_ID = #{sitId,jdbcType=BIGINT},
+			</if>
+			<if test="siteType != null">
+				SITE_TYPE = #{siteType,jdbcType=INTEGER},
+			</if>
+			<if test="listName != null">
+				LIST_NAME = #{listName,jdbcType=VARCHAR},
+			</if>
+			<if test="prodMacNo != null">
+				PROD_MAC_NO = #{prodMacNo,jdbcType=VARCHAR},
+			</if>
+			<if test="layer != null">
+				LAYER = #{layer,jdbcType=INTEGER},
+			</if>
+			<if test="macInSiteNo != null">
+				MAC_IN_SITE_NO = #{macInSiteNo,jdbcType=VARCHAR},
+			</if>
+			<if test="companyId != null">
+				COMPANY_ID = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.DeviceSitSet">
+		UPDATE DEVICE_SIT_SET
+		<set>
+			DIVICE_NO = #{diviceNo,jdbcType=VARCHAR},
+			SIT_ID = #{sitId,jdbcType=BIGINT},
+			SITE_TYPE = #{siteType,jdbcType=INTEGER},
+			LIST_NAME = #{listName,jdbcType=VARCHAR},
+			PROD_MAC_NO = #{prodMacNo,jdbcType=VARCHAR},
+			LAYER = #{layer,jdbcType=INTEGER},
+			MAC_IN_SITE_NO = #{macInSiteNo,jdbcType=VARCHAR},
+			COMPANY_ID = #{companyId,jdbcType=BIGINT},
+			DELETED = #{deleted,jdbcType=VARCHAR},
+			CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.DeviceSitSet">
+		UPDATE DEVICE_SIT_SET
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       ID id,
+		       DIVICE_NO diviceNo,
+		       SIT_ID sitId,
+		       SITE_TYPE siteType,
+		       LIST_NAME listName,
+		       PROD_MAC_NO prodMacNo,
+		       LAYER layer,
+		       MAC_IN_SITE_NO macInSiteNo,
+		       COMPANY_ID companyId,
+		       DELETED deleted,
+		       CREATE_TIME createTime,
+		       MODIFY_TIME modifyTime,
+		       CREATE_BY createBy,
+		       MODIFY_BY modifyBy
+	</sql>
+
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.DeviceSitSet">
+		<include refid="selectFieldSQL" />
+		  FROM DEVICE_SIT_SET
+		 WHERE ID = #{id,jdbcType=INTEGER}
+		   AND DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.DeviceSitSet" resultType="com.zhiyun.entity.DeviceSitSet">
+		<include refid="selectFieldSQL" />
+		  FROM DEVICE_SIT_SET
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="diviceNo != null and diviceNo != ''">
+				AND DIVICE_NO = #{diviceNo,jdbcType=VARCHAR}
+			</if>
+			<if test="sitId != null">
+				AND SIT_ID = #{sitId,jdbcType=BIGINT}
+			</if>
+			<if test="siteType != null">
+				AND SITE_TYPE = #{siteType,jdbcType=INTEGER}
+			</if>
+			<if test="listName != null and listName != ''">
+				AND LIST_NAME = #{listName,jdbcType=VARCHAR}
+			</if>
+			<if test="prodMacNo != null and prodMacNo != ''">
+				AND PROD_MAC_NO = #{prodMacNo,jdbcType=VARCHAR}
+			</if>
+			<if test="layer != null">
+				AND LAYER = #{layer,jdbcType=INTEGER}
+			</if>
+			<if test="macInSiteNo != null and macInSiteNo != ''">
+				AND MAC_IN_SITE_NO = #{macInSiteNo,jdbcType=VARCHAR}
+			</if>
+			<if test="companyId != null">
+				AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.DeviceSitSet">
+		<include refid="selectFieldSQL" />
+		  FROM DEVICE_SIT_SET
+		 WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.diviceNo != null and entity.diviceNo != ''">
+					AND DIVICE_NO = #{entity.diviceNo,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.sitId != null">
+					AND SIT_ID = #{entity.sitId,jdbcType=BIGINT}
+				</if>
+				<if test="entity.siteType != null">
+					AND SITE_TYPE = #{entity.siteType,jdbcType=INTEGER}
+				</if>
+				<if test="entity.listName != null and entity.listName != ''">
+					AND LIST_NAME = #{entity.listName,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.prodMacNo != null and entity.prodMacNo != ''">
+					AND PROD_MAC_NO = #{entity.prodMacNo,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.layer != null">
+					AND LAYER = #{entity.layer,jdbcType=INTEGER}
+				</if>
+				<if test="entity.macInSiteNo != null and entity.macInSiteNo != ''">
+					AND MAC_IN_SITE_NO = #{entity.macInSiteNo,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.companyId != null">
+					AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+				</if>
+				<if test="entity.deleted != null and entity.deleted != ''">
+					AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+				</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM DEVICE_SIT_SET
+		<include refid="page_condition" />
+	</select>
+
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.DeviceSitSet">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM DEVICE_SIT_SET
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+	
+	<!-- Map查询所有 -->
+	<select id="findMapListAll" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM DEVICE_SIT_SET
+		 WHERE DELETED = "F"
+	</select>
+	
+	<!-- Map条件查询 -->
+	<select id="findMapList" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM DEVICE_SIT_SET
+		 <where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="diviceNo != null and diviceNo != ''">
+				AND DIVICE_NO = #{diviceNo,jdbcType=VARCHAR}
+			</if>
+			<if test="sitId != null">
+				AND SIT_ID = #{sitId,jdbcType=BIGINT}
+			</if>
+			<if test="siteType != null">
+				AND SITE_TYPE = #{siteType,jdbcType=INTEGER}
+			</if>
+			<if test="listName != null and listName != ''">
+				AND LIST_NAME = #{listName,jdbcType=VARCHAR}
+			</if>
+			<if test="prodMacNo != null and prodMacNo != ''">
+				AND PROD_MAC_NO = #{prodMacNo,jdbcType=VARCHAR}
+			</if>
+			<if test="layer != null">
+				AND LAYER = #{layer,jdbcType=INTEGER}
+			</if>
+			<if test="macInSiteNo != null and macInSiteNo != ''">
+				AND MAC_IN_SITE_NO = #{macInSiteNo,jdbcType=VARCHAR}
+			</if>
+			<if test="companyId != null">
+				AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+		 WHERE DELETED = "F"
+		</where>
+	</select>
+	
+	<!-- 插入实体map -->
+	<insert id="mapInsert" parameterType="map">
+		INSERT INTO DEVICE_SIT_SET (
+		   	ID,
+		   	DIVICE_NO,
+		   	SIT_ID,
+		   	SITE_TYPE,
+		   	LIST_NAME,
+		   	PROD_MAC_NO,
+		   	LAYER,
+		   	MAC_IN_SITE_NO,
+		   	COMPANY_ID,
+		   	DELETED,
+		   	CREATE_TIME,
+		   	MODIFY_TIME,
+		   	CREATE_BY,
+		   	MODIFY_BY
+		) VALUES (
+		   	#{ id,jdbcType=BIGINT},
+		   	#{ diviceNo,jdbcType=VARCHAR},
+		   	#{ sitId,jdbcType=BIGINT},
+		   	#{ siteType,jdbcType=INTEGER},
+		   	#{ listName,jdbcType=VARCHAR},
+		   	#{ prodMacNo,jdbcType=VARCHAR},
+		   	#{ layer,jdbcType=INTEGER},
+		   	#{ macInSiteNo,jdbcType=VARCHAR},
+		   	#{ companyId,jdbcType=BIGINT},
+		   	#{ deleted,jdbcType=VARCHAR},
+		   	#{ createTime,jdbcType=TIMESTAMP},
+		   	#{ modifyTime,jdbcType=TIMESTAMP},
+		   	#{ createBy,jdbcType=VARCHAR},
+		   	#{ modifyBy,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_DEVICE_SIT_SET.nextval as id FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新实体Map -->
+	<update id="mapUpdate" parameterType="map">
+		UPDATE DEVICE_SIT_SET
+		<set>
+			<if test="diviceNo != null">
+				DIVICE_NO = #{diviceNo,jdbcType=VARCHAR},
+			</if>
+			<if test="sitId != null">
+				SIT_ID = #{sitId,jdbcType=BIGINT},
+			</if>
+			<if test="siteType != null">
+				SITE_TYPE = #{siteType,jdbcType=INTEGER},
+			</if>
+			<if test="listName != null">
+				LIST_NAME = #{listName,jdbcType=VARCHAR},
+			</if>
+			<if test="prodMacNo != null">
+				PROD_MAC_NO = #{prodMacNo,jdbcType=VARCHAR},
+			</if>
+			<if test="layer != null">
+				LAYER = #{layer,jdbcType=INTEGER},
+			</if>
+			<if test="macInSiteNo != null">
+				MAC_IN_SITE_NO = #{macInSiteNo,jdbcType=VARCHAR},
+			</if>
+			<if test="companyId != null">
+				COMPANY_ID = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>   

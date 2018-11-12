@@ -49,4 +49,6 @@ public interface SitSetService extends BaseService<SitSet, Long> {
 
     SitSet getMac(SitSet sitSet);
 
+    List<SitSetDto> findSit(SitSet sitSet);
+
 }

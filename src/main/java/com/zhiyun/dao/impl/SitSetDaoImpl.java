@@ -72,4 +72,9 @@ public class SitSetDaoImpl extends BaseDaoImpl<SitSet, Long> implements SitSetDa
         return this.selectOne(getMethodName(), sitSet);
     }
 
+    @Override
+    public List<SitSetDto> findSit(SitSet sitSet) {
+        return this.selectList(getMethodName(),sitSet);
+    }
+
 }
